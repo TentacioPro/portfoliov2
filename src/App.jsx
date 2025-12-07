@@ -11,10 +11,9 @@ function App() {
 
   return (
     <SmoothScroll>
-      <div className="min-h-screen bg-void text-slate-200 selection:bg-neon-cyan/30 selection:text-neon-cyan font-sans overflow-x-hidden">
-        {/* Ambient Background */}
-        <div className="fixed inset-0 bg-void-gradient pointer-events-none z-0" />
-        <div className="fixed inset-0 bg-[url('/noise.svg')] opacity-[0.03] pointer-events-none z-0 mix-blend-overlay" />
+      <div className="min-h-screen bg-swiss-bg text-swiss-text font-sans overflow-x-hidden selection:bg-swiss-accent/20 selection:text-swiss-accent">
+        {/* Noise Overlay */}
+        <div className="fixed inset-0 bg-noise opacity-[0.03] pointer-events-none z-50 mix-blend-multiply" />
 
         <main className="relative z-10 pb-32">
           <AnimatePresence mode="wait">
@@ -35,9 +34,12 @@ function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="pt-20 max-w-7xl mx-auto"
+                className="pt-20"
               >
-                <h2 className="text-4xl font-technical font-bold px-8 mb-8 text-slate-100">The Lab</h2>
+                <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
+                  <h2 className="text-4xl font-bold tracking-tight text-stone-900">The Archive</h2>
+                  <p className="text-stone-500 mt-2 text-lg">Selected works and experiments.</p>
+                </div>
                 <BentoGrid />
               </motion.div>
             )}
@@ -48,25 +50,27 @@ function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="pt-20 max-w-7xl mx-auto"
+                className="pt-20"
               >
-                <h2 className="text-4xl font-technical font-bold px-8 mb-8 text-slate-100">System Metrics</h2>
+                <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
+                  <h2 className="text-4xl font-bold tracking-tight text-stone-900">The Synapse</h2>
+                  <p className="text-stone-500 mt-2 text-lg">Quantifying the creative process.</p>
+                </div>
                 <Analytics />
               </motion.div>
             )}
             
-            {/* Placeholder for other tabs */}
-            {(activeTab === 'about' || activeTab === 'terminal') && (
+            {activeTab === 'about' && (
               <motion.div
-                key="placeholder"
+                key="about"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="h-screen flex items-center justify-center"
+                className="h-[80vh] flex items-center justify-center"
               >
                 <div className="text-center">
-                  <h2 className="text-2xl font-mono text-neon-purple mb-2">System Module Offline</h2>
-                  <p className="text-slate-500">This section is currently under development.</p>
+                  <h2 className="text-2xl font-medium text-stone-400">Profile Module</h2>
+                  <p className="text-stone-300 mt-2">Under Construction</p>
                 </div>
               </motion.div>
             )}

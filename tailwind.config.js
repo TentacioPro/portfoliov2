@@ -7,21 +7,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        void: '#020617',
-        neon: {
-          cyan: '#22d3ee',
-          purple: '#a855f7',
+        swiss: {
+          bg: '#FAFAF9', // Stone 50
+          text: '#18181b', // Zinc 900
+          accent: '#f97316', // Orange 500
+          secondary: '#4f46e5', // Indigo 600
         }
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        technical: ['Space Grotesk', 'sans-serif'],
+        sans: ['Instrument Sans', 'sans-serif'],
       },
       backgroundImage: {
-        'void-gradient': 'radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.03) 0%, rgba(2, 6, 23, 0) 60%)',
+        'noise': "url('/noise.svg')",
       },
-      animation: {
-        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      boxShadow: {
+        'soft': '0 20px 40px -15px rgba(0, 0, 0, 0.05)',
+        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
       }
     },
   },

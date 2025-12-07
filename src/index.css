@@ -4,29 +4,26 @@
 
 @layer base {
   body {
-    @apply font-sans bg-void text-slate-200;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-technical;
+    @apply font-sans bg-swiss-bg text-swiss-text;
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Minimal Light */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
+  background: #e7e5e4; /* Stone 200 */
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #d6d3d1; /* Stone 300 */
 }
 
 /* Custom Scrollbar */
