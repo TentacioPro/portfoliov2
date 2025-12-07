@@ -6,16 +6,22 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        void: '#020617',
+        neon: {
+          cyan: '#22d3ee',
+          purple: '#a855f7',
+        }
+      },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        mono: ['Space Mono', 'monospace'],
+        technical: ['Space Grotesk', 'sans-serif'],
       },
-      colors: {
-        slate: {
-          850: '#1e293b', // Custom darker slate
-          900: '#0f172a',
-          950: '#020617',
-        }
+      backgroundImage: {
+        'void-gradient': 'radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.03) 0%, rgba(2, 6, 23, 0) 60%)',
+      },
+      animation: {
+        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       }
     },
   },

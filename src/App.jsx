@@ -1,55 +1,81 @@
-import { useState, useMemo } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { Hero } from './components/Hero';
-import { FilterBar } from './components/FilterBar';
-import { ProjectCard } from './components/ProjectCard';
-import { ProjectDetail } from './components/ProjectDetail';
-import { projects, categories } from './data/projects';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import SmoothScroll from './components/SmoothScroll';
+import Hero from './components/Hero';
+import BentoGrid from './components/BentoGrid';
+import Analytics from './components/Analytics';
+import Dock from './components/Dock';
 
 function App() {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [selectedId, setSelectedId] = useState(null);
-
-  const filteredProjects = useMemo(() => {
-    if (activeCategory === 'All') return projects;
-    return projects.filter(p => p.category === activeCategory);
-  }, [activeCategory]);
-
-  const selectedProject = useMemo(() => 
-    projects.find(p => p.id === selectedId), 
-  [selectedId]);
+  const [activeTab, setActiveTab] = useState('home');
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <Hero />
-        
-        <FilterBar 
-          categories={categories}
-          activeCategory={activeCategory}
-          onSelect={setActiveCategory}
-        />
+    <SmoothScroll>
+      <div className="min-h-screen bg-void text-slate-200 selection:bg-neon-cyan/30 selection:text-neon-cyan font-sans overflow-x-hidden">
+        {/* Ambient Background */}
+        <div className="fixed inset-0 bg-void-gradient pointer-events-none z-0" />
+        <div className="fixed inset-0 bg-[url('/noise.png')] opacity-[0.03] pointer-events-none z-0 mix-blend-overlay" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map(project => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              onClick={() => setSelectedId(project.id)}
-            />
-          ))}
-        </div>
+        <main className="relative z-10 pb-32">
+          <AnimatePresence mode="wait">
+            {activeTab === 'home' && (
+              <motion.div
+                key="home"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Hero />
+              </motion.div>
+            )}
 
-        <AnimatePresence>
-          {selectedId && selectedProject && (
-            <ProjectDetail 
-              project={selectedProject} 
-              onClose={() => setSelectedId(null)} 
-            />
-          )}
-        </AnimatePresence>
+            {activeTab === 'projects' && (
+              <motion.div
+                key="projects"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="pt-20 max-w-7xl mx-auto"
+              >
+                <h2 className="text-4xl font-technical font-bold px-8 mb-8 text-slate-100">The Lab</h2>
+                <BentoGrid />
+              </motion.div>
+            )}
+
+            {activeTab === 'analytics' && (
+              <motion.div
+                key="analytics"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="pt-20 max-w-7xl mx-auto"
+              >
+                <h2 className="text-4xl font-technical font-bold px-8 mb-8 text-slate-100">System Metrics</h2>
+                <Analytics />
+              </motion.div>
+            )}
+            
+            {/* Placeholder for other tabs */}
+            {(activeTab === 'about' || activeTab === 'terminal') && (
+              <motion.div
+                key="placeholder"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="h-screen flex items-center justify-center"
+              >
+                <div className="text-center">
+                  <h2 className="text-2xl font-mono text-neon-purple mb-2">System Module Offline</h2>
+                  <p className="text-slate-500">This section is currently under development.</p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </main>
+
+        <Dock activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>
-    </div>
+    </SmoothScroll>
   );
 }
 
