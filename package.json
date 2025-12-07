@@ -13,7 +13,10 @@
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
     "clsx": "^2.1.1",
+    "dotenv": "^17.2.3",
     "framer-motion": "^11.18.2",
+    "glob": "^13.0.0",
+    "groq-sdk": "^0.37.0",
     "lucide-react": "^0.344.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
