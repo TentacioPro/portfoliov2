@@ -4,6 +4,7 @@ import SmoothScroll from './components/SmoothScroll';
 import Hero from './components/Hero';
 import BentoGrid from './components/BentoGrid';
 import Analytics from './components/Analytics';
+import Profile from './components/Profile';
 import Dock from './components/Dock';
 
 function App() {
@@ -66,12 +67,9 @@ function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="h-[80vh] flex items-center justify-center"
+                className="pt-20"
               >
-                <div className="text-center">
-                  <h2 className="text-2xl font-medium text-stone-400">Profile Module</h2>
-                  <p className="text-stone-300 mt-2">Under Construction</p>
-                </div>
+                <Profile />
               </motion.div>
             )}
           </AnimatePresence>
