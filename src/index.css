@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --chart-grid: #e7e5e4;
+    --chart-text: #78716c;
+  }
+
+  .dark {
+    --chart-grid: #27272a; /* Zinc 800 */
+    --chart-text: #a1a1aa; /* Zinc 400 */
+  }
+
   body {
     @apply font-sans bg-swiss-bg text-swiss-text;
   }
@@ -38,15 +48,3 @@
   background: #52525b; /* Zinc 600 */
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-slate-950;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-slate-800 rounded-full hover:bg-slate-700 transition-colors;
-}

@@ -9,7 +9,7 @@ export default function Hero() {
         {/* Left: Text Manifesto */}
         <div className="order-2 md:order-1">
           <div className="relative">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-swiss-text leading-[1.1] mb-8">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-swiss-text dark:text-white leading-[1.1] mb-8">
               <span className="relative inline-block">
                 A jack of all trades
                 <svg className="absolute top-1/2 left-0 w-full h-full pointer-events-none overflow-visible" viewBox="0 0 100 20" preserveAspectRatio="none">
@@ -25,14 +25,14 @@ export default function Hero() {
                 </svg>
               </span>
               <br />
-              <span className="text-stone-400">is a master of none.</span>
+              <span className="text-stone-400 dark:text-stone-500">is a master of none.</span>
             </h1>
             
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.5, duration: 0.8 }}
-              className="text-2xl md:text-3xl font-medium text-swiss-secondary leading-tight"
+              className="text-2xl md:text-3xl font-medium text-swiss-secondary dark:text-indigo-400 leading-tight"
             >
               ...but oftentimes better than a master of one.
             </motion.p>
@@ -47,7 +47,7 @@ export default function Hero() {
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="relative w-64 h-64 md:w-96 md:h-96"
           >
-            <div className="absolute inset-0 bg-stone-200 rounded-[2rem] rotate-6 transform translate-y-4 translate-x-4" />
+            <div className="absolute inset-0 bg-stone-200 dark:bg-zinc-800 rounded-[2rem] rotate-6 transform translate-y-4 translate-x-4" />
             <img 
               src={profile.avatar} 
               alt="Profile" 

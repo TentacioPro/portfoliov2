@@ -37,8 +37,8 @@ function App() {
                 className="pt-20"
               >
                 <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
-                  <h2 className="text-4xl font-bold tracking-tight text-stone-900">The Archive</h2>
-                  <p className="text-stone-500 mt-2 text-lg">Selected works and experiments.</p>
+                  <h2 className="text-4xl font-bold tracking-tight text-stone-900 dark:text-white">The Archive</h2>
+                  <p className="text-stone-500 dark:text-stone-400 mt-2 text-lg">Selected works and experiments.</p>
                 </div>
                 <BentoGrid />
               </motion.div>
@@ -53,8 +53,8 @@ function App() {
                 className="pt-20"
               >
                 <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
-                  <h2 className="text-4xl font-bold tracking-tight text-stone-900">The Synapse</h2>
-                  <p className="text-stone-500 mt-2 text-lg">Quantifying the creative process.</p>
+                  <h2 className="text-4xl font-bold tracking-tight text-stone-900 dark:text-white">The Synapse</h2>
+                  <p className="text-stone-500 dark:text-stone-400 mt-2 text-lg">Quantifying the creative process.</p>
                 </div>
                 <Analytics />
               </motion.div>

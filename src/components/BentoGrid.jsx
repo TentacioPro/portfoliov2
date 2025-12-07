@@ -17,27 +17,27 @@ export default function BentoGrid() {
             onClick={() => setSelectedId(project.id)}
             className={clsx(
               "group relative overflow-hidden rounded-[24px] cursor-pointer",
-              "bg-white border border-stone-200 shadow-soft hover:shadow-xl hover:scale-[1.02] transition-all duration-500",
+              "bg-white dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800 shadow-soft dark:shadow-none hover:shadow-xl hover:scale-[1.02] transition-all duration-500",
               project.colSpan === 2 ? "md:col-span-2" : "md:col-span-1"
             )}
           >
             <div className="absolute inset-0 p-8 flex flex-col justify-between z-10">
               <div className="flex justify-between items-start">
-                <span className="px-3 py-1 text-xs font-medium tracking-wide uppercase rounded-full bg-stone-100 text-stone-500">
+                <span className="px-3 py-1 text-xs font-medium tracking-wide uppercase rounded-full bg-stone-100 dark:bg-zinc-800 text-stone-500 dark:text-stone-400">
                   {project.status}
                 </span>
-                <div className="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <ArrowUpRight className="w-4 h-4 text-stone-900" />
+                <div className="w-8 h-8 rounded-full bg-stone-100 dark:bg-zinc-800 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <ArrowUpRight className="w-4 h-4 text-stone-900 dark:text-white" />
                 </div>
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold text-stone-900 mb-2">
+                <h3 className="text-2xl font-bold text-stone-900 dark:text-white mb-2">
                   {project.title}
                 </h3>
                 <div className="flex flex-wrap gap-2 mt-3">
                   {project.tags.map(tag => (
-                    <span key={tag} className="text-sm text-stone-500">
+                    <span key={tag} className="text-sm text-stone-500 dark:text-stone-400">
                       #{tag}
                     </span>
                   ))}
@@ -46,7 +46,7 @@ export default function BentoGrid() {
             </div>
             
             {/* Abstract Background Decoration */}
-            <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-gradient-to-br from-stone-100 to-stone-200 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-gradient-to-br from-stone-100 to-stone-200 dark:from-zinc-800 dark:to-zinc-900 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
           </motion.div>
         ))}
       </div>
@@ -64,7 +64,7 @@ export default function BentoGrid() {
             
             <motion.div
               layoutId={`card-${selectedId}`}
-              className="w-full max-w-4xl bg-white rounded-[32px] overflow-hidden relative z-10 shadow-2xl"
+              className="w-full max-w-4xl bg-white dark:bg-zinc-900 rounded-[32px] overflow-hidden relative z-10 shadow-2xl"
             >
               {(() => {
                 const project = projects.find(p => p.id === selectedId);
@@ -78,26 +78,26 @@ export default function BentoGrid() {
                         </span>
                         <button 
                           onClick={(e) => { e.stopPropagation(); setSelectedId(null); }}
-                          className="p-2 rounded-full hover:bg-stone-100 transition-colors"
+                          className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-zinc-800 transition-colors"
                         >
                           <X className="w-6 h-6 text-stone-400" />
                         </button>
                       </div>
                       
-                      <h2 className="text-4xl md:text-5xl font-bold text-stone-900 mb-6 tracking-tight">
+                      <h2 className="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white mb-6 tracking-tight">
                         {project.title}
                       </h2>
 
-                      <p className="text-lg text-stone-600 leading-relaxed mb-8">
+                      <p className="text-lg text-stone-600 dark:text-stone-300 leading-relaxed mb-8">
                         {project.description}
                       </p>
 
                       <div className="mt-auto flex gap-4">
-                        <button className="px-6 py-3 rounded-xl bg-stone-900 text-white font-medium hover:bg-stone-800 transition-colors flex items-center gap-2">
+                        <button className="px-6 py-3 rounded-xl bg-stone-900 dark:bg-white text-white dark:text-stone-900 font-medium hover:bg-stone-800 dark:hover:bg-stone-200 transition-colors flex items-center gap-2">
                           View Project <ArrowUpRight className="w-4 h-4" />
                         </button>
                         {project.downloadUrl && (
-                          <button className="px-6 py-3 rounded-xl border border-stone-200 text-stone-900 font-medium hover:bg-stone-50 transition-colors flex items-center gap-2">
+                          <button className="px-6 py-3 rounded-xl border border-stone-200 dark:border-zinc-700 text-stone-900 dark:text-white font-medium hover:bg-stone-50 dark:hover:bg-zinc-800 transition-colors flex items-center gap-2">
                             Download PDF <Download className="w-4 h-4" />
                           </button>
                         )}
