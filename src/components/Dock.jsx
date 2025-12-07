@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
-import { Home, Activity, FolderGit2, User } from 'lucide-react';
+import { Home, Activity, FolderGit2, User, BookOpen } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import clsx from 'clsx';
 
 export default function Dock({ activeTab, setActiveTab }) {
+  const navigate = useNavigate();
+
   const items = [
     { id: 'home', icon: Home, label: 'Home' },
     { id: 'projects', icon: FolderGit2, label: 'Archive' },
@@ -54,6 +57,25 @@ export default function Dock({ activeTab, setActiveTab }) {
           );
         })}
         
+        <div className="w-px h-8 bg-stone-200 dark:bg-white/10 mx-1" />
+        
+        {/* Docs Link */}
+        <motion.button
+          onClick={() => navigate('/docs')}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="relative p-3 rounded-full hover:bg-stone-50 dark:hover:bg-white/5 transition-all duration-300 group"
+        >
+          <BookOpen 
+            strokeWidth={1.5}
+            className="w-5 h-5 text-stone-400 dark:text-stone-500 group-hover:text-stone-600 dark:group-hover:text-stone-300 transition-colors duration-300" 
+          />
+          <span className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-stone-900 dark:bg-zinc-950 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg">
+            Docs
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-900 dark:bg-zinc-950 rotate-45" />
+          </span>
+        </motion.button>
+
         <div className="w-px h-8 bg-stone-200 dark:bg-white/10 mx-1" />
         <ThemeToggle />
       </div>
