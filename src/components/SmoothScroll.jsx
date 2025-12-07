@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Lenis from 'lenis';
+import Lenis from '@studio-freight/lenis';
 
 export default function SmoothScroll({ children }) {
   useEffect(() => {
