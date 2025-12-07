@@ -12,6 +12,8 @@ export default function ThemeToggle() {
     setTheme(savedTheme);
     if (savedTheme === 'dark') {
       document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 
