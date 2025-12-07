@@ -11,9 +11,9 @@ function App() {
 
   return (
     <SmoothScroll>
-      <div className="min-h-screen bg-swiss-bg text-swiss-text font-sans overflow-x-hidden selection:bg-swiss-accent/20 selection:text-swiss-accent">
+      <div className="min-h-screen bg-swiss-bg dark:bg-[#0c0c0c] text-swiss-text dark:text-[#ededed] font-sans overflow-x-hidden selection:bg-swiss-accent/20 dark:selection:bg-swiss-accent/20 selection:text-swiss-accent transition-colors duration-300">
         {/* Noise Overlay */}
-        <div className="fixed inset-0 bg-noise opacity-[0.03] pointer-events-none z-50 mix-blend-multiply" />
+        <div className="fixed inset-0 bg-noise opacity-[0.03] pointer-events-none z-50 mix-blend-multiply dark:mix-blend-screen" />
 
         <main className="relative z-10 pb-32">
           <AnimatePresence mode="wait">

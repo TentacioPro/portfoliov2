@@ -6,6 +6,10 @@
   body {
     @apply font-sans bg-swiss-bg text-swiss-text;
   }
+  
+  .dark body {
+    @apply bg-[#0c0c0c] text-[#ededed];
+  }
 }
 
 /* Custom Scrollbar - Minimal Light */
@@ -22,8 +26,16 @@
   border-radius: 3px;
 }
 
+.dark ::-webkit-scrollbar-thumb {
+  background: #3f3f46; /* Zinc 700 */
+}
+
 ::-webkit-scrollbar-thumb:hover {
   background: #d6d3d1; /* Stone 300 */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #52525b; /* Zinc 600 */
 }
 
 /* Custom Scrollbar */

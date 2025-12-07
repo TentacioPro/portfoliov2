@@ -1,57 +1,71 @@
 import { Github, Linkedin, Twitter } from 'lucide-react';
 
 export const profile = {
-  name: "Design Engineer",
-  bio: "Crafting digital interfaces with Swiss precision and modern motion.",
+  name: "Abishek",
+  role: "Full-Stack Engineer",
+  bio: "Full-Stack Engineer with a Low-Level Fetish. Bridging high-level UI with bare-metal logic through Breadth-First, Depth-Next exploration.",
   avatar: "/avatar.jpg",
+  socials: [
+    { name: "GitHub", url: "https://github.com/TentacioPro", icon: Github },
+    { name: "LinkedIn", url: "https://linkedin.com/in/", icon: Linkedin },
+    { name: "Twitter", url: "https://twitter.com/", icon: Twitter },
+  ],
 };
-
-export const socials = [
-  { name: "GitHub", url: "https://github.com", icon: Github },
-  { name: "LinkedIn", url: "https://linkedin.com", icon: Linkedin },
-  { name: "X", url: "https://x.com", icon: Twitter },
-];
 
 export const projects = [
   {
-    id: 1,
+    id: "subq-protocol",
     title: "SubQ Protocol",
-    description: "A bare-metal blockchain messaging layer optimized for sub-millisecond latency. Written in Rust and C++.",
-    tags: ["Bare Metal", "Rust", "Cryptography"],
-    status: "Production",
-    link: "#",
-    downloadUrl: "#",
+    tag: "C++ / Bare Metal",
+    image: "/images/project-subq.png",
+    description: "Hit the Windows Memory Wall hard orchestrating local LLMs. Pivoted to WSL to unlock raw performance and build a bare-metal agentic OS layer.",
+    downloadUrl: "/docs/02_Agentic_OS_Local_LLM.md",
     colSpan: 2
   },
   {
-    id: 2,
-    title: "Lumina UI",
-    description: "A React component library focusing on compound components and accessible primitives.",
-    tags: ["React", "A11y", "Design System"],
-    status: "Beta",
-    link: "#",
-    downloadUrl: "#",
+    id: "agents-scratch",
+    title: "Agents From Scratch",
+    tag: "Python / LangGraph",
+    image: "/images/project-agents.png",
+    description: "Deconstructed agentic workflows to understand the primitives. Moved from simple chains to stateful, multi-step reasoning graphs.",
+    downloadUrl: "/docs/01_Agents_From_Scratch_LangGraph.md",
     colSpan: 1
   },
   {
-    id: 3,
-    title: "Vercel Clone",
-    description: "Reverse engineering the Vercel dashboard deployment pipeline using AWS Lambda and SQS.",
-    tags: ["AWS", "Node.js", "DevOps"],
-    status: "Concept",
-    link: "#",
-    downloadUrl: "#",
+    id: "voice-agents",
+    title: "Voice Agents Workshop",
+    tag: "OpenAI / Realtime API",
+    image: "/images/project-voice.png",
+    description: "Engineered low-latency voice pipeline using OpenAI's Realtime API. Focused on natural interruption and turn-taking in conversation.",
+    downloadUrl: "/docs/03_Voice_Agents_OpenAI_Workshop.md",
     colSpan: 1
   },
   {
-    id: 4,
-    title: "Linear Sync",
-    description: "Two-way sync engine between Linear issues and GitHub issues.",
-    tags: ["TypeScript", "API", "Tooling"],
-    status: "Live",
-    link: "#",
-    downloadUrl: "#",
+    id: "yt-summarizer",
+    title: "YouTube Summarizer",
+    tag: "Python / NLP",
+    image: "/images/project-yt.png",
+    description: "Built dynamic content processor to extract and summarize video transcripts. Solved token context window challenge for long-form content.",
+    downloadUrl: "/docs/04_YouTube_Video_Summarizer.md",
     colSpan: 2
+  },
+  {
+    id: "ai-webscraper",
+    title: "AI WebScraper",
+    tag: "Puppeteer / AI",
+    image: "/images/project-scraper.png",
+    description: "Intelligent extraction tool navigating complex DOMs. Uses computer vision and DOM analysis to identify and retrieve relevant data points automatically.",
+    downloadUrl: "/docs/11_AI_WebScraper_Intelligent_Extraction.md",
+    colSpan: 1
+  },
+  {
+    id: "notion-clone",
+    title: "Notion Clone",
+    tag: "Next.js / WebSockets",
+    image: "/images/project-notion.png",
+    description: "Real-time collaborative editor handling concurrent user updates. Implemented CRDT-like conflict resolution for seamless editing experience.",
+    downloadUrl: "/docs/07_NotionClone_Collaborative_Editor.md",
+    colSpan: 1
   }
 ];
 
