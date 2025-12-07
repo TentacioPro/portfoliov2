@@ -1,55 +1,77 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { projects } from '../data/data';
-import { X, ArrowUpRight, Download } from 'lucide-react';
+import { X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import clsx from 'clsx';
 
 export default function BentoGrid() {
   const [selectedId, setSelectedId] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(9);
+
+  const visibleProjects = projects.slice(0, visibleCount);
+  const hasMore = visibleCount < projects.length;
+
+  const loadMore = () => {
+    setVisibleCount(prev => Math.min(prev + 9, projects.length));
+  };
 
   return (
     <div className="p-6 md:p-12 pb-32 max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
-        {projects.map((project) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[240px]">
+        {visibleProjects.map((project) => (
           <motion.div
             key={project.id}
             layoutId={`card-${project.id}`}
             onClick={() => setSelectedId(project.id)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             className={clsx(
-              "group relative overflow-hidden rounded-[24px] cursor-pointer",
-              "bg-white dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800 shadow-soft dark:shadow-none hover:shadow-xl hover:scale-[1.02] transition-all duration-500",
+              "group relative overflow-hidden rounded-[20px] cursor-pointer",
+              "bg-white dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all duration-300",
               project.colSpan === 2 ? "md:col-span-2" : "md:col-span-1"
             )}
           >
-            <div className="absolute inset-0 p-8 flex flex-col justify-between z-10">
+            <div className="absolute inset-0 p-6 flex flex-col justify-between z-10">
               <div className="flex justify-between items-start">
-                <span className="px-3 py-1 text-xs font-medium tracking-wide uppercase rounded-full bg-stone-100 dark:bg-zinc-800 text-stone-500 dark:text-stone-400">
-                  {project.status}
-                </span>
-                <div className="w-8 h-8 rounded-full bg-stone-100 dark:bg-zinc-800 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <ArrowUpRight className="w-4 h-4 text-stone-900 dark:text-white" />
+                <div className="flex gap-2">
+                  {project.tags.slice(0, 2).map(tag => (
+                    <span key={tag} className="px-2 py-1 text-[10px] font-medium tracking-wide uppercase rounded-full bg-stone-100 dark:bg-zinc-800 text-stone-500 dark:text-stone-400">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="w-6 h-6 rounded-full bg-stone-100 dark:bg-zinc-800 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <ArrowUpRight className="w-3 h-3 text-stone-900 dark:text-white" />
                 </div>
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold text-stone-900 dark:text-white mb-2">
+                <h3 className="text-xl font-bold text-stone-900 dark:text-white mb-2 line-clamp-1">
                   {project.title}
                 </h3>
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="text-sm text-stone-500 dark:text-stone-400">
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
+                <p className="text-sm text-stone-500 dark:text-stone-400 line-clamp-2 leading-relaxed">
+                  {project.description}
+                </p>
               </div>
             </div>
             
             {/* Abstract Background Decoration */}
-            <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-gradient-to-br from-stone-100 to-stone-200 dark:from-zinc-800 dark:to-zinc-900 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-gradient-to-br from-stone-100 to-stone-200 dark:from-zinc-800 dark:to-zinc-900 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </motion.div>
         ))}
       </div>
+
+      {hasMore && (
+        <div className="flex justify-center mt-12">
+          <button
+            onClick={loadMore}
+            className="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800 text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-zinc-800 transition-all shadow-sm hover:shadow-md"
+          >
+            <span className="text-sm font-medium">Load More Archives</span>
+            <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+          </button>
+        </div>
+      )}
 
       <AnimatePresence>
         {selectedId && (
@@ -64,27 +86,33 @@ export default function BentoGrid() {
             
             <motion.div
               layoutId={`card-${selectedId}`}
-              className="w-full max-w-4xl bg-white dark:bg-zinc-900 rounded-[32px] overflow-hidden relative z-10 shadow-2xl"
+              className="w-full max-w-3xl bg-white dark:bg-zinc-900 rounded-[32px] overflow-hidden relative z-10 shadow-2xl max-h-[80vh] flex flex-col"
             >
               {(() => {
                 const project = projects.find(p => p.id === selectedId);
                 return (
-                  <div className="flex flex-col md:flex-row h-[80vh] md:h-[600px]">
-                    {/* Left: Content */}
-                    <div className="flex-1 p-8 md:p-12 flex flex-col overflow-y-auto">
-                      <div className="flex justify-between items-center mb-8">
-                        <span className="text-swiss-accent font-medium tracking-wider uppercase text-sm">
-                          {project.status}
-                        </span>
-                        <button 
+                  <>
+                    {/* Header / Image Area (Optional, using gradient for now) */}
+                    <div className="h-32 bg-gradient-to-br from-stone-100 to-stone-200 dark:from-zinc-800 dark:to-zinc-900 relative">
+                       <button 
                           onClick={(e) => { e.stopPropagation(); setSelectedId(null); }}
-                          className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-zinc-800 transition-colors"
+                          className="absolute top-6 right-6 p-2 rounded-full bg-white/50 dark:bg-black/20 hover:bg-white dark:hover:bg-black/40 transition-colors backdrop-blur-md"
                         >
-                          <X className="w-6 h-6 text-stone-400" />
+                          <X className="w-5 h-5 text-stone-600 dark:text-stone-300" />
                         </button>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-8 md:p-10 overflow-y-auto">
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {project.tags.map(tag => (
+                          <span key={tag} className="px-3 py-1 text-xs font-medium tracking-wide uppercase rounded-full bg-stone-100 dark:bg-zinc-800 text-stone-600 dark:text-stone-300">
+                            {tag}
+                          </span>
+                        ))}
                       </div>
                       
-                      <h2 className="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white mb-6 tracking-tight">
+                      <h2 className="text-3xl md:text-4xl font-bold text-stone-900 dark:text-white mb-4 tracking-tight">
                         {project.title}
                       </h2>
 
@@ -92,30 +120,18 @@ export default function BentoGrid() {
                         {project.description}
                       </p>
 
-                      <div className="mt-auto flex gap-4">
-                        <button className="px-6 py-3 rounded-xl bg-stone-900 dark:bg-white text-white dark:text-stone-900 font-medium hover:bg-stone-800 dark:hover:bg-stone-200 transition-colors flex items-center gap-2">
-                          View Project <ArrowUpRight className="w-4 h-4" />
-                        </button>
-                        {project.downloadUrl && (
-                          <button className="px-6 py-3 rounded-xl border border-stone-200 dark:border-zinc-700 text-stone-900 dark:text-white font-medium hover:bg-stone-50 dark:hover:bg-zinc-800 transition-colors flex items-center gap-2">
-                            Download PDF <Download className="w-4 h-4" />
-                          </button>
-                        )}
+                      <div className="flex gap-4 pt-4 border-t border-stone-100 dark:border-zinc-800">
+                        <a 
+                          href={project.downloadUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-6 py-3 rounded-xl bg-stone-900 dark:bg-white text-white dark:text-stone-900 font-medium hover:bg-stone-800 dark:hover:bg-stone-200 transition-colors flex items-center gap-2"
+                        >
+                          Read Documentation <ArrowUpRight className="w-4 h-4" />
+                        </a>
                       </div>
                     </div>
-
-                    {/* Right: Visuals */}
-                    <div className="w-full md:w-1/3 bg-stone-50 border-l border-stone-100 p-8 flex flex-col justify-center">
-                       <h4 className="text-sm font-bold text-stone-900 uppercase tracking-wide mb-4">Technologies</h4>
-                       <div className="flex flex-wrap gap-2">
-                        {project.tags.map(tag => (
-                          <span key={tag} className="px-3 py-1 bg-white border border-stone-200 rounded-lg text-sm text-stone-600 shadow-sm">
-                            {tag}
-                          </span>
-                        ))}
-                       </div>
-                    </div>
-                  </div>
+                  </>
                 );
               })()}
             </motion.div>
