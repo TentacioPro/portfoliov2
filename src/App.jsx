@@ -14,7 +14,7 @@ function App() {
       <div className="min-h-screen bg-void text-slate-200 selection:bg-neon-cyan/30 selection:text-neon-cyan font-sans overflow-x-hidden">
         {/* Ambient Background */}
         <div className="fixed inset-0 bg-void-gradient pointer-events-none z-0" />
-        <div className="fixed inset-0 bg-[url('/noise.png')] opacity-[0.03] pointer-events-none z-0 mix-blend-overlay" />
+        <div className="fixed inset-0 bg-[url('/noise.svg')] opacity-[0.03] pointer-events-none z-0 mix-blend-overlay" />
 
         <main className="relative z-10 pb-32">
           <AnimatePresence mode="wait">

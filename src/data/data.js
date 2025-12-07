@@ -3,7 +3,7 @@ import { Github, Linkedin, Twitter, Disc } from 'lucide-react';
 export const profile = {
   name: "Creative Technologist",
   bio: "Exploring the intersection of design, code, and artificial intelligence.",
-  avatar: "https://i.pravatar.cc/300",
+  avatar: "/avatar.jpg",
 };
 
 export const socials = [
