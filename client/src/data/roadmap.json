@@ -55,8 +55,8 @@
   },
   {
     "id": "phase-5",
-    "title": "Phase 5: Visualization",
-    "description": "Analytics dashboard and project roadmap",
+    "title": "Phase 5: Visualization & Analysis",
+    "description": "Analytics, roadmap, and semantic code analysis",
     "status": "in-progress",
     "tasks": [
       { "id": "task-5-1", "title": "Git commit structure with rollback", "status": "done" },
@@ -64,7 +64,8 @@
       { "id": "task-5-3", "title": "Roadmap data structure", "status": "done" },
       { "id": "task-5-4", "title": "Roadmap visualization component", "status": "done" },
       { "id": "task-5-5", "title": "Knowledge graph with force-directed layout", "status": "done" },
-      { "id": "task-5-6", "title": "Analytics dashboard", "status": "pending" }
+      { "id": "task-5-6", "title": "Semantic code analyzer with LLM", "status": "done" },
+      { "id": "task-5-7", "title": "Analytics dashboard", "status": "pending" }
     ]
   },
   {
