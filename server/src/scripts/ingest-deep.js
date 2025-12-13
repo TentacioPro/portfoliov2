@@ -3,7 +3,7 @@ import path from 'path';
 import { glob } from 'glob';
 import mongoose from 'mongoose';
 import { analyzeProject, analyzePowerPoint, sleep } from '../services/codeAnalysis.js';
-import { getEmbedding } from '../services/embedding.js';
+import { embeddingService } from '../services/embedding.js';
 import { client as qdrantClient } from '../services/vector.js';
 import { connectDB } from '../services/db.js';
 
@@ -62,7 +62,7 @@ async function ingestDeep(rootDir) {
         console.log(`  ✓ Stack: ${analysis.stack.language} - ${analysis.stack.framework}`);
 
         // Generate embedding from summary
-        const embedding = await getEmbedding(analysis.summary);
+        const embedding = await embeddingService.getEmbedding(analysis.summary);
         console.log(`  ✓ Generated embedding (${embedding.length} dimensions)`);
 
         // Store in Qdrant
@@ -137,7 +137,7 @@ async function ingestDeep(rootDir) {
         console.log(`  ✓ Analysis complete`);
 
         // Generate embedding
-        const embedding = await getEmbedding(analysis.summary);
+        const embedding = await embeddingService.getEmbedding(analysis.summary);
         console.log(`  ✓ Generated embedding`);
 
         // Store in Qdrant
