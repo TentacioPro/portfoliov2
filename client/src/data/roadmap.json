@@ -62,8 +62,9 @@
       { "id": "task-5-1", "title": "Git commit structure with rollback", "status": "done" },
       { "id": "task-5-2", "title": "Comprehensive CHANGELOG", "status": "done" },
       { "id": "task-5-3", "title": "Roadmap data structure", "status": "done" },
-      { "id": "task-5-4", "title": "Roadmap visualization component", "status": "pending" },
-      { "id": "task-5-5", "title": "Analytics dashboard", "status": "pending" }
+      { "id": "task-5-4", "title": "Roadmap visualization component", "status": "done" },
+      { "id": "task-5-5", "title": "Knowledge graph with force-directed layout", "status": "done" },
+      { "id": "task-5-6", "title": "Analytics dashboard", "status": "pending" }
     ]
   },
   {
