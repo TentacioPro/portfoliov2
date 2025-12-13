@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Home, Activity, FolderGit2, User, BookOpen, FileText, MessageCircle } from 'lucide-react';
+import { Home, Activity, FolderGit2, User, BookOpen, FileText, MessageCircle, Map } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import clsx from 'clsx';
@@ -89,6 +89,23 @@ export default function Dock({ activeTab, setActiveTab }) {
           />
           <span className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-stone-900 dark:bg-zinc-950 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg">
             Chat
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-900 dark:bg-zinc-950 rotate-45" />
+          </span>
+        </motion.button>
+
+        {/* Roadmap Link */}
+        <motion.button
+          onClick={() => navigate('/roadmap')}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="relative p-3 rounded-full hover:bg-stone-50 dark:hover:bg-white/5 transition-all duration-300 group"
+        >
+          <Map 
+            strokeWidth={1.5}
+            className="w-5 h-5 text-stone-400 dark:text-stone-500 group-hover:text-stone-600 dark:group-hover:text-stone-300 transition-colors duration-300" 
+          />
+          <span className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-stone-900 dark:bg-zinc-950 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg">
+            Roadmap
             <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-900 dark:bg-zinc-950 rotate-45" />
           </span>
         </motion.button>

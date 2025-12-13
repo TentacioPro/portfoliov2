@@ -1,0 +1,81 @@
+[
+  {
+    "id": "phase-1",
+    "title": "Phase 1: Infrastructure",
+    "description": "Docker orchestration and backend foundation",
+    "status": "completed",
+    "tasks": [
+      { "id": "task-1-1", "title": "Comprehensive .gitignore setup", "status": "done" },
+      { "id": "task-1-2", "title": "Docker Compose with 4 services", "status": "done" },
+      { "id": "task-1-3", "title": "Express ESM server (Node v20)", "status": "done" },
+      { "id": "task-1-4", "title": "Environment configuration", "status": "done" },
+      { "id": "task-1-5", "title": "Dockerfile for containerization", "status": "done" }
+    ]
+  },
+  {
+    "id": "phase-2",
+    "title": "Phase 2: The Brain",
+    "description": "AI/ML pipeline with embeddings and vector storage",
+    "status": "completed",
+    "tasks": [
+      { "id": "task-2-1", "title": "MongoDB and Redis clients", "status": "done" },
+      { "id": "task-2-2", "title": "Zod validation schemas", "status": "done" },
+      { "id": "task-2-3", "title": "Embedding service (@xenova/transformers)", "status": "done" },
+      { "id": "task-2-4", "title": "Qdrant vector database integration", "status": "done" },
+      { "id": "task-2-5", "title": "BullMQ ingestion worker", "status": "done" },
+      { "id": "task-2-6", "title": "Ingest API endpoint", "status": "done" }
+    ]
+  },
+  {
+    "id": "phase-3",
+    "title": "Phase 3: Artifact Engine",
+    "description": "RAG retrieval and LaTeX compilation",
+    "status": "completed",
+    "tasks": [
+      { "id": "task-3-1", "title": "RAG retrieval with Groq LLM", "status": "done" },
+      { "id": "task-3-2", "title": "Chat API endpoint", "status": "done" },
+      { "id": "task-3-3", "title": "LaTeX service with Tectonic", "status": "done" },
+      { "id": "task-3-4", "title": "Resume generation API", "status": "done" },
+      { "id": "task-3-5", "title": "Verification and seed scripts", "status": "done" }
+    ]
+  },
+  {
+    "id": "phase-4",
+    "title": "Phase 4: Frontend Glass",
+    "description": "React UI with chat and resume builder",
+    "status": "completed",
+    "tasks": [
+      { "id": "task-4-1", "title": "React + Vite + Tailwind setup", "status": "done" },
+      { "id": "task-4-2", "title": "API client utilities", "status": "done" },
+      { "id": "task-4-3", "title": "Resume Builder component", "status": "done" },
+      { "id": "task-4-4", "title": "ChatGPT-style chat interface", "status": "done" },
+      { "id": "task-4-5", "title": "Portfolio UI components", "status": "done" },
+      { "id": "task-4-6", "title": "Mobile responsiveness", "status": "done" }
+    ]
+  },
+  {
+    "id": "phase-5",
+    "title": "Phase 5: Visualization",
+    "description": "Analytics dashboard and project roadmap",
+    "status": "in-progress",
+    "tasks": [
+      { "id": "task-5-1", "title": "Git commit structure with rollback", "status": "done" },
+      { "id": "task-5-2", "title": "Comprehensive CHANGELOG", "status": "done" },
+      { "id": "task-5-3", "title": "Roadmap data structure", "status": "done" },
+      { "id": "task-5-4", "title": "Roadmap visualization component", "status": "pending" },
+      { "id": "task-5-5", "title": "Analytics dashboard", "status": "pending" }
+    ]
+  },
+  {
+    "id": "phase-6",
+    "title": "Phase 6: Production",
+    "description": "Authentication and deployment",
+    "status": "planned",
+    "tasks": [
+      { "id": "task-6-1", "title": "Authentication system", "status": "pending" },
+      { "id": "task-6-2", "title": "Multi-user support", "status": "pending" },
+      { "id": "task-6-3", "title": "Production deployment config", "status": "pending" },
+      { "id": "task-6-4", "title": "Performance optimization", "status": "pending" }
+    ]
+  }
+]
