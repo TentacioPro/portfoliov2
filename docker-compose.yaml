@@ -18,6 +18,7 @@ services:
       - vector
     volumes:
       - ./server/src:/app/src # Hot reload for backend logic
+      - ../:/projects:ro # Mount parent directory (all projects) as read-only
     networks:
       - brain-net
 

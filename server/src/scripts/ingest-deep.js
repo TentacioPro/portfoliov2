@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { glob } from 'glob';
+import { randomUUID } from 'crypto';
 import mongoose from 'mongoose';
 import { analyzeProject, analyzePowerPoint, sleep } from '../services/codeAnalysis.js';
 import { embeddingService } from '../services/embedding.js';
@@ -66,21 +67,23 @@ async function ingestDeep(rootDir) {
         console.log(`  ✓ Generated embedding (${embedding.length} dimensions)`);
 
         // Store in Qdrant
-        const vectorId = `project_${projectName}_${Date.now()}`;
+        const vectorId = randomUUID();
+        const payload = {
+          text: analysis.summary?.substring(0, 5000) || 'No summary', // Limit to 5KB
+          source: projectName,
+          type: 'project-architecture',
+          stack: JSON.stringify(analysis.stack) || 'unknown',
+          complexity: analysis.complexity || 0,
+          patterns: Array.isArray(analysis.patterns) ? analysis.patterns.join(', ') : '',
+          keyComponents: Array.isArray(analysis.keyComponents) ? analysis.keyComponents.join(', ') : ''
+        };
+
         await qdrantClient.upsert('secondbrain', {
           points: [
             {
               id: vectorId,
               vector: embedding,
-              payload: {
-                text: analysis.summary,
-                source: projectName,
-                type: 'project-architecture',
-                stack: analysis.stack,
-                complexity: analysis.complexity,
-                patterns: analysis.patterns,
-                keyComponents: analysis.keyComponents
-              }
+              payload
             }
           ]
         });
@@ -110,7 +113,11 @@ async function ingestDeep(rootDir) {
         }
 
       } catch (error) {
-        console.error(`  ✗ Error processing ${projectName}:`, error.message);
+        console.error(`  ✗ Error processing ${projectName}:`, {
+          message: error.message,
+          status: error.status,
+          name: error.name
+        });
         continue; // Skip to next project
       }
     }
@@ -141,14 +148,14 @@ async function ingestDeep(rootDir) {
         console.log(`  ✓ Generated embedding`);
 
         // Store in Qdrant
-        const vectorId = `ppt_${fileName}_${Date.now()}`;
+        const vectorId = randomUUID();
         await qdrantClient.upsert('secondbrain', {
           points: [
             {
               id: vectorId,
               vector: embedding,
               payload: {
-                text: analysis.summary,
+                text: analysis.summary?.substring(0, 5000) || 'No content',
                 source: fileName,
                 type: 'presentation',
                 size: analysis.size
@@ -156,7 +163,7 @@ async function ingestDeep(rootDir) {
             }
           ]
         });
-        console.log(`  ✓ Stored in Qdrant`);
+        console.log(`  ✓ Stored in Qdrant (ID: ${vectorId})`);
 
         // Store metadata in MongoDB
         await Project.findOneAndUpdate(
