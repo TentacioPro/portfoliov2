@@ -8,6 +8,7 @@ import { port } from './src/config/env.js';
 import ingestRouter from './src/routes/ingest.js';
 import resumeRouter from './src/routes/resume.js';
 import chatRouter from './src/routes/chat.js';
+import graphRouter from './src/routes/graph.js';
 
 const app = express();
 app.use(cors());
@@ -20,6 +21,8 @@ console.log('📍 Mounting /api/resume route...');
 app.use('/api/resume', resumeRouter);
 console.log('📍 Mounting /api/chat route...');
 app.use('/api/chat', chatRouter);
+console.log('📍 Mounting /api/graph route...');
+app.use('/api/graph', graphRouter);
 console.log('📍 Routes mounted successfully');
 
 // STATUS STATE
