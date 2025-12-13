@@ -47,6 +47,47 @@ export default function Docs() {
             </p>
           </motion.div>
 
+          {/* Mission Section */}
+          <section className="mb-32">
+            <h2 className="text-3xl font-bold tracking-tight mb-6">{docsData.mission.title}</h2>
+            <p className="text-stone-600 dark:text-stone-400 leading-relaxed text-lg mb-8">
+              {docsData.mission.description}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {docsData.mission.specs.map((spec, index) => (
+                <div 
+                  key={index}
+                  className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800"
+                >
+                  <div className="text-sm text-stone-500 dark:text-stone-400 mb-1">{spec.label}</div>
+                  <div className="font-mono text-stone-900 dark:text-white">{spec.value}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Architecture Section */}
+          <section className="mb-32">
+            <h2 className="text-3xl font-bold tracking-tight mb-6">{docsData.architecture.title}</h2>
+            <p className="text-stone-600 dark:text-stone-400 leading-relaxed text-lg mb-8">
+              {docsData.architecture.description}
+            </p>
+            <div className="space-y-3">
+              {docsData.architecture.services.map((service, index) => (
+                <div 
+                  key={index}
+                  className="flex items-center justify-between p-6 rounded-xl bg-white dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800"
+                >
+                  <div className="flex-1">
+                    <div className="font-mono font-bold text-stone-900 dark:text-white mb-1">{service.name}</div>
+                    <div className="text-sm text-stone-600 dark:text-stone-400">{service.description}</div>
+                  </div>
+                  <div className="font-mono text-sm text-stone-500 dark:text-stone-400">:{service.port}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* Philosophy Cards */}
           <section className="mb-32">
             <div className="flex items-baseline justify-between mb-12">
@@ -75,7 +116,10 @@ export default function Docs() {
 
           {/* Prompt Log */}
           <section>
-            <h2 className="text-2xl font-bold tracking-tight mb-12">The Prompt Log</h2>
+            <h2 className="text-2xl font-bold tracking-tight mb-4">The Prompt Log</h2>
+            <p className="text-stone-600 dark:text-stone-400 mb-12">
+              Every prompt used to build this system, organized by development phase.
+            </p>
             
             <div className="space-y-12 relative border-l border-stone-200 dark:border-zinc-800 ml-4 md:ml-0">
               {docsData.prompts.map((prompt, index) => (
@@ -84,13 +128,14 @@ export default function Docs() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.05 }}
                   className="relative pl-8 md:pl-12"
                 >
                   {/* Timeline Dot */}
                   <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-stone-300 dark:bg-zinc-700 ring-4 ring-stone-50 dark:ring-[#0c0c0c]" />
                   
                   <div className="mb-4">
+                    <div className="text-xs font-mono text-stone-400 dark:text-stone-500 mb-2">{prompt.phase}</div>
                     <h3 className="text-xl font-bold text-stone-900 dark:text-white">{prompt.title}</h3>
                     <p className="text-stone-500 dark:text-stone-400 mt-1">{prompt.description}</p>
                   </div>
