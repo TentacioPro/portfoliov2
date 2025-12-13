@@ -85,9 +85,21 @@ Complete transformation from single React app to full-stack AI-native system wit
   - Rollback: Full portfolio with all pages/components
   - Revert: `git checkout 635adf2`
 
-#### Documentation
-- **35e5d50** `docs: add sample resume PDF for testing` (HEAD)
-  - Rollback: Complete system with test data
+#### Advanced Features & Deployment
+- **35e5d50** `docs: add sample resume PDF for testing`
+  - Rollback: System with test data
+  - Revert: `git checkout 35e5d50`
+
+- **ed8453a** `feat: fix batch ingestion (UUID + Docker volume mount)`
+  - Rollback: Production-ready with 33+ projects ingested (HEAD)
+  - Changes:
+    - Fixed Qdrant UUID format (randomUUID vs timestamp)
+    - Fixed array serialization (patterns/keyComponents)
+    - Added Docker volume `../:/projects:ro` for external access
+    - Limited payload to 5000 chars to prevent errors
+    - Enhanced error logging with status codes
+  - Result: 33 projects in MongoDB, 58 nodes in Qdrant
+  - Known Issue: Groq rate limit (100k tokens/day) blocked final 4 projects
   - Current state: `git checkout v2`
 
 ---
@@ -169,6 +181,8 @@ git stash pop                # Restore work
 | Resume UI | c9f0eb0 | ✅ |
 | Chat UI | 441e994 | ✅ |
 | Portfolio | 635adf2 | ✅ |
+| Test Data | 35e5d50 | ✅ |
+| Batch Ingestion | ed8453a | ✅ (33/41 projects) |
 
 ---
 
