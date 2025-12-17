@@ -147,8 +147,8 @@ export async function analyzeProject(dirPath) {
     // 3. Read key files
     const keyFiles = await readKeyFiles(dirPath);
 
-    // 4. Construct LLM prompt
-    const analysisPrompt = `You are a Senior Staff Engineer analyzing a software project.
+    // 4. Construct LLM prompt with new Senior Software Architect ideology
+    const analysisPrompt = `You are a Senior Software Architect analyzing a legacy codebase.
 
 FILE TREE:
 ${tree.slice(0, 2000)} ${tree.length > 2000 ? '...(truncated)' : ''}
@@ -165,24 +165,37 @@ ENTRY POINT CODE:
 ${keyFiles.entryPoint.slice(0, 1500)} ${keyFiles.entryPoint.length > 1500 ? '...(truncated)' : ''}
 
 TASK:
-1. Write a concise Technical Architecture Summary (150-300 words) covering:
-   - System design patterns used
-   - Key components and their interactions
-   - Data flow and architecture style
-   - Notable technical decisions
+Analyze the provided code files. You must ignore syntax errors and focus on INTENT.
 
-2. Assign a Complexity Score (1-10) where:
+OUTPUT: Return a JSON object with:
+
+1. "oneLiner": A simple English sentence explaining what this project actually does (e.g., "A real-time chat app using WebSockets").
+
+2. "techStack": List libraries/frameworks detected as an array of strings (e.g., ["React", "Pandas", "Socket.io"]).
+
+3. "engineersLogic": Infer what problem the developer was trying to solve (2-3 sentences).
+
+4. "promptReconstruction": Reverse engineer the likely prompt the user gave to an AI to generate this (e.g., "Write a Python script that scrapes X and saves to CSV").
+
+5. "complexity": Rate complexity from 1-10 where:
    - 1-3: Simple script/utility
    - 4-6: Standard application
    - 7-9: Complex system with multiple integrations
    - 10: Highly sophisticated distributed system
 
+6. "patterns": Array of architectural patterns detected (e.g., ["MVC", "Event-Driven"]).
+
+7. "keyComponents": Array of main technical components (e.g., ["Database Layer", "API Gateway"]).
+
 Output Format:
 {
-  "summary": "Technical architecture summary here",
+  "oneLiner": "...",
+  "techStack": ["...", "..."],
+  "engineersLogic": "...",
+  "promptReconstruction": "...",
   "complexity": 7,
-  "patterns": ["pattern1", "pattern2"],
-  "keyComponents": ["component1", "component2"]
+  "patterns": ["...", "..."],
+  "keyComponents": ["...", "..."]
 }`;
 
     // 5. Call Groq API
@@ -192,7 +205,7 @@ Output Format:
       messages: [
         {
           role: 'system',
-          content: 'You are a Senior Staff Engineer specializing in software architecture analysis. Always respond with valid JSON.'
+          content: 'You are a Senior Software Architect analyzing legacy codebases. Focus on INTENT over syntax. Always respond with valid JSON.'
         },
         {
           role: 'user',
@@ -200,16 +213,20 @@ Output Format:
         }
       ],
       temperature: 0.3,
-      max_tokens: 1000,
+      max_tokens: 1500,
       response_format: { type: 'json_object' }
     });
 
     const analysisText = response.choices[0].message.content;
     const analysis = JSON.parse(analysisText);
 
-    // 6. Return comprehensive result
+    // 6. Return comprehensive result with new fields
     return {
-      summary: analysis.summary || 'No summary generated',
+      summary: analysis.oneLiner || 'No summary generated',
+      oneLiner: analysis.oneLiner || 'Unknown project',
+      techStack: analysis.techStack || [],
+      engineersLogic: analysis.engineersLogic || 'Logic unclear',
+      promptReconstruction: analysis.promptReconstruction || 'Unable to reconstruct',
       stack: {
         language: stack.language,
         framework: stack.framework,
