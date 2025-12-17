@@ -5,6 +5,22 @@
 ### Architecture Overview
 Complete transformation from single React app to full-stack AI-native system with Docker orchestration.
 
+### Latest Changes
+
+#### Code Analysis Ideology Upgrade (Dec 17, 2024)
+- **e884659** `feat: upgrade code analysis with Senior Software Architect ideology`
+  - **New LLM Prompt**: "Focus on INTENT over syntax" with reverse engineering capability
+  - **New Fields Added**:
+    * `oneLiner`: Simple English explanation of project purpose
+    * `techStack`: Array of detected libraries/frameworks
+    * `engineersLogic`: Inferred problem the developer was solving
+    * `promptReconstruction`: Reverse-engineered AI prompt that likely generated the code
+  - **Schema Updates**: Enhanced MongoDB ProjectSchema with 4 new fields
+  - **API**: Created `/api/projects` endpoint for enriched metadata queries
+  - **Storage**: Updated Qdrant payload structure with architectural insights
+  - **Tokens**: Increased max_tokens from 1000 to 1500 for detailed analysis
+  - Rollback: `git checkout e884659`
+
 ### Commit Structure (Rollback Points)
 
 #### Infrastructure Layer
