@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import mongoose from 'mongoose';
+import ProjectsList from '../models/ProjectsList.js';
 
 const router = Router();
 
@@ -106,6 +107,101 @@ router.get('/:name', async (req, res) => {
 
   } catch (error) {
     console.error('[Projects] Error:', error.message);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+/**
+ * GET /list - List all projects from conversations
+ * Returns simplified project list with chat metadata
+ */
+router.get('/list', async (req, res) => {
+  try {
+    const { sortBy = 'totalExchanges', order = 'desc', tech, status } = req.query;
+    
+    // Build query
+    const query = {};
+    if (tech) {
+      query.techStack = tech;
+    }
+    if (status) {
+      query.status = status;
+    }
+
+    // Build sort
+    const sort = {};
+    sort[sortBy] = order === 'desc' ? -1 : 1;
+
+    const projects = await ProjectsList.find(query).sort(sort);
+
+    res.json({
+      success: true,
+      count: projects.length,
+      data: projects
+    });
+  } catch (error) {
+    console.error('Error fetching projects list:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+/**
+ * GET /list/names - Get just project names from conversations
+ */
+router.get('/list/names', async (req, res) => {
+  try {
+    const projects = await ProjectsList.find({}, { projectName: 1, _id: 0 })
+      .sort({ projectName: 1 });
+    
+    const names = projects.map(p => p.projectName);
+
+    res.json({
+      success: true,
+      count: names.length,
+      data: names
+    });
+  } catch (error) {
+    console.error('Error fetching project names:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+/**
+ * GET /list/stats - Get conversation statistics
+ */
+router.get('/list/stats', async (req, res) => {
+  try {
+    const totalProjects = await ProjectsList.countDocuments();
+    const totalExchanges = await ProjectsList.aggregate([
+      { $group: { _id: null, total: { $sum: '$totalExchanges' } } }
+    ]);
+
+    // Tech stack distribution
+    const techDistribution = await ProjectsList.aggregate([
+      { $unwind: '$techStack' },
+      { $group: { _id: '$techStack', count: { $sum: 1 } } },
+      { $sort: { count: -1 } }
+    ]);
+
+    res.json({
+      success: true,
+      data: {
+        totalProjects,
+        totalExchanges: totalExchanges[0]?.total || 0,
+        techStackDistribution: techDistribution
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching stats:', error);
     res.status(500).json({
       success: false,
       error: error.message

@@ -5,6 +5,7 @@ import { open } from 'sqlite';
 import mongoose from 'mongoose';
 import { QdrantClient } from '@qdrant/js-client-rest';
 import { v4 as uuidv4 } from 'uuid';
+import Conversation from '../models/Conversation.js';
 
 // --- CONFIGURATION ---
 const WORKSPACE_STORAGE_ROOT = '../workspace-storage'; // VS Code workspace storage location
@@ -13,30 +14,6 @@ const QDRANT_URL = 'http://localhost:6333';
 
 // --- DATABASE SETUP ---
 const qdrant = new QdrantClient({ url: QDRANT_URL });
-
-const ConversationSchema = new mongoose.Schema({
-    projectName: String,
-    projectPath: String,
-    workspaceId: String,
-    techStack: [String], // Extracted from workspace or guessed
-    conversations: [{
-        sessionId: String,
-        timestamp: Date,
-        exchanges: [{
-            prompt: String,         // What I asked
-            response: String,       // What Copilot said
-            timestamp: Date,
-            toolsUsed: [String],    // e.g. ["copilot_runInTerminal", "copilot_editFile"]
-            filesEditedCount: Number, // Just the count to avoid parsing issues
-            modelUsed: String       // e.g. "Azure-csvgpt-4o"
-        }]
-    }],
-    totalExchanges: Number,
-    firstChatDate: Date,
-    lastChatDate: Date,
-    extractedAt: Date
-});
-const Conversation = mongoose.model('Conversation', ConversationSchema);
 
 // --- HELPER: Extract Chat from Chat Sessions (Chat-Friendly Format) ---
 async function extractChatSessions(workspaceFolder) {
@@ -66,12 +43,11 @@ async function extractChatSessions(workspaceFolder) {
                 for (const req of sessionData.requests) {
                     const prompt = req.message?.text || '';
                     
-                    // Extract response text from Copilot
+                    // Extract response text from Copilot (stored in 'value' field)
                     let response = '';
                     if (req.response && Array.isArray(req.response)) {
                         const textParts = req.response
-                            .filter(r => r.kind === 'textSerialized' || r.kind === 'markdownSerialized')
-                            .map(r => r.content || r.text || r.value)
+                            .map(r => r.value || r.content || r.text)
                             .filter(Boolean);
                         response = textParts.join('\n\n');
                     }
@@ -235,6 +211,27 @@ async function main() {
 
     console.log(`\n✨ Done! Imported ${count} projects with chat history`);
     console.log(`⚠️  Skipped ${skipped} projects without chat data`);
+    
+    // List folders without data
+    console.log('\n📋 Folders without chat data:');
+    const allFolders = fs.readdirSync(WORKSPACE_STORAGE_ROOT);
+    const foldersWithoutData = [];
+    
+    for (const folder of allFolders) {
+        const fullPath = path.join(WORKSPACE_STORAGE_ROOT, folder);
+        const chatSessionsPath = path.join(fullPath, 'chatSessions');
+        
+        if (!fs.existsSync(chatSessionsPath) || fs.readdirSync(chatSessionsPath).filter(f => f.endsWith('.json')).length === 0) {
+            const realPath = getProjectPath(fullPath);
+            const projectName = path.basename(realPath);
+            if (projectName !== 'Unknown Project' && projectName !== '') {
+                foldersWithoutData.push(projectName);
+            }
+        }
+    }
+    
+    console.log(foldersWithoutData.join('\n'));
+    console.log(`\n📊 Total: ${foldersWithoutData.length} folders without chat history`);
     
     mongoose.disconnect();
 }

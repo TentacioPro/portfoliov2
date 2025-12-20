@@ -1,33 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import Conversation from '../models/Conversation.js';
 
 const router = express.Router();
-
-// Define schema (must match forensic-ingest.js)
-const ConversationSchema = new mongoose.Schema({
-    projectName: String,
-    projectPath: String,
-    workspaceId: String,
-    techStack: [String],
-    conversations: [{
-        sessionId: String,
-        timestamp: Date,
-        exchanges: [{
-            prompt: String,
-            response: String,
-            timestamp: Date,
-            toolsUsed: [String],
-            filesEditedCount: Number,
-            modelUsed: String
-        }]
-    }],
-    totalExchanges: Number,
-    firstChatDate: Date,
-    lastChatDate: Date,
-    extractedAt: Date
-});
-
-const Conversation = mongoose.model('Conversation', ConversationSchema);
 
 // GET /api/conversations - List all projects
 router.get('/', async (req, res) => {
