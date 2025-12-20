@@ -10,6 +10,7 @@ import resumeRouter from './src/routes/resume.js';
 import chatRouter from './src/routes/chat.js';
 import graphRouter from './src/routes/graph.js';
 import projectsRouter from './src/routes/projects.js';
+import conversationsRouter from './src/routes/conversations.js';
 
 const app = express();
 app.use(cors());
@@ -26,6 +27,8 @@ console.log('📍 Mounting /api/graph route...');
 app.use('/api/graph', graphRouter);
 console.log('📍 Mounting /api/projects route...');
 app.use('/api/projects', projectsRouter);
+console.log('📍 Mounting /api/conversations route...');
+app.use('/api/conversations', conversationsRouter);
 console.log('📍 Routes mounted successfully');
 
 // STATUS STATE

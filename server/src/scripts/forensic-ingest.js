@@ -14,19 +14,31 @@ const QDRANT_URL = 'http://localhost:6333';
 // --- DATABASE SETUP ---
 const qdrant = new QdrantClient({ url: QDRANT_URL });
 
-const ProjectSchema = new mongoose.Schema({
-    name: String,
-    originalPath: String,
+const ConversationSchema = new mongoose.Schema({
+    projectName: String,
+    projectPath: String,
     workspaceId: String,
-    chatHistory: [Object], // Store raw chat sessions here
-    extractedPrompts: [String], // We will populate this later
-    techStack: [String],
-    complexity: Number,
-    lastModified: Date
+    techStack: [String], // Extracted from workspace or guessed
+    conversations: [{
+        sessionId: String,
+        timestamp: Date,
+        exchanges: [{
+            prompt: String,         // What I asked
+            response: String,       // What Copilot said
+            timestamp: Date,
+            toolsUsed: [String],    // e.g. ["copilot_runInTerminal", "copilot_editFile"]
+            filesEditedCount: Number, // Just the count to avoid parsing issues
+            modelUsed: String       // e.g. "Azure-csvgpt-4o"
+        }]
+    }],
+    totalExchanges: Number,
+    firstChatDate: Date,
+    lastChatDate: Date,
+    extractedAt: Date
 });
-const Project = mongoose.model('Project', ProjectSchema);
+const Conversation = mongoose.model('Conversation', ConversationSchema);
 
-// --- HELPER: Extract Chat from Chat Sessions ---
+// --- HELPER: Extract Chat from Chat Sessions (Chat-Friendly Format) ---
 async function extractChatSessions(workspaceFolder) {
     try {
         const chatSessionsPath = path.join(workspaceFolder, 'chatSessions');
@@ -41,37 +53,63 @@ async function extractChatSessions(workspaceFolder) {
             return null;
         }
         
-        const allSessions = [];
+        const conversations = [];
         
         for (const file of sessionFiles) {
             const filePath = path.join(chatSessionsPath, file);
             const sessionData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
             
-            // Extract key information
+            // Extract exchanges in chat format
             if (sessionData.requests && sessionData.requests.length > 0) {
-                const session = {
-                    sessionId: sessionData.sessionId,
-                    creationDate: new Date(sessionData.creationDate),
-                    lastMessageDate: new Date(sessionData.lastMessageDate),
-                    exchangeCount: sessionData.requests.length,
-                    exchanges: sessionData.requests.map(req => ({
-                        prompt: req.message?.text || '',
+                const exchanges = [];
+                
+                for (const req of sessionData.requests) {
+                    const prompt = req.message?.text || '';
+                    
+                    // Extract response text from Copilot
+                    let response = '';
+                    if (req.response && Array.isArray(req.response)) {
+                        const textParts = req.response
+                            .filter(r => r.kind === 'textSerialized' || r.kind === 'markdownSerialized')
+                            .map(r => r.content || r.text || r.value)
+                            .filter(Boolean);
+                        response = textParts.join('\n\n');
+                    }
+                    
+                    // Extract tools used
+                    const toolsUsed = req.response
+                        ?.filter(r => r.kind === 'toolInvocationSerialized')
+                        .map(t => t.toolId) || [];
+                    
+                    // Count edited files (avoid parsing complexity)
+                    const filesEditedCount = req.editedFileEvents ? 
+                        (Array.isArray(req.editedFileEvents) ? req.editedFileEvents.length : 0) : 0;
+                    
+                    exchanges.push({
+                        prompt,
+                        response,
                         timestamp: new Date(req.timestamp),
-                        agent: req.agent?.fullName || 'GitHub Copilot',
-                        modelId: req.modelId || '',
-                        tools: req.response?.filter(r => r.kind === 'toolInvocationSerialized').map(t => t.toolId) || [],
-                        hasEdits: req.editedFileEvents?.length > 0 || false
-                    }))
-                };
-                allSessions.push(session);
+                        toolsUsed,
+                        filesEditedCount,
+                        modelUsed: req.modelId || 'unknown'
+                    });
+                }
+                
+                if (exchanges.length > 0) {
+                    conversations.push({
+                        sessionId: sessionData.sessionId,
+                        timestamp: new Date(sessionData.creationDate),
+                        exchanges
+                    });
+                }
             }
         }
         
-        return allSessions.length > 0 ? allSessions : null;
+        return conversations.length > 0 ? conversations : null;
     } catch (e) {
         console.error(`   ⚠️  Chat extraction error: ${e.message}`);
+        return null;
     }
-    return null;
 }
 
 // --- HELPER: Find Real Project Path ---
@@ -89,59 +127,116 @@ function getProjectPath(folderPath) {
     return "Unknown Project";
 }
 
+// --- HELPER: Guess Tech Stack from Path ---
+function guessTechStack(projectPath, chatSessions) {
+    const techStack = new Set();
+    const pathLower = projectPath.toLowerCase();
+    
+    // From path
+    if (pathLower.includes('react')) techStack.add('React');
+    if (pathLower.includes('nextjs') || pathLower.includes('next.js')) techStack.add('Next.js');
+    if (pathLower.includes('node')) techStack.add('Node.js');
+    if (pathLower.includes('python')) techStack.add('Python');
+    if (pathLower.includes('django')) techStack.add('Django');
+    if (pathLower.includes('flask')) techStack.add('Flask');
+    if (pathLower.includes('vue')) techStack.add('Vue.js');
+    if (pathLower.includes('angular')) techStack.add('Angular');
+    
+    // From chat content (look at prompts/responses)
+    if (chatSessions) {
+        const allText = chatSessions
+            .flatMap(s => s.exchanges)
+            .flatMap(e => [e.prompt, e.response])
+            .join(' ')
+            .toLowerCase();
+        
+        if (allText.includes('express')) techStack.add('Express');
+        if (allText.includes('mongodb')) techStack.add('MongoDB');
+        if (allText.includes('postgres')) techStack.add('PostgreSQL');
+        if (allText.includes('tailwind')) techStack.add('Tailwind CSS');
+        if (allText.includes('typescript')) techStack.add('TypeScript');
+        if (allText.includes('vite')) techStack.add('Vite');
+        if (allText.includes('docker')) techStack.add('Docker');
+    }
+    
+    return Array.from(techStack);
+}
+
 // --- MAIN EXECUTION ---
 async function main() {
     await mongoose.connect(MONGO_URI);
     console.log("🔌 Connected to MongoDB");
+    
+    // Clear existing conversations
+    await Conversation.deleteMany({});
+    console.log("🗑️  Cleared old conversations\n");
 
     const folders = fs.readdirSync(WORKSPACE_STORAGE_ROOT);
-    console.log(`📂 Scanning ${folders.length} workspace folders...`);
+    console.log(`📂 Scanning ${folders.length} workspace folders...\n`);
 
     let count = 0;
+    let skipped = 0;
 
     for (const folder of folders) {
         const fullPath = path.join(WORKSPACE_STORAGE_ROOT, folder);
-        const dbPath = path.join(fullPath, 'state.vscdb');
 
-        if (fs.existsSync(dbPath)) {
-            const realPath = getProjectPath(fullPath);
-            const projectName = path.basename(realPath);
+        // Extract project info
+        const realPath = getProjectPath(fullPath);
+        const projectName = path.basename(realPath);
 
-            // Skip empty/unknown projects
-            if (projectName === "Unknown Project" || projectName === "") continue;
-
-            console.log(`   🔍 Analyzing: ${projectName} (${folder})`);
-
-            // 1. Extract Chat Sessions
-            const chatSessions = await extractChatSessions(fullPath);
-            
-            if (chatSessions && chatSessions.length > 0) {
-                const totalExchanges = chatSessions.reduce((sum, s) => sum + s.exchangeCount, 0);
-                console.log(`      ✅ Found ${chatSessions.length} chat sessions with ${totalExchanges} exchanges!`);
-                
-                // Extract prompts for analysis
-                const prompts = chatSessions.flatMap(s => s.exchanges.map(e => e.prompt)).filter(p => p.length > 10);
-                
-                // 2. Save to MongoDB
-                await Project.findOneAndUpdate(
-                    { workspaceId: folder },
-                    {
-                        name: projectName,
-                        originalPath: realPath,
-                        workspaceId: folder,
-                        chatHistory: chatSessions, // Store sessions with full metadata
-                        extractedPrompts: prompts, // Just the prompts for easy searching
-                        lastModified: new Date()
-                    },
-                    { upsert: true }
-                );
-                count++;
-            }
+        // Skip empty/unknown projects
+        if (projectName === "Unknown Project" || projectName === "") {
+            skipped++;
+            continue;
         }
+
+        console.log(`📁 [${count + 1}/${folders.length}] ${projectName}`);
+
+        // Extract Chat Sessions
+        const conversations = await extractChatSessions(fullPath);
+        
+        if (!conversations || conversations.length === 0) {
+            console.log(`   ⚠️  No chat data found\n`);
+            skipped++;
+            continue;
+        }
+
+        // Calculate stats
+        const totalExchanges = conversations.reduce((sum, c) => sum + c.exchanges.length, 0);
+        const allDates = conversations.map(c => c.timestamp);
+        const firstChat = new Date(Math.min(...allDates));
+        const lastChat = new Date(Math.max(...allDates));
+        
+        // Guess tech stack
+        const techStack = guessTechStack(realPath, conversations);
+        
+        console.log(`   ✅ ${conversations.length} sessions, ${totalExchanges} exchanges`);
+        console.log(`   📅 ${firstChat.toLocaleDateString()} → ${lastChat.toLocaleDateString()}`);
+        if (techStack.length > 0) {
+            console.log(`   🛠️  ${techStack.join(', ')}`);
+        }
+
+        // Save to MongoDB
+        await Conversation.create({
+            projectName,
+            projectPath: realPath,
+            workspaceId: folder,
+            techStack,
+            conversations,
+            totalExchanges,
+            firstChatDate: firstChat,
+            lastChatDate: lastChat,
+            extractedAt: new Date()
+        });
+
+        count++;
+        console.log('');
     }
 
-    console.log(`\n✨ Done! Imported chat history for ${count} projects.`);
-    process.exit(0);
+    console.log(`\n✨ Done! Imported ${count} projects with chat history`);
+    console.log(`⚠️  Skipped ${skipped} projects without chat data`);
+    
+    mongoose.disconnect();
 }
 
-main();
+main().catch(console.error);
