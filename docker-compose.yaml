@@ -1,24 +1,24 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # THE BRAIN (Node.js API + Workers)
   brain:
     build: ./server
     ports:
-      - "3001:3001" # API runs on 3001, Client on 5173/3000
+      - "3001:3001"
     environment:
       - PORT=3001
       - MONGO_URI=mongodb://mongo:27017/secondbrain
       - REDIS_HOST=cache
       - QDRANT_URL=http://vector:6333
-      - GROQ_API_KEY=${GROQ_API_KEY} # Reads from your local .env
+      - GROQ_API_KEY=${GROQ_API_KEY}
     depends_on:
       - mongo
       - cache
       - vector
     volumes:
-      - ./server/src:/app/src # Hot reload for backend logic
-      - ../:/projects:ro # Mount parent directory (all projects) as read-only
+      - ./server/src:/app/src
+      - ../:/projects:ro
     networks:
       - brain-net
 
@@ -47,6 +47,19 @@ services:
       - "6333:6333"
     volumes:
       - ./data/qdrant:/qdrant/storage
+    networks:
+      - brain-net
+
+  # THE OBSERVER (MongoDB UI)
+  mongoku:
+    image: huggingface/mongoku
+    ports:
+      - "3100:3100"
+    environment:
+      - MONGOKU_DEFAULT_CONNECTION=mongodb://mongo:27017/secondbrain
+      - MONGOKU_DISABLE_CONNECTION_MANAGEMENT=true
+    depends_on:
+      - mongo
     networks:
       - brain-net
 

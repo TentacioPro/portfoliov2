@@ -1,0 +1,21 @@
+Before proceeding further,
+Cleanse the existing stuff in vector & mongodb.
+A new deep-diver approach on top of what we did.
+The real source extractor for my projects with humoungous files
+Instead of bulk projects, focus on single project.
+Deep dive should be file-by-file, folder-by-folder, line-by-line
+To achieve this, I am going to implement a few steps to crack this out.
+Over all the projects that sit in my laptop
+I havent wrote anything from scratch, and mostly prompted my way out for all kinds of solutions to Github Copilot and AWS KIRO
+few over copilot, few over kiro.
+So, we are going to reverse-engineer this.
+Gather the entire context stored per project,
+session history, chat history, prompts & responses - file contents.
+Restore all of them into our knowledge base with a new set of DB's in both Vector & Mongo.
+1) Map this to our chat-assistant as well - the knowledgebase
+for my spec-engineering struggles, priniciples, apporaches used
+to converse all that stuff
+2) Use this to strengthen my domain knowledge
+3) Create a prompt library, and showcase the prompts I have used to so far and tackled challenges. Where I went fast & where I went slower & where I was in hell & where I quit.
+4) Be the part of the Data Ingestion Engine for stuff that I learnt by project-based experimental learning
+5) Feed this as a part of data source for resume building, chatbot, and showcase library 
