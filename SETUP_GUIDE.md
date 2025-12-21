@@ -512,6 +512,22 @@ ExperimentalPortfolio/
 └── README.md
 ```
 
+### 6. Run Neural Biographer (Deep Analysis)
+*Requires Ollama installed and running locally with `phi3.5` model*
+
+This step uses a local LLM to analyze the "intent" and "struggle" behind every chat message.
+
+1.  **Install Ollama**: [https://ollama.com/](https://ollama.com/)
+2.  **Pull the Model**:
+    ```powershell
+    ollama pull phi3.5
+    ```
+3.  **Run the Pipeline**:
+    ```powershell
+    node server/src/scripts/run-biography-pipeline.js
+    ```
+    *Note: This process is long-running (~26 hours for full dataset). It includes thermal protection sleeps to prevent GPU overheating.*
+
 ---
 
 ## Next Steps After Setup
