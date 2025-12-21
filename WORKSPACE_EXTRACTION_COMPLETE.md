@@ -160,3 +160,11 @@ Successfully extracted and stored **100% of available valid chat data** from all
 - **API-ready** for frontend consumption
 
 The Second Brain is now a comprehensive knowledge repository of all AI-assisted development work across GitHub Copilot and KIRO Agent sessions.
+
+## Post-Extraction Analysis (In Progress)
+
+As of Dec 21, 2025, the **Neural Biographer** pipeline is active.
+- **Goal**: Analyze every exchange for "Intent", "Scenario", and "Struggle Score".
+- **Engine**: Ollama (Phi-3.5) + BullMQ.
+- **Status**: Processing ~13,500 exchanges with thermal protection enabled.
+
