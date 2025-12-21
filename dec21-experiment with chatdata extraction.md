@@ -259,6 +259,56 @@ From analysis of all 51,160 conversations:
 
 ---
 
+## Phase 6: Deep Dive Forensics (The "Code Psychologist")
+
+### Intent & Struggle Analysis
+**Goal**: Move beyond *what* was typed to *why* it was typed. Analyze the "Developer's Struggle".
+
+**Actions Taken**:
+- Created `analyze-deep-dive.js`
+- Integrated **Ollama** running `qwen2.5:1.5b` (Fast, JSON-optimized model)
+- Designed a "Code Psychologist" system prompt:
+  > "You are a Code Psychologist. Analyze this specific interaction... Return JSON: { intent, scenario, thought_process, is_debugging, struggle_score }"
+
+**Results**:
+- ✅ **Micro-analyzed hundreds of exchanges**
+- ✅ **Identified High-Struggle Sessions** (Score 8-10):
+  - "Too many requests from this IP" (Docker rate limiting)
+  - "MongoDB connection refused"
+  - "React DataGrid rendering issues"
+- ✅ **Created `DeepDiveLog` collection**:
+  - Maps the emotional/technical journey of the developer.
+  - Tags every interaction with `is_debugging: true/false`.
+
+**Key Insight**: We can now programmatically detect when the developer is frustrated and offer proactive help, rather than just reactive code snippets.
+
+---
+
+## Phase 7: The Neural Biographer (Production Pipeline)
+
+### Architecture Evolution
+**Goal**: Scale the "Code Psychologist" analysis to the entire 13,500+ exchange dataset reliably.
+
+**Challenges Encountered**:
+1.  **Schema Rigidity**: The AI model (Phi-3.5) often returned complex nested objects for fields defined as `String` in Mongoose, causing `ValidationError` crashes.
+2.  **Hardware Limits**: Continuous inference on the RTX 3050 Laptop GPU caused thermal throttling and potential instability.
+3.  **Process Management**: Running separate scripts for Queue and Worker was cumbersome.
+
+**Solutions Implemented**:
+1.  **Unified Pipeline**: Created `server/src/scripts/run-biography-pipeline.js` which combines the BullMQ Producer and Worker into a single process.
+2.  **Flexible Schema**: Updated `NeuralArchive` schema to use `mongoose.Schema.Types.Mixed` for the `analysis` field, allowing the database to accept *any* valid JSON the AI produces.
+3.  **Thermal Protection**:
+    - **Per-Request Cooldown**: 2000ms sleep after every AI generation.
+    - **Batch Cooldown**: 10000ms sleep after every 50 items.
+    - **Concurrency**: Limited to 1 job at a time.
+
+**Current Status**:
+- Pipeline is **Active**.
+- Estimated processing time: **~26 hours**.
+- Data is being saved to `neuralarchives` collection.
+
+---
+
 ## Summary
 
 **Started with**: 63 GitHub Copilot projects, 1,385 exchanges, no vectors
@@ -267,8 +317,9 @@ From analysis of all 51,160 conversations:
 - ✅ **101 projects** across 3 AI assistants
 - ✅ **51,160 exchanges** (37.7x increase)
 - ✅ **125,413 semantic search vectors**
+- ✅ **Deep Semantic Analysis** of developer intent and struggle
 - ✅ **100% data coverage** (0 failures)
 
-**Time Investment**: ~4-5 hours of exploration, scripting, and extraction
+**Time Investment**: ~6 hours of exploration, scripting, extraction, and analysis
 
-**Result**: A complete, searchable knowledge repository of all AI-assisted development work, ready for semantic querying and analysis.
+**Result**: A complete, searchable, and **psychologically aware** knowledge repository of all AI-assisted development work.
