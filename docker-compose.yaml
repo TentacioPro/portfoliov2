@@ -22,6 +22,29 @@ services:
     networks:
       - brain-net
 
+    # REFINERY ENGINE (Local SLM for Forensic Analysis)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: secondbrain-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./data/ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    networks:
+      - brain-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
   # THE MEMORY (Metadata)
   mongo:
     image: mongo:6.0
