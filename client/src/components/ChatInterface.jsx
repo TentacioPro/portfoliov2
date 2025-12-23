@@ -1,37 +1,86 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { sendChatMessage } from '../api/client';
+import { sendChatMessage, getSessions, createSession, getSession, deleteSession } from '../api/client';
 import { useNavigate } from 'react-router-dom';
 import { Home, Plus, MessageSquare, Trash2, Menu, X } from 'lucide-react';
 
 const ChatInterface = () => {
   const navigate = useNavigate();
-  const [conversations, setConversations] = useState(() => {
-    const saved = localStorage.getItem('chatConversations');
-    return saved ? JSON.parse(saved) : [{
-      id: Date.now(),
-      title: 'New Chat',
-      messages: [{
-        role: 'assistant',
-        content: '👋 Hi! I\'m your Second Brain assistant. Ask me anything about the knowledge base.',
-        citations: []
-      }],
-      timestamp: Date.now()
-    }];
-  });
-  const [currentConversationId, setCurrentConversationId] = useState(conversations[0].id);
+  
+  // State
+  const [sessions, setSessions] = useState([]);
+  const [currentSession, setCurrentSession] = useState(null);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [provider, setProvider] = useState('groq');
   const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth >= 768);
+  
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  const currentConversation = conversations.find(c => c.id === currentConversationId);
-  const messages = currentConversation?.messages || [];
+  // Derived state
+  const messages = currentSession?.messages || [];
+  const currentSessionId = currentSession?._id;
 
+  // Initial Load
   useEffect(() => {
-    localStorage.setItem('chatConversations', JSON.stringify(conversations));
-  }, [conversations]);
+    loadSessions();
+  }, []);
+
+  const loadSessions = async () => {
+    try {
+      const data = await getSessions();
+      setSessions(data);
+      if (data.length > 0) {
+        // Load the most recent session
+        await selectSession(data[0]._id);
+      } else {
+        await createNewSession();
+      }
+    } catch (err) {
+      console.error('Failed to load sessions:', err);
+    }
+  };
+
+  const selectSession = async (id) => {
+    try {
+      const session = await getSession(id);
+      setCurrentSession(session);
+      if (window.innerWidth < 768) {
+        setSidebarOpen(false);
+      }
+    } catch (err) {
+      console.error('Failed to load session:', err);
+    }
+  };
+
+  const createNewSession = async () => {
+    try {
+      const session = await createSession();
+      setSessions(prev => [session, ...prev]);
+      setCurrentSession(session);
+    } catch (err) {
+      console.error('Failed to create session:', err);
+    }
+  };
+
+  const handleDeleteSession = async (id) => {
+    try {
+      await deleteSession(id);
+      setSessions(prev => prev.filter(s => s._id !== id));
+      
+      if (id === currentSessionId) {
+        const remaining = sessions.filter(s => s._id !== id);
+        if (remaining.length > 0) {
+          selectSession(remaining[0]._id);
+        } else {
+          createNewSession();
+        }
+      }
+    } catch (err) {
+      console.error('Failed to delete session:', err);
+    }
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -39,7 +88,7 @@ const ChatInterface = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isLoading]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -51,122 +100,56 @@ const ChatInterface = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const createNewConversation = () => {
-    const newConv = {
-      id: Date.now(),
-      title: 'New Chat',
-      messages: [{
-        role: 'assistant',
-        content: '👋 Hi! I\'m your Second Brain assistant. Ask me anything about the knowledge base.',
-        citations: []
-      }],
-      timestamp: Date.now()
-    };
-    setConversations(prev => [newConv, ...prev]);
-    setCurrentConversationId(newConv.id);
-  };
-
-  const deleteConversation = (id) => {
-    setConversations(prev => {
-      const filtered = prev.filter(c => c.id !== id);
-      if (filtered.length === 0) {
-        const newConv = {
-          id: Date.now(),
-          title: 'New Chat',
-          messages: [{
-            role: 'assistant',
-            content: '👋 Hi! I\'m your Second Brain assistant. Ask me anything about the knowledge base.',
-            citations: []
-          }],
-          timestamp: Date.now()
-        };
-        setCurrentConversationId(newConv.id);
-        return [newConv];
-      }
-      if (id === currentConversationId) {
-        setCurrentConversationId(filtered[0].id);
-      }
-      return filtered;
-    });
-  };
-
-  const selectConversation = (id) => {
-    setCurrentConversationId(id);
-    if (window.innerWidth < 768) {
-      setSidebarOpen(false);
-    }
-  };
-
-  const updateConversationTitle = (id, firstMessage) => {
-    setConversations(prev => prev.map(conv => {
-      if (conv.id === id && conv.title === 'New Chat') {
-        return {
-          ...conv,
-          title: firstMessage.substring(0, 30) + (firstMessage.length > 30 ? '...' : '')
-        };
-      }
-      return conv;
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const userMessage = input.trim();
-    if (!userMessage || isLoading) return;
+    if (!userMessage || isLoading || !currentSessionId) return;
 
-    // Update conversation title if this is the first user message
-    if (messages.length === 1) {
-      updateConversationTitle(currentConversationId, userMessage);
-    }
-
-    // Add user message
-    setConversations(prev => prev.map(conv => {
-      if (conv.id === currentConversationId) {
-        return {
-          ...conv,
-          messages: [...conv.messages, { role: 'user', content: userMessage, citations: [] }],
-          timestamp: Date.now()
-        };
-      }
-      return conv;
+    // Optimistic Update
+    const tempUserMsg = { role: 'user', content: userMessage, citations: [] };
+    setCurrentSession(prev => ({
+      ...prev,
+      messages: [...prev.messages, tempUserMsg]
     }));
+    
     setInput('');
     setIsLoading(true);
 
     try {
       // Call API
-      const response = await sendChatMessage(userMessage);
+      const response = await sendChatMessage(userMessage, provider, currentSessionId);
       
-      // Add assistant response
-      setConversations(prev => prev.map(conv => {
-        if (conv.id === currentConversationId) {
-          return {
-            ...conv,
-            messages: [...conv.messages, {
-              role: 'assistant',
-              content: response.answer,
-              citations: response.citations || []
-            }]
-          };
-        }
-        return conv;
+      // Update with real response
+      // We fetch the full session again to ensure sync, or just append
+      // For better UX, let's append the assistant response
+      const assistantMsg = {
+        role: 'assistant',
+        content: response.answer,
+        citations: response.citations || []
+      };
+
+      setCurrentSession(prev => ({
+        ...prev,
+        messages: [...prev.messages, assistantMsg]
       }));
+
+      // Update title in sidebar if it was "New Chat"
+      if (currentSession.title === 'New Chat' && messages.length === 0) {
+         // Refresh list to get new title
+         loadSessions(); 
+      }
+
     } catch (error) {
       // Add error message
-      setConversations(prev => prev.map(conv => {
-        if (conv.id === currentConversationId) {
-          return {
-            ...conv,
-            messages: [...conv.messages, {
-              role: 'assistant',
-              content: `❌ Error: ${error.message}. Please try again.`,
-              citations: [],
-              isError: true
-            }]
-          };
-        }
-        return conv;
+      setCurrentSession(prev => ({
+        ...prev,
+        messages: [...prev.messages, {
+          role: 'assistant',
+          content: `❌ Error: ${error.message}. Please try again.`,
+          citations: [],
+          isError: true
+        }]
       }));
     } finally {
       setIsLoading(false);
@@ -189,7 +172,7 @@ const ChatInterface = () => {
             {/* Sidebar Header */}
             <div className="p-4 border-b border-stone-200 dark:border-zinc-800">
               <motion.button
-                onClick={createNewConversation}
+                onClick={createNewSession}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-stone-100 dark:bg-zinc-900 hover:bg-stone-200 dark:hover:bg-zinc-800 rounded-lg transition-colors font-medium text-stone-900 dark:text-stone-100"
@@ -201,38 +184,36 @@ const ChatInterface = () => {
 
             {/* Conversations List */}
             <div className="flex-1 overflow-y-auto p-3 space-y-1">
-              {conversations.map((conv) => (
+              {sessions.map((session) => (
                 <motion.div
-                  key={conv.id}
+                  key={session._id}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className={`group relative flex items-center gap-3 px-3 py-3 rounded-lg cursor-pointer transition-all ${
-                    conv.id === currentConversationId
+                    session._id === currentSessionId
                       ? 'bg-stone-100 dark:bg-zinc-900'
                       : 'hover:bg-stone-50 dark:hover:bg-zinc-900/50'
                   }`}
-                  onClick={() => selectConversation(conv.id)}
+                  onClick={() => selectSession(session._id)}
                 >
                   <MessageSquare size={16} className="text-stone-400 dark:text-stone-600 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-stone-900 dark:text-stone-100 truncate">
-                      {conv.title}
+                      {session.title}
                     </p>
                     <p className="text-xs text-stone-500 dark:text-stone-500">
-                      {new Date(conv.timestamp).toLocaleDateString()}
+                      {new Date(session.updatedAt || session.createdAt).toLocaleDateString()}
                     </p>
                   </div>
-                  {conversations.length > 1 && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteConversation(conv.id);
-                      }}
-                      className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-100 dark:hover:bg-red-900/30 rounded transition-all"
-                    >
-                      <Trash2 size={14} className="text-red-600 dark:text-red-400" />
-                    </button>
-                  )}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteSession(session._id);
+                    }}
+                    className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-100 dark:hover:bg-red-900/30 rounded transition-all"
+                  >
+                    <Trash2 size={14} className="text-red-600 dark:text-red-400" />
+                  </button>
                 </motion.div>
               ))}
             </div>
@@ -277,19 +258,46 @@ const ChatInterface = () => {
             </button>
             <div className="min-w-0">
               <h1 className="text-base md:text-lg font-semibold text-stone-900 dark:text-stone-100 truncate">
-                {currentConversation?.title || 'New Chat'}
+                {currentSession?.title || 'New Chat'}
               </h1>
               <p className="text-xs text-stone-500 dark:text-stone-500 hidden md:block">
                 Second Brain Assistant
               </p>
             </div>
           </div>
-          <button
-            onClick={() => navigate('/')}
-            className="p-2 hover:bg-stone-100 dark:hover:bg-zinc-900 rounded-lg transition-colors flex-shrink-0"
-          >
-            <Home size={20} className="text-stone-600 dark:text-stone-400" />
-          </button>
+
+          <div className="flex items-center gap-2">
+            {/* Provider Toggle */}
+            <div className="flex items-center gap-1 bg-stone-100 dark:bg-zinc-900 p-1 rounded-lg">
+              <button
+                onClick={() => setProvider('groq')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                  provider === 'groq'
+                    ? 'bg-white dark:bg-zinc-800 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                    : 'text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200'
+                }`}
+              >
+                Groq
+              </button>
+              <button
+                onClick={() => setProvider('gemini')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                  provider === 'gemini'
+                    ? 'bg-white dark:bg-zinc-800 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                    : 'text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200'
+                }`}
+              >
+                Gemini
+              </button>
+            </div>
+
+            <button
+              onClick={() => navigate('/')}
+              className="p-2 hover:bg-stone-100 dark:hover:bg-zinc-900 rounded-lg transition-colors flex-shrink-0"
+            >
+              <Home size={20} className="text-stone-600 dark:text-stone-400" />
+            </button>
+          </div>
         </div>
 
         {/* Messages Area */}
@@ -297,6 +305,28 @@ const ChatInterface = () => {
           <div className="max-w-3xl mx-auto px-3 md:px-4 py-4 md:py-8">
             <div className="space-y-4 md:space-y-6">
               <AnimatePresence initial={false}>
+                {/* Welcome Message if empty */}
+                {messages.length === 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-start gap-2 md:gap-4"
+                  >
+                    <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-stone-200 dark:bg-zinc-800 flex items-center justify-center text-xs md:text-sm font-semibold text-stone-700 dark:text-stone-300">
+                      🧠
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="prose prose-sm dark:prose-invert max-w-none">
+                        <div className="inline-block text-left text-stone-900 dark:text-stone-100">
+                          <div className="whitespace-pre-wrap break-words leading-relaxed">
+                            👋 Hi! I'm your Second Brain assistant. Ask me anything about the knowledge base.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
                 {messages.map((msg, idx) => (
                   <motion.div
                     key={idx}

@@ -72,16 +72,18 @@ export async function ingestText(text, source, metadata = {}) {
 /**
  * Send a chat message to the knowledge base
  * @param {string} message - User's question
+ * @param {string} provider - LLM provider ('groq' or 'gemini')
+ * @param {string} sessionId - Optional session ID to persist chat
  * @returns {Promise<{answer: string, citations: Array}>}
  */
-export async function sendChatMessage(message) {
+export async function sendChatMessage(message, provider = 'groq', sessionId = null) {
   try {
     const response = await fetch(`${API_BASE}/chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message, provider, sessionId }),
     });
 
     if (!response.ok) {
@@ -94,6 +96,32 @@ export async function sendChatMessage(message) {
     console.error('[API] Chat request failed:', error);
     throw error;
   }
+}
+
+// --- Session Management ---
+
+export async function getSessions() {
+  const res = await fetch(`${API_BASE}/chat/sessions`);
+  if (!res.ok) throw new Error('Failed to fetch sessions');
+  return await res.json();
+}
+
+export async function createSession() {
+  const res = await fetch(`${API_BASE}/chat/sessions`, { method: 'POST' });
+  if (!res.ok) throw new Error('Failed to create session');
+  return await res.json();
+}
+
+export async function getSession(id) {
+  const res = await fetch(`${API_BASE}/chat/sessions/${id}`);
+  if (!res.ok) throw new Error('Failed to fetch session');
+  return await res.json();
+}
+
+export async function deleteSession(id) {
+  const res = await fetch(`${API_BASE}/chat/sessions/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Failed to delete session');
+  return await res.json();
 }
 
 /**
