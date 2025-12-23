@@ -68,3 +68,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 workspace-storage/
+
+data/exports/
+sqlite/

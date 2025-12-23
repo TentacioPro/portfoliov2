@@ -9,7 +9,8 @@
 5. [Running Extraction Scripts](#running-extraction-scripts)
 6. [Verification](#verification)
 7. [Viewing the Data](#viewing-the-data)
-8. [Troubleshooting](#troubleshooting)
+8. [Database Backup & Restore](#database-backup--restore)
+9. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -406,6 +407,47 @@ npm run dev
 ```
 
 Visit: `http://localhost:5173`
+
+---
+
+## Database Backup & Restore
+
+### Export All Collections
+
+Exports all MongoDB collections to JSON files in `data/exports/`:
+
+```powershell
+cd server
+node src/scripts/export-mongo.js
+```
+
+**Output:**
+```
+📁 Created exports directory: d:\My Projects\ExperimentalPortfolio\data\exports
+💾 Exported: projectslists (101 documents)
+💾 Exported: neuralarchives (2 documents)
+💾 Exported: rawconversations (13520 documents)
+💾 Exported: conversations (101 documents)
+✅ Export complete: 4 collections
+```
+
+### Restore a Collection
+
+Import a JSON file into a new or existing collection:
+
+```powershell
+# Basic usage
+node src/scripts/import-mongo.js <json-file> <collection-name>
+
+# Example: Restore rawconversations to a new collection
+node src/scripts/import-mongo.js ../data/exports/rawconversations.json neuralarchiveRaw
+
+# Force overwrite existing collection
+node src/scripts/import-mongo.js ../data/exports/rawconversations.json neuralarchiveRaw --force
+```
+
+**Options:**
+- `--force` - Drop existing collection before import
 
 ---
 
