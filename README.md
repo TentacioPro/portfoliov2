@@ -2,14 +2,11 @@
 
 A self-hosted system that extracts, indexes, and queries AI chat history from GitHub Copilot and KIRO Agent. Built with Node.js, MongoDB, Qdrant, and React.
 
-## What It Does
+**Status**: 🟢 Production Ready | **Database**: 16,116 documents | **Vectors**: 125,413 embeddings
 
-- **Extracts** 51,160+ AI conversations from VS Code extensions
-- **Indexes** 125,413 code embeddings for semantic search
-- **Analyzes** developer intent and struggle patterns using local LLMs
-- **Serves** a REST API + React frontend to explore the knowledge base
+---
 
-## Quick Start
+## 🚀 Quick Start
 
 ```powershell
 # 1. Start infrastructure
@@ -18,15 +15,53 @@ docker-compose up -d
 # 2. Install dependencies
 cd server && npm install
 
-# 3. Run extraction scripts (see SETUP_GUIDE.md for details)
-node src/scripts/forensic-ingest.js
-node src/scripts/extract-kiro-chats.js
-
-# 4. Start server
+# 3. Start server
 node index.js
+
+# 4. Access API
+curl http://localhost:3001/health
 ```
 
-## Architecture
+---
+
+## 📚 Documentation
+
+All documentation has been consolidated in the [`docs/`](docs/) directory for easier navigation.
+
+### Getting Started
+- **[Setup Guide](docs/SETUP_GUIDE.md)** - Complete installation & extraction steps
+- **[README](docs/README.md)** - Full project overview & features
+
+### Development Timeline
+- **[Work Summary (Dec 21-25)](docs/WORK_SUMMARY_DEC21.md)** - Phase-by-phase achievements
+- **[MongoDB Import Session (Dec 25)](docs/DEC25_MONGODB_IMPORT_SESSION.md)** - Docker mongoimport methodology
+- **[Extraction Journey](docs/dec21-experiment%20with%20chatdata%20extraction.md)** - Complete data extraction story
+
+### Technical Deep Dives
+- **[KIRO Extraction Report](docs/KIRO_EXTRACTION_FINAL_REPORT.md)** - Vector & conversation extraction
+- **[KIRO Analysis Report](docs/KIRO_ANALYSIS_REPORT.md)** - Deep dive into KIRO architecture
+- **[Code Analysis Ideology](docs/CODE_ANALYSIS_IDEOLOGY.md)** - Intent-over-syntax analysis framework
+
+### Project Management
+- **[Issue Tracker](docs/ISSUES.md)** - Known issues, bugs, enhancements, and backlog
+- **[Changelog](docs/CHANGELOG.md)** - Version history & releases
+
+---
+
+## 📊 Current Stats
+
+| Metric | Value |
+|--------|-------|
+| **Total Documents** | 16,116 |
+| **Extracted Exchanges** | 51,160+ |
+| **Qdrant Vectors** | 125,413 (384-dim) |
+| **Projects** | 99+ |
+| **Collections** | 5 (conversations, deepdivelogs, neura larchives, projectslists, rawconversations) |
+| **Data Size** | 4.7 GB |
+
+---
+
+## 🏗️ Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -41,102 +76,117 @@ node index.js
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Data Sources
+---
 
-| Source | Exchanges | Status |
-|--------|-----------|--------|
-| GitHub Copilot | 1,385 | ✅ Extracted |
-| KIRO Agent (Small) | 12,077 | ✅ Extracted |
-| KIRO Agent (Large) | 37,698 | ✅ Extracted |
-| **Total** | **51,160** | ✅ Complete |
-
-## Key Features
-
-### Chat Extraction
-- Parses multiple AI chat formats (Copilot JSON, KIRO role-based)
-- Handles large workspaces with streaming to avoid memory issues
-- Detects tech stack from conversation context
-
-### Semantic Search
-- 125K pre-computed code embeddings (384-dim, MiniLM-L6-v2)
-- Instant code search via Qdrant vector database
-- Query: "authentication implementation" → ranked code snippets
-
-### Neural Biographer (Optional)
-- Uses Ollama (Phi-3.5) to analyze every exchange
-- Extracts: intent, scenario, struggle score (1-10)
-- Identifies high-frustration debugging sessions
-
-## API Endpoints
+## 📁 Project Structure
 
 ```
-GET  /api/chat/sessions          # List chat sessions
-POST /api/chat                   # Send message to RAG pipeline
-GET  /api/conversations          # All extracted conversations
-GET  /api/projects/list          # Project metadata
-```
-
-## Project Structure
-
-```
-├── server/
+portfoliov2/
+├── docs/                    # 📚 All documentation
+│   ├── README.md
+│   ├── SETUP_GUIDE.md
+│   ├── ISSUES.md           # Issue tracker
+│   ├── DEC25_MONGODB_IMPORT_SESSION.md
+│   ├── WORK_SUMMARY_DEC21.md
+│   └── ... (8 more docs)
+├── server/                  # 🔧 Node.js backend
 │   ├── src/
 │   │   ├── scripts/        # Extraction & analysis scripts
 │   │   ├── services/       # MongoDB, Qdrant, Redis, LLM
 │   │   ├── routes/         # API endpoints
 │   │   └── models/         # Mongoose schemas
 │   └── index.js
-├── client/                 # React + Vite frontend
-├── data/                   # Docker volumes (mongo, qdrant, redis)
-├── workspace-storage/      # Source data (copied from AppData)
+├── client/                  # 🎨 React frontend
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── App.jsx
+│   └── package.json
+├── data/                    # 💾 Docker volumes
+│   ├── mongo/              # MongoDB data
+│   ├── qdrant/             # Vector DB data
+│   ├── redis/              # Cache data
+│   └── exports/            # JSON backups
+├── workspace-storage/       # 📂 Source data (optional)
 ├── docker-compose.yaml
-├── SETUP_GUIDE.md          # Detailed setup instructions
-└── README.md
+└── .env                     # Configuration
 ```
 
-## Scripts Reference
+---
 
-| Script | Purpose |
-|--------|---------|
-| `forensic-ingest.js` | Extract GitHub Copilot chats |
-| `extract-kiro-chats.js` | Extract KIRO Agent chats |
-| `extract-large-kiro-workspaces.js` | Handle large KIRO workspaces |
-| `extract-kiro-vectors.js` | Import code vectors to Qdrant |
-| `export-mongo.js` | Export all collections to JSON |
-| `import-mongo.js` | Restore JSON to MongoDB collection |
-| `run-biography-pipeline.js` | Analyze exchanges with Ollama |
+## 🔧 Key Features
 
-## Database Backup & Restore
+### Data Extraction
+- ✅ GitHub Copilot chat extraction (1,385 exchanges)
+- ✅ KIRO Agent extraction (49,775 exchanges)
+- ✅ Large workspace handling (streaming + chunking)
+- ✅ Automatic tech stack detection
 
-```powershell
-# Export all collections
-node src/scripts/export-mongo.js
+### Semantic Search
+- ✅ 125,413 pre-computed code embeddings
+- ✅ Instant Qdrant vector search
+- ✅ Ranked results by relevance
 
-# Restore a collection
-node src/scripts/import-mongo.js rawconversations.json neuralarchiveRaw
-```
+### Analysis & Insights
+- ✅ Developer intent extraction (Ollama pipeline)
+- ✅ Struggle score classification (1-10)
+- ✅ Debugging session detection
+- ✅ Technology distribution analysis
 
-## Environment Variables
+### Data Management
+- ✅ MongoDB persistence (16,116 documents)
+- ✅ Docker mongoimport for rapid restoration
+- ✅ Backup/restore scripts
+- ✅ Redis caching layer
 
-```env
-MONGO_URI=mongodb://localhost:27017/secondbrain
-REDIS_HOST=localhost
-QDRANT_URL=http://localhost:6333
-GROQ_API_KEY=your_groq_key
-GOOGLE_API_KEY=your_google_key
-```
+---
 
-## Requirements
+## 📋 Requirements
 
-- Node.js v20+
-- Docker Desktop
-- (Optional) Ollama for local LLM analysis
+- **Node.js** v20+
+- **Docker Desktop** (MongoDB, Qdrant, Redis, Ollama)
+- **Git** v2.49+
+- (Optional) **Ollama** for local LLM analysis
 
-## Documentation
+---
 
-- [SETUP_GUIDE.md](SETUP_GUIDE.md) - Complete installation guide
-- [CHANGELOG.md](CHANGELOG.md) - Version history
+## 🚨 Known Issues
 
-## License
+See **[ISSUES.md](docs/ISSUES.md)** for:
+- Critical issues (resolved) ✅
+- High priority items (in progress) 🔄
+- Medium priority enhancements
+- Low priority improvements
+- Unsorted backlog
+
+**Current Status**: 🟢 Production Ready  
+**Next Milestone**: Semantic search API endpoint (H-001)
+
+---
+
+## 🤝 Contributing
+
+1. Check [ISSUES.md](docs/ISSUES.md) for open issues
+2. Follow [SETUP_GUIDE.md](docs/SETUP_GUIDE.md) to get started
+3. Submit changes with clear commit messages
+4. Update relevant documentation
+
+---
+
+## 📞 Support
+
+- **Setup Issues**: See [SETUP_GUIDE.md](docs/SETUP_GUIDE.md#troubleshooting)
+- **API Questions**: Check [docs/README.md](docs/README.md#api-endpoints)
+- **Bug Reports**: Create issue in [ISSUES.md](docs/ISSUES.md)
+
+---
+
+## 📄 License
 
 ISC
+
+---
+
+**Last Updated**: December 25, 2025  
+**Maintainer**: @Second Brain Team  
+**Repository Status**: Active Development
