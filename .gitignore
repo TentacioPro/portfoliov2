@@ -27,6 +27,7 @@ Thumbs.db
 *.iml
 
 # Docker volumes & data
+/data/
 data/mongo/
 data/qdrant/
 data/redis/
