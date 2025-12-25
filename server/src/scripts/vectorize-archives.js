@@ -69,7 +69,39 @@ async function vectorize() {
         await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/secondbrain');
         console.log('Connected.');
 
+        // --- IDEMPOTENCY STATUS REPORT ---
+        const totalArchives = await NeuralArchive.countDocuments();
+        const vectorizedCount = await NeuralArchive.countDocuments({ vectorized: true });
+        const eligibleCount = await NeuralArchive.countDocuments({
+            vectorized: { $ne: true },
+            $or: [
+                { "analysis.is_milestone": true },
+                { struggle_score: { $gt: 5 } }
+            ]
+        });
+        
+        console.log('\n📊 VECTORIZATION STATUS:');
+        console.log(`   Total Archives:       ${totalArchives}`);
+        console.log(`   Already Vectorized:   ${vectorizedCount}`);
+        console.log(`   Eligible & Pending:   ${eligibleCount}`);
+        
+        if (eligibleCount === 0) {
+            console.log('\n✅ No eligible documents pending vectorization. Nothing to do.');
+            await mongoose.disconnect();
+            return;
+        }
+
         await ensureCollection();
+        
+        // Check Qdrant collection status
+        try {
+            const collectionInfo = await qdrant.getCollection(COLLECTION_NAME);
+            console.log(`   Qdrant Vectors:       ${collectionInfo.points_count || 0}`);
+        } catch (e) {
+            console.log(`   Qdrant Vectors:       0 (new collection)`);
+        }
+        
+        console.log(`\n🚀 Processing ${eligibleCount} documents...\n`);
 
         const candidates = await NeuralArchive.find({
             vectorized: { $ne: true },

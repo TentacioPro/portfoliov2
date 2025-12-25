@@ -75,12 +75,25 @@ async function parseJSON(filePath) {
 }
 
 // ============================================================================
+// IDEMPOTENCY: Get already-imported file paths
+// ============================================================================
+async function getImportedFilePaths() {
+  const docs = await RawConversation.find({}, { filePath: 1 }).lean();
+  return new Set(docs.map(d => d.filePath));
+}
+
+// ============================================================================
 // MAIN PIPELINE
 // ============================================================================
 
 async function main() {
   console.log(`🚀 INGESTION ENGINE: Scanning "${CONFIG.WORKSPACE_ROOT}"...`);
   await mongoose.connect(CONFIG.MONGO_URI);
+
+  // --- IDEMPOTENCY STATUS REPORT ---
+  const existingCount = await RawConversation.countDocuments();
+  const importedPaths = await getImportedFilePaths();
+  console.log(`📊 STATUS: ${existingCount} documents already in DB from ${importedPaths.size} unique files.`);
 
   const patterns = [
     '**/state.vscdb', 
@@ -89,13 +102,22 @@ async function main() {
     '**/*chat_history.json' 
   ];
   
-  const files = await glob(patterns, { 
+  let files = await glob(patterns, { 
     cwd: CONFIG.WORKSPACE_ROOT, 
     absolute: true,
     ignore: ['**/node_modules/**', '**/dist/**'] 
   });
 
-  console.log(`📂 Found ${files.length} potential conversation files.`);
+  // --- IDEMPOTENCY FILTER: Skip already-imported files ---
+  const newFiles = files.filter(f => !importedPaths.has(f));
+  console.log(`📂 Found ${files.length} potential files. ${newFiles.length} are NEW (not yet imported).`);
+  
+  if (newFiles.length === 0) {
+    console.log('✅ All files already imported. Nothing to do.');
+    process.exit(0);
+  }
+  
+  files = newFiles; // Only process new files
 
   let bulkOps = [];
   let processed = 0;

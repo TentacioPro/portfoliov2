@@ -116,9 +116,28 @@ async function analyzeWithGemini3(prompt, response, prevIntent) {
 // ============================================================================
 async function main() {
   await mongoose.connect(CONFIG.MONGO_URI);
-  console.log(`🚀 GEMINI 3 FLASH BIOGRAPHER ACTIVE`);
+  
+  // --- IDEMPOTENCY STATUS REPORT ---
+  const totalRaw = await RawConversation.countDocuments();
+  const processedCount = await RawConversation.countDocuments({ processed: true });
+  const pendingCount = totalRaw - processedCount;
+  const archivesCount = await NeuralArchive.countDocuments();
+  
+  console.log('\n📊 STATUS REPORT:');
+  console.log(`   Raw Documents:     ${totalRaw}`);
+  console.log(`   Already Processed: ${processedCount}`);
+  console.log(`   Pending Analysis:  ${pendingCount}`);
+  console.log(`   Neural Archives:   ${archivesCount}`);
+  
+  if (pendingCount === 0) {
+    console.log('\n✅ All documents already processed. Nothing to do.');
+    process.exit(0);
+  }
+  
+  console.log(`\n🚀 GEMINI 3 FLASH BIOGRAPHER ACTIVE`);
   console.log(`   Project: ${CONFIG.PROJECT_ID}`);
   console.log(`   Model:   ${CONFIG.MODEL_NAME}`);
+  console.log(`   Processing ${pendingCount} documents...\n`);
 
   // Using cursor for memory efficiency
   const cursor = RawConversation.find({ processed: { $ne: true } }).cursor();
@@ -179,8 +198,21 @@ async function main() {
   }
 
   await Promise.all(tasks);
-  console.log(`\n🎉 DONE. Processed: ${processedCount}`);
+  
+  // Final status
+  const finalArchives = await NeuralArchive.countDocuments();
+  console.log(`\n🎉 DONE.`);
+  console.log(`   New Archives Created: ${processedCount}`);
+  console.log(`   Total Archives Now:   ${finalArchives}`);
+  
+  await mongoose.disconnect();
   process.exit(0);
 }
 
-main();
+// Only run if called directly
+const isDirectRun = process.argv[1] && (path.resolve(process.argv[1]) === path.resolve(__filename));
+if (isDirectRun) {
+  main();
+}
+
+export { main as runArchiver };
