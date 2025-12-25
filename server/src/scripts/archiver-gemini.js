@@ -143,7 +143,7 @@ async function main() {
   const cursor = RawConversation.find({ processed: { $ne: true } }).cursor();
   const limit = pLimit(CONFIG.CONCURRENCY);
   
-  let processedCount = 0;
+  let newlyProcessed = 0;
   let tasks = [];
 
   for (let doc = await cursor.next(); doc != null; doc = await cursor.next()) {
@@ -182,8 +182,8 @@ async function main() {
                     raw: { prompt: promptText.substring(0, 1000), response_summary: "Gemini 3 Analysis" }
                 });
                 await RawConversation.updateOne({ _id: doc._id }, { $set: { processed: true } });
-                processedCount++;
-                if (processedCount % 10 === 0) process.stdout.write(`\r✅ Analyzed: ${processedCount}`);
+                newlyProcessed++;
+                if (newlyProcessed % 10 === 0) process.stdout.write(`\r✅ Analyzed: ${newlyProcessed}`);
             } catch (err) {
                 if (err.code !== 11000) console.error(`DB Error: ${err.message}`);
             }
@@ -202,7 +202,7 @@ async function main() {
   // Final status
   const finalArchives = await NeuralArchive.countDocuments();
   console.log(`\n🎉 DONE.`);
-  console.log(`   New Archives Created: ${processedCount}`);
+  console.log(`   New Archives Created: ${newlyProcessed}`);
   console.log(`   Total Archives Now:   ${finalArchives}`);
   
   await mongoose.disconnect();

@@ -28,6 +28,8 @@ This document tracks all known issues, bugs, enhancements, and tasks for the Sec
 | H-003 | RAG pipeline not implemented | 🔄 IN PROGRESS | HIGH | Can't combine chat history with semantic search | — | Design RAG architecture |
 | H-004 | No authentication/authorization | 🔄 IN PROGRESS | HIGH | Anyone can access all data if exposed | — | Add Clerk or similar auth |
 | H-005 | Missing database indexes | ❌ TODO | MEDIUM-HIGH | Slow queries on large collections | — | Run `db.collection.createIndex()` |
+| H-006 | Vertex AI Batch Model 404 | ✅ RESOLVED | HIGH | `gemini-1.5-flash-001` not found in batch | — | Use full resource path |
+| H-007 | GCS Bucket 404 | ✅ RESOLVED | HIGH | Batch upload fails if bucket missing | — | Auto-create bucket in script |
 
 ---
 
@@ -40,7 +42,7 @@ This document tracks all known issues, bugs, enhancements, and tasks for the Sec
 | M-003 | LanceDB .lance files not analyzed | ❌ TODO | MEDIUM | Optional - may be redundant with SQLite | Verify if additional vectors exist |
 | M-004 | No incremental update strategy | ❌ TODO | MEDIUM | Must re-extract all data for updates | Design append-only changelog |
 | M-005 | Ollama pipeline not fully tested | ❌ TODO | MEDIUM | Neural biographer needs validation | Run sample analysis on subset |
-| M-006 | No error recovery/retry logic | ❌ TODO | MEDIUM | Failed jobs are lost forever | Add idempotency + retry queue |
+| M-006 | No error recovery/retry logic | ✅ RESOLVED | MEDIUM | Failed jobs are lost forever | Implemented idempotency in Batch Pipeline |
 | M-007 | Documentation links may be broken | 🔄 IN PROGRESS | MEDIUM | Moved .md files to /docs | Need to verify all cross-references |
 
 ---

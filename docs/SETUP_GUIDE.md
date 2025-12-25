@@ -88,14 +88,26 @@ MONGODB_URI=mongodb://localhost:27017/secondbrain
 # Qdrant
 QDRANT_URL=http://localhost:6333
 
+# Google Cloud Platform (For Batch ETL)
+GCP_PROJECT_ID=your-project-id
+GCP_LOCATION=us-central1
+GCS_BUCKET_NAME=your-bucket-name
+
 # Node.js
 NODE_ENV=development
 ```
 
+### Google Cloud Setup
+1.  **Create a GCP Project:** Go to the [GCP Console](https://console.cloud.google.com/) and create a new project.
+2.  **Enable APIs:** Enable the **Vertex AI API** and **Cloud Storage API**.
+3.  **Authentication:** Run `gcloud auth application-default login` on your local machine to provide credentials to the scripts.
+4.  **Bucket:** The script will automatically create the bucket specified in `GCS_BUCKET_NAME` if it doesn't exist.
+
 ### MongoDB Collections
 The scripts will automatically create these collections:
-- `conversations` - AI chat history with exchanges
-- `projectslists` - Project metadata and statistics
+- `rawconversations` - Raw ingested data from disk.
+- `neuralarchives` - Structured metadata extracted by Gemini.
+- `projectslists` - Project metadata and statistics.
 
 ---
 

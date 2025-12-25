@@ -256,3 +256,29 @@ curl http://localhost:3001/api/graph | jq '.stats'
 **Status:** 🟢 Operational (Partial Success)  
 **Confidence:** High (33/41 projects = 80% success rate)  
 **Next Milestone:** Complete remaining 8 projects after rate limit reset
+
+---
+
+## 🚀 Update: Vertex AI Batch Processing (Dec 25, 2025)
+
+**Objective:** Process 13,520 raw conversation documents (4.5GB) using Gemini 1.5 Flash via Vertex AI Batch Prediction.
+
+### Technical Implementation
+- **Script:** `batch-processor-vertex.js`
+- **Method:** Streaming JSONL export -> GCS Upload -> Vertex AI Batch Job.
+- **Idempotency:** Implemented size-matching for GCS uploads and job-state checks for Vertex AI submissions.
+
+### Results
+| Metric | Value |
+|--------|-------|
+| **Total Documents** | 13,520 |
+| **Export Format** | JSONL (Streaming) |
+| **GCS Storage** | `gs://maaxly-brain-batch-storage/batch_input.jsonl` |
+| **Model** | `gemini-1.5-flash-001` |
+| **Status** | Job Submitted / Pending |
+
+### Key Fixes
+- **Model 404:** Corrected model path to full resource name.
+- **Bucket 404:** Added auto-creation logic for GCS buckets.
+- **Memory Management:** Used Node.js streams to handle 4.5GB export without RAM spikes.
+

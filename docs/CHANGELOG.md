@@ -21,6 +21,19 @@ Complete transformation from single React app to full-stack AI-native system wit
   - **Tokens**: Increased max_tokens from 1000 to 1500 for detailed analysis
   - Rollback: `git checkout e884659`
 
+#### ELT Pipeline & Vertex AI Batch Integration (Dec 25, 2025)
+- **68ce43f** `feat: implement ELT pipeline with Gemini 3 Transformer and Qdrant Vectorizer`
+  - **Consolidation**: Moved 19 legacy/test scripts to `server/src/scripts/legacy/`.
+  - **Transformer**: Implemented `archiver-gemini.js` with Token Bucket rate limiting (15 RPM).
+  - **Vectorizer**: Implemented `vectorize-archives.js` using local Ollama (`nomic-embed-text`) and Qdrant.
+  - **Orchestrator**: Updated `fleet-commander.js` for phase-based execution (`--phase=transform`, `--phase=vectorize`).
+- **Current** `feat: Vertex AI Batch Prediction Pipeline`
+  - **Batch Processor**: Created `batch-processor-vertex.js` for high-volume processing (4.5GB+).
+  - **Streaming**: Implemented Node.js streams for memory-efficient JSONL export.
+  - **GCS Integration**: Automated bucket creation and idempotent file uploads with size verification.
+  - **Vertex AI**: Integrated `JobServiceClient` for batch prediction job submission.
+  - **Idempotency**: Added progress-aware checks across all pipeline phases.
+
 ### Commit Structure (Rollback Points)
 
 #### Infrastructure Layer

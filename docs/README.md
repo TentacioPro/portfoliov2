@@ -6,7 +6,7 @@ A self-hosted system that extracts, indexes, and queries AI chat history from Gi
 
 - **Extracts** 51,160+ AI conversations from VS Code extensions
 - **Indexes** 125,413 code embeddings for semantic search
-- **Analyzes** developer intent and struggle patterns using local LLMs
+- **Analyzes** developer intent and struggle patterns using local LLMs (Ollama) and Cloud LLMs (Vertex AI Batch)
 - **Imports** 16,116+ documents from existing MongoDB exports via Docker
 - **Serves** a REST API + React frontend to explore the knowledge base
 
@@ -20,10 +20,12 @@ docker-compose up -d
 cd server && npm install
 
 # 3. Run extraction scripts (see SETUP_GUIDE.md for details)
-node src/scripts/forensic-ingest.js
-node src/scripts/extract-kiro-chats.js
+node src/scripts/ingest-raw-workspace.js
 
-# 4. Start server
+# 4. Run the ELT pipeline (Vertex AI Batch)
+node src/scripts/fleet-commander.js --phase=batch
+
+# 5. Start server
 node index.js
 ```
 
@@ -33,8 +35,8 @@ node index.js
 ┌─────────────────────────────────────────────────────────────┐
 │                     Second Brain System                      │
 ├─────────────┬─────────────┬─────────────┬──────────────────┤
-│   MongoDB   │   Qdrant    │    Redis    │     Ollama       │
-│  (Metadata) │  (Vectors)  │   (Cache)   │   (Analysis)     │
+│   MongoDB   │   Qdrant    │    Redis    │     Vertex AI    │
+│  (Metadata) │  (Vectors)  │   (Cache)   │   (Batch ETL)    │
 ├─────────────┴─────────────┴─────────────┴──────────────────┤
 │                    Node.js API Server                       │
 ├─────────────────────────────────────────────────────────────┤
@@ -59,13 +61,18 @@ node index.js
 - Handles large workspaces with streaming to avoid memory issues
 - Detects tech stack from conversation context
 
+### Vertex AI Batch Pipeline
+- Processes 13,000+ documents (4.5GB+) using Gemini 1.5 Flash
+- Bypasses online API rate limits via Batch Prediction API
+- Extracts structured metadata: intent, struggle score, milestones
+
 ### Semantic Search
 - 125K pre-computed code embeddings (384-dim, MiniLM-L6-v2)
 - Instant code search via Qdrant vector database
 - Query: "authentication implementation" → ranked code snippets
 
 ### Neural Biographer (Optional)
-- Uses Ollama (Phi-3.5) to analyze every exchange
+- Uses Ollama (Phi-3.5) or Gemini 1.5 Flash to analyze every exchange
 - Extracts: intent, scenario, struggle score (1-10)
 - Identifies high-frustration debugging sessions
 
