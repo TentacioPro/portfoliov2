@@ -31,6 +31,10 @@
 ### Technical Deep Dives
 | File | Topic | Audience |
 |------|-------|----------|
+| [`docs/IDEMPOTENT_SCRIPTS.md`](docs/IDEMPOTENT_SCRIPTS.md) | Idempotent script architecture & patterns | Engineers |
+| [`docs/VERTEX_AI_BATCH_PIPELINE.md`](docs/VERTEX_AI_BATCH_PIPELINE.md) | Vertex AI Batch Prediction workflow | Cloud Engineers |
+| [`docs/GENAI_ELT_RESEARCH_DEC2025.md`](docs/GENAI_ELT_RESEARCH_DEC2025.md) | GenAI-Augmented ELT research | Data Engineers |
+| [`docs/NODEJS_VERTEX_BATCH_GUIDE.md`](docs/NODEJS_VERTEX_BATCH_GUIDE.md) | Node.js Vertex AI implementation guide | Backend Engineers |
 | [`docs/KIRO_EXTRACTION_FINAL_REPORT.md`](docs/KIRO_EXTRACTION_FINAL_REPORT.md) | Vector & conversation extraction results | Engineers |
 | [`docs/KIRO_ANALYSIS_REPORT.md`](docs/KIRO_ANALYSIS_REPORT.md) | Deep dive into KIRO architecture | Data Scientists |
 | [`docs/CODE_ANALYSIS_IDEOLOGY.md`](docs/CODE_ANALYSIS_IDEOLOGY.md) | Intent-over-syntax analysis framework | Architects |
@@ -88,6 +92,8 @@ See [`docs/ISSUES.md`](docs/ISSUES.md) for full breakdown.
 **Looking for...?**
 
 - **How to install** → [`docs/SETUP_GUIDE.md`](docs/SETUP_GUIDE.md)
+- **Idempotent scripts** → [`docs/IDEMPOTENT_SCRIPTS.md`](docs/IDEMPOTENT_SCRIPTS.md)
+- **Batch processing** → [`docs/VERTEX_AI_BATCH_PIPELINE.md`](docs/VERTEX_AI_BATCH_PIPELINE.md)
 - **What's done** → [`docs/WORK_SUMMARY_DEC21.md`](docs/WORK_SUMMARY_DEC21.md)
 - **What's broken** → [`docs/ISSUES.md`](docs/ISSUES.md)
 - **Architecture** → [`docs/README.md`](docs/README.md#-architecture)
