@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@google-cloud/aiplatform": "^6.0.0",
+    "@google-cloud/storage": "^7.18.0"
+  }
+}
