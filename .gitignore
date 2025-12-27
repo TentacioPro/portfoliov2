@@ -72,3 +72,5 @@ workspace-storage/
 
 data/exports/
 sqlite/
+batch_input.jsonl
+GITHUB PAT local-dev-pc-dec25-TENTACIOPRO.txt

@@ -7,6 +7,24 @@ Complete transformation from single React app to full-stack AI-native system wit
 
 ### Latest Changes
 
+#### Vertex AI Batch Processing - Production Run (Dec 26, 2025)
+- **CURRENT SESSION** `feat: Vertex AI Batch Prediction with Gemini 2.5 Flash`
+  - **Batch Submission**: 13,520 documents (4.32 GB) submitted to Vertex AI
+  - **Model Fix**: Corrected model ID from `gemini-2.5-flash-001` to `gemini-2.5-flash-preview-05-20`
+  - **Scripts Created**:
+    * `trigger_batch_processing.js` - Upload to GCS + Submit batch job
+    * `import-batch-results.js` - Download results + Import to MongoDB
+  - **Idempotency**: 3-layer verification (file hash, GCS size, job state)
+  - **GCS Bucket**: `gs://maaxly-brain-batch-storage/`
+  - **Status**: Batch job running, awaiting completion
+
+#### Idempotent Scripts Revamp (Dec 25, 2025)
+- **eb0a10b** `docs: update existing documentation`
+  - All 6 pipeline scripts now fully idempotent
+  - Added `--status` flag to fleet-commander for pipeline dashboard
+  - Created `docs/IDEMPOTENT_SCRIPTS.md` with verification patterns
+  - Metadata tracking via `.export_meta.json` and `.import_meta.json`
+
 #### Code Analysis Ideology Upgrade (Dec 17, 2024)
 - **e884659** `feat: upgrade code analysis with Senior Software Architect ideology`
   - **New LLM Prompt**: "Focus on INTENT over syntax" with reverse engineering capability

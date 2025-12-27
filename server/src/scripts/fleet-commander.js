@@ -30,12 +30,13 @@ async function showStatusDashboard() {
         
         // Raw Conversations
         const rawTotal = await db.collection('rawconversations').countDocuments();
-        const rawProcessed = await db.collection('rawconversations').countDocuments({ processed: true });
-        const rawBatched = await db.collection('rawconversations').countDocuments({ batch_submitted: true });
         
-        // Neural Archives
-        const archivesTotal = await db.collection('neuralarchives').countDocuments();
-        const archivesVectorized = await db.collection('neuralarchives').countDocuments({ vectorized: true });
+        // NEW Collection for Archives
+        const archivesTotal = await db.collection('neuralarchivedash').countDocuments();
+        
+        // Vectors (Assuming you will vector this new collection)
+        // If vector collection hasn't been created yet, this might be 0
+        const archivesVectorized = await db.collection('neuralarchivedash').countDocuments({ vectorized: true });
         
         await mongoose.disconnect();
         
@@ -43,14 +44,8 @@ async function showStatusDashboard() {
         console.log('║  📥 PHASE 1: INGESTION (Loader)                              ║');
         console.log(`║     Raw Documents:        ${String(rawTotal).padStart(6)}                         ║`);
         console.log('║                                                              ║');
-        console.log('║  🤖 PHASE 2a: TRANSFORMATION (Online API)                    ║');
-        console.log(`║     Processed (Online):   ${String(rawProcessed).padStart(6)} / ${String(rawTotal).padEnd(6)}               ║`);
-        console.log('║                                                              ║');
-        console.log('║  ☁️  PHASE 2b: TRANSFORMATION (Batch API)                     ║');
-        console.log(`║     Submitted to Batch:   ${String(rawBatched).padStart(6)} / ${String(rawTotal).padEnd(6)}               ║`);
-        console.log('║                                                              ║');
-        console.log('║  📚 PHASE 3: NEURAL ARCHIVES                                 ║');
-        console.log(`║     Archives Created:     ${String(archivesTotal).padStart(6)}                         ║`);
+        console.log('║  📚 PHASE 3: NEURAL ARCHIVES (neuralarchivedash)             ║');
+        console.log(`║     Archives Imported:    ${String(archivesTotal).padStart(6)}                         ║`);
         console.log('║                                                              ║');
         console.log('║  🎯 PHASE 4: VECTORIZATION                                   ║');
         console.log(`║     Vectorized:           ${String(archivesVectorized).padStart(6)} / ${String(archivesTotal).padEnd(6)}               ║`);
@@ -61,13 +56,10 @@ async function showStatusDashboard() {
         console.log('\n💡 RECOMMENDATIONS:');
         if (rawTotal === 0) {
             console.log('   → Run: node fleet-commander.js --phase=ingest');
-        } else if (rawProcessed < rawTotal && rawBatched < rawTotal) {
-            console.log('   → For small batches: node fleet-commander.js --phase=transform');
-            console.log('   → For large datasets: node fleet-commander.js --phase=batch');
+        } else if (archivesTotal === 0) {
+            console.log('   → Run: node fleet-commander.js --phase=import');
         } else if (archivesTotal > 0 && archivesVectorized < archivesTotal) {
             console.log('   → Run: node fleet-commander.js --phase=vectorize');
-        } else if (archivesVectorized === archivesTotal && archivesTotal > 0) {
-            console.log('   ✅ All phases complete! Your Second Brain is ready.');
         }
         console.log('');
         
@@ -78,11 +70,12 @@ async function showStatusDashboard() {
     }
 }
 
-function runScript(scriptName) {
+function runScript(scriptName, scriptArgs = []) {
     return new Promise((resolve, reject) => {
         console.log(`\n🚀 Starting Phase: ${scriptName}`);
         const scriptPath = path.resolve(__dirname, scriptName);
-        const child = spawn('node', [scriptPath], { stdio: 'inherit' });
+        
+        const child = spawn('node', [scriptPath, ...scriptArgs], { stdio: 'inherit' });
 
         child.on('close', (code) => {
             if (code === 0) {
@@ -109,12 +102,17 @@ async function main() {
             await runScript('ingest-raw-workspace.js');
         }
         
-        if (phase === 'transform' || phase === 'all') {
+        if (phase === 'transform') {
             await runScript('archiver-gemini.js');
         }
 
         if (phase === 'batch') {
             await runScript('trigger_batch_processing.js');
+        }
+        
+        if (phase === 'import') {
+            // Updated to run the local import
+            await runScript('import-batch-results.js', ['--local']);
         }
         
         if (phase === 'vectorize' || phase === 'all') {
@@ -124,14 +122,21 @@ async function main() {
         console.log("\n🏁 All requested phases complete.");
         
         // Show final status
-        if (phase !== 'all') {
-            await showStatusDashboard();
-        }
+        await showStatusDashboard();
         
     } catch (error) {
         console.error("\n💥 Orchestration failed:", error.message);
         process.exit(1);
     }
 }
+
+// Print usage help
+console.log('\n📋 FLEET COMMANDER - ELT Pipeline Orchestrator');
+console.log('─'.repeat(50));
+console.log('Usage:');
+console.log('  node fleet-commander.js --status       Show pipeline status');
+console.log('  node fleet-commander.js --phase=import    Import batch results (Local File)');
+console.log('  node fleet-commander.js --phase=vectorize Qdrant vectorization');
+console.log('');
 
 main();

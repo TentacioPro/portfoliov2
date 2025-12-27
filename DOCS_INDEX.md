@@ -24,6 +24,7 @@
 ### Project Timeline
 | File | Content | Date |
 |------|---------|------|
+| [`docs/BATCH_PROCESSING_SESSION_DEC26.md`](docs/BATCH_PROCESSING_SESSION_DEC26.md) | Vertex AI batch production run | Dec 26 |
 | [`docs/WORK_SUMMARY_DEC21.md`](docs/WORK_SUMMARY_DEC21.md) | Complete 8-phase timeline | Dec 21-25 |
 | [`docs/DEC25_MONGODB_IMPORT_SESSION.md`](docs/DEC25_MONGODB_IMPORT_SESSION.md) | Docker mongoimport methodology | Dec 25 |
 | [`docs/dec21-experiment with chatdata extraction.md`](docs/dec21-experiment%20with%20chatdata%20extraction.md) | Full extraction journey | Dec 21 |
@@ -39,6 +40,13 @@
 | [`docs/KIRO_ANALYSIS_REPORT.md`](docs/KIRO_ANALYSIS_REPORT.md) | Deep dive into KIRO architecture | Data Scientists |
 | [`docs/CODE_ANALYSIS_IDEOLOGY.md`](docs/CODE_ANALYSIS_IDEOLOGY.md) | Intent-over-syntax analysis framework | Architects |
 | [`docs/WORKSPACE_EXTRACTION_COMPLETE.md`](docs/WORKSPACE_EXTRACTION_COMPLETE.md) | Extraction statistics & methodology | Data Engineers |
+
+### Deep Research
+| File | Topic |
+|------|-------|
+| [`docs/deep research/GEMINI_MODEL_ID_RESEARCH.md`](docs/deep%20research/GEMINI_MODEL_ID_RESEARCH.md) | Gemini model ID format for Vertex AI |
+| [`docs/deep research/Node.js Implementation Guide_ Cost-Optimized Generative ELT on Vertex AI.md`](docs/deep%20research/Node.js%20Implementation%20Guide_%20Cost-Optimized%20Generative%20ELT%20on%20Vertex%20AI.md) | Cost optimization strategies |
+| [`docs/deep research/Vertex AI Batch GenAI ELT Guide.md`](docs/deep%20research/Vertex%20AI%20Batch%20GenAI%20ELT%20Guide.md) | Batch API implementation guide |
 
 ### Reference
 | File | Content |
