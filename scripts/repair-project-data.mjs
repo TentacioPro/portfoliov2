@@ -66,7 +66,7 @@ const updated = projects.map((project) => ({
   githubUrl: repoUrl,
 }));
 
-const serialized = `export const projects = ${JSON.stringify(updated, null, 2)};\n`;
+const serialized = 'export const projects = ' + JSON.stringify(updated, null, 2) + ';\n';
 fs.writeFileSync(path.resolve('src/data/projects.js'), serialized);
 fs.mkdirSync(path.resolve('public/docs'), { recursive: true });
 for (const project of updated) {
