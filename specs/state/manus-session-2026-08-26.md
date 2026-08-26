@@ -17,3 +17,9 @@
 - Gate: Verification confirmed 40 records, zero missing icons/URL fields/docs, zero placeholder image fields, and a minimum summary length of 190 words.
 - Blockers: An initial generator pass preserved the placeholder field; the serializer and data output were corrected before continuing.
 - Next: Implement the responsive archive, About section, and single dark theme.
+
+## [2026-08-26 03:20 IST] Task 2 Correction Complete
+- Decision: Removed unused legacy components, prompt data, and the external-API indexer so the shipped surface has one navigation model, one dark theme, and no stale toggle or placeholder regeneration path.
+- Gate: `npm run lint` passed with zero warnings/errors and `npm run build` passed. The Vite bundle remains image-light and the active routes are `/`, `/about`, and `/docs`.
+- Blockers: None.
+- Next: Start the dev server and run responsive/browser and Lighthouse verification.
