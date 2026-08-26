@@ -59,12 +59,16 @@ function createSummary(project) {
   return `${output}\n`;
 }
 
-const updated = projects.map((project) => ({
-  ...project,
-  icon: chooseIcon(project),
-  liveUrl: null,
-  githubUrl: repoUrl,
-}));
+const updated = projects.map((project) => {
+  const updatedProject = {
+    ...project,
+    icon: chooseIcon(project),
+    liveUrl: null,
+    githubUrl: repoUrl,
+  };
+  delete updatedProject.image;
+  return updatedProject;
+});
 
 const serialized = 'export const projects = ' + JSON.stringify(updated, null, 2) + ';\n';
 fs.writeFileSync(path.resolve('src/data/projects.js'), serialized);
