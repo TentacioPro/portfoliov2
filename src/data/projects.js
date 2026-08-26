@@ -629,4 +629,4 @@ export const projects = [
     "liveUrl": null,
     "githubUrl": "https://github.com/TentacioPro/portfoliov2"
   }
-];\n
+];
