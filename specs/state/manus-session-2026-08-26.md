@@ -29,3 +29,9 @@
 - Gate: `npm run lint` passed; `npm run build` passed; `node scripts/verify-portfolio.mjs` passed with 40 projects, 40 local docs, and all four required artifacts; production Lighthouse scored Performance 100, Accessibility 100, Best Practices 100, and SEO 100. Responsive screenshots exist at 375px, 768px, and 1440px. Browser findings are preserved in `specs/state/browser-findings.md`.
 - Blockers: The brief states 29 projects, while the checked-out main branch contains 40. All existing records were preserved and all 40 were repaired.
 - Next: Deliver the completed branch, commits, artifacts, and verification summary.
+
+## [2026-08-26 04:12 IST] Task 4 Complete
+- Decision: Audited the 11 additional `-summary` records. Nine are duplicate summary pairs and are marked with `isDuplicate: true`, `duplicateOf`, and `duplicateNote` in `src/data/projects.js`. Two are real standalone rollups—RAG Pipeline and Full Stack Portfolio—and are marked with `isDuplicate: false`, `duplicateOf: null`, and an explanatory note. No records were deleted.
+- Gate: `node scripts/audit-project-duplicates.mjs` found 11 summary records; annotation verification found 9 duplicate pairs and 2 standalone records. `npm run lint` and `npm run build` both passed.
+- Blockers: None.
+- Next: Deploy the updated branch to GitHub Pages and verify the live URL.

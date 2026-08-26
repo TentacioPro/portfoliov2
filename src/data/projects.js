@@ -174,7 +174,10 @@ export const projects = [
     "downloadUrl": "/docs/18_ChatGPT_Clone_Full_Stack_Summary.md",
     "icon": "Brain",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": true,
+    "duplicateOf": "18-chatgpt-clone-full-stack",
+    "duplicateNote": "Summary record retained for provenance; overlaps the paired project record."
   },
   {
     "title": "ChatGPT Clone",
@@ -231,7 +234,10 @@ export const projects = [
     "downloadUrl": "/docs/15_n8n_Self_Hosted_AI_Starter_Summary.md",
     "icon": "Brain",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": true,
+    "duplicateOf": "15-n8n-self-hosted-ai-starter",
+    "duplicateNote": "Summary record retained for provenance; overlaps the paired project record."
   },
   {
     "title": "AI Workflow Automation",
@@ -276,7 +282,10 @@ export const projects = [
     "downloadUrl": "/docs/13_DOCS_Scraper_Vector_Database_Summary.md",
     "icon": "UsersRound",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": false,
+    "duplicateOf": null,
+    "duplicateNote": "Standalone rollup retained; related to other work but not a duplicate record."
   },
   {
     "title": "Vector DB Scraper",
@@ -304,7 +313,10 @@ export const projects = [
     "downloadUrl": "/docs/12_AWS_Scraper_Cloud_Documentation_Summary.md",
     "icon": "Brain",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": true,
+    "duplicateOf": "12-aws-scraper-cloud-documentation",
+    "duplicateNote": "Summary record retained for provenance; overlaps the paired project record."
   },
   {
     "title": "AWS Scraper",
@@ -333,7 +345,10 @@ export const projects = [
     "downloadUrl": "/docs/11_AI_WebScraper_Intelligent_Extraction_Summary.md",
     "icon": "Brain",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": true,
+    "duplicateOf": "11-ai-webscraper-intelligent-extraction",
+    "duplicateNote": "Summary record retained for provenance; overlaps the paired project record."
   },
   {
     "title": "AI Web Scraper",
@@ -407,7 +422,10 @@ export const projects = [
     "downloadUrl": "/docs/07_NotionClone_Collaborative_Editor_Summary.md",
     "icon": "UsersRound",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": true,
+    "duplicateOf": "07-notionclone-collaborative-editor",
+    "duplicateNote": "Summary record retained for provenance; overlaps the paired project record."
   },
   {
     "title": "Collaborative Editor",
@@ -452,7 +470,10 @@ export const projects = [
     "downloadUrl": "/docs/05_Project_Management_System_MERN_Summary.md",
     "icon": "Workflow",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": true,
+    "duplicateOf": "05-project-management-system-mern",
+    "duplicateNote": "Summary record retained for provenance; overlaps the paired project record."
   },
   {
     "title": "MERN Project Manager",
@@ -497,7 +518,10 @@ export const projects = [
     "downloadUrl": "/docs/03_Voice_Agents_OpenAI_Workshop_Summary.md",
     "icon": "Brain",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": true,
+    "duplicateOf": "03-voice-agents-openai-workshop",
+    "duplicateNote": "Summary record retained for provenance; overlaps the paired project record."
   },
   {
     "title": "Voice AI Agents",
@@ -527,7 +551,10 @@ export const projects = [
     "downloadUrl": "/docs/02_Agentic_OS_Local_LLM_Summary.md",
     "icon": "Brain",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": true,
+    "duplicateOf": "02-agentic-os-local-llm",
+    "duplicateNote": "Summary record retained for provenance; overlaps the paired project record."
   },
   {
     "title": "Local LLM Infrastructure",
@@ -557,7 +584,10 @@ export const projects = [
     "downloadUrl": "/docs/01_Agents_From_Scratch_LangGraph_Summary.md",
     "icon": "Brain",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": true,
+    "duplicateOf": "01-agents-from-scratch-langgraph",
+    "duplicateNote": "Summary record retained for provenance; overlaps the paired project record."
   },
   {
     "title": "AI Email Assistant",
@@ -587,6 +617,9 @@ export const projects = [
     "downloadUrl": "/docs/00_MASTER_PORTFOLIO_SUMMARY.md",
     "icon": "Brain",
     "liveUrl": null,
-    "githubUrl": "https://github.com/TentacioPro/portfoliov2"
+    "githubUrl": "https://github.com/TentacioPro/portfoliov2",
+    "isDuplicate": false,
+    "duplicateOf": null,
+    "duplicateNote": "Standalone rollup retained; related to other work but not a duplicate record."
   }
 ];
