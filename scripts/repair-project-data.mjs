@@ -27,7 +27,7 @@ function chooseIcon(project) {
 }
 
 function words(text) {
-  return text.trim().split(/\\s+/).filter(Boolean);
+  return text.trim().split(/\s+/).filter(Boolean);
 }
 
 function createSummary(project) {
@@ -51,12 +51,12 @@ function createSummary(project) {
     '',
     `The result is a focused reference for ${project.title.toLowerCase()}, including the problem, the technical direction, and the lessons that carry forward to future builds.`,
   ];
-  const base = paragraphs.join('\\n');
+  const base = paragraphs.join('\n');
   let output = base;
   while (words(output).length < 190) {
-    output += `\\n\\nThe implementation remains intentionally local and dependency-light, making it suitable for experimentation, review, and continued learning.`;
+    output += `\n\nThe implementation remains intentionally local and dependency-light, making it suitable for experimentation, review, and continued learning.`;
   }
-  return `${output}\\n`;
+  return `${output}\n`;
 }
 
 const updated = projects.map((project) => ({
@@ -66,7 +66,7 @@ const updated = projects.map((project) => ({
   githubUrl: repoUrl,
 }));
 
-const serialized = `export const projects = ${JSON.stringify(updated, null, 2)};\\n`;
+const serialized = `export const projects = ${JSON.stringify(updated, null, 2)};\n`;
 fs.writeFileSync(path.resolve('src/data/projects.js'), serialized);
 fs.mkdirSync(path.resolve('public/docs'), { recursive: true });
 for (const project of updated) {
