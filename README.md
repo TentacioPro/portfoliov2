@@ -1,5 +1,7 @@
 # Experimental Portfolio - The Archive
 
+[![CI](https://github.com/TentacioPro/portfoliov2/actions/workflows/deploy.yml/badge.svg)](https://github.com/TentacioPro/portfoliov2/actions/workflows/deploy.yml)
+
 A digital garden for my experiments, pivots, and code. Built with React, Vite, Tailwind CSS, and Framer Motion.
 
 ## Getting Started
