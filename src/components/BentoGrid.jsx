@@ -16,7 +16,7 @@ function ProjectCard({ project, index, onSelect }) {
       <div className="project-card-art" aria-hidden="true"><IconGlyph name={project.icon} size={isFeature ? 58 : 42} /><span className="project-card-index">{String(index + 1).padStart(2, '0')}</span></div>
       <div className="relative z-10 flex min-h-52 flex-col justify-between p-5 sm:min-h-56 sm:p-6">
         <div className="flex items-start justify-between gap-4"><div className="flex flex-wrap gap-2">{project.tags.slice(0, 2).map((tag) => <span key={tag} className="tag">{tag}</span>)}</div><span className="icon-button opacity-100 sm:opacity-0 sm:group-hover:opacity-100"><ArrowUpRight size={15} /></span></div>
-        <div><h3 className={`${isFeature ? 'text-2xl' : 'text-xl'} font-semibold tracking-tight`}>{project.title}</h3>{isFeature && <p className="mt-2 line-clamp-2 max-w-2xl text-sm leading-6 text-ink-muted">{project.description}</p>}</div>
+        <div><h3 className={`${isFeature ? 'text-2xl' : 'text-xl'} font-semibold tracking-tight`}>{project.title}</h3>{isFeature && <p className="mt-2 line-clamp-2 max-w-2xl text-sm leading-6 text-ink-accessible">{project.description}</p>}</div>
       </div>
     </article>
   );
@@ -43,7 +43,7 @@ export default function BentoGrid() {
             <div className="mb-8 flex h-28 items-center justify-between rounded-2xl border border-accent/20 bg-accent/5 px-7 text-accent"><IconGlyph name={selectedProject.icon} size={56} /><span className="eyebrow text-accent">Project brief</span></div>
             <div className="flex flex-wrap gap-2">{selectedProject.tags.map((tag) => <span key={tag} className="tag">{tag}</span>)}</div>
             <h2 className="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl">{selectedProject.title}</h2>
-            <p className="mt-5 text-base leading-8 text-ink-muted">{selectedProject.description}</p>
+            <p className="mt-5 text-base leading-8 text-ink-accessible">{selectedProject.description}</p>
             <div className="mt-8 flex flex-wrap gap-3 border-t border-ink-line pt-6"><a className="button-primary" href={selectedProject.downloadUrl} target="_blank" rel="noreferrer"><BookOpen size={16} /> Read brief</a>{selectedProject.githubUrl && <a className="button-secondary" href={selectedProject.githubUrl} target="_blank" rel="noreferrer">GitHub <ExternalLink size={15} /></a>}{selectedProject.liveUrl && <a className="button-secondary" href={selectedProject.liveUrl} target="_blank" rel="noreferrer">Live site <ExternalLink size={15} /></a>}</div>
           </div>
         </div>

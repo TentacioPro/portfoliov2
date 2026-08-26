@@ -10,6 +10,7 @@ export default {
           raised: '#1c1c1c',
           text: '#e5e5e5',
           muted: '#737373',
+          accessible: '#a3a3a3',
           line: '#292929',
         },
         accent: {

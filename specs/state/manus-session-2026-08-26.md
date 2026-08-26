@@ -23,3 +23,9 @@
 - Gate: `npm run lint` passed with zero warnings/errors and `npm run build` passed. The Vite bundle remains image-light and the active routes are `/`, `/about`, and `/docs`.
 - Blockers: None.
 - Next: Start the dev server and run responsive/browser and Lighthouse verification.
+
+## [2026-08-26 03:38 IST] Task 3 Complete
+- Decision: Kept the production implementation dependency-light and used the production preview rather than the Vite development server for Lighthouse, so compression and minification scores reflect the shipped build.
+- Gate: `npm run lint` passed; `npm run build` passed; `node scripts/verify-portfolio.mjs` passed with 40 projects, 40 local docs, and all four required artifacts; production Lighthouse scored Performance 100, Accessibility 100, Best Practices 100, and SEO 100. Responsive screenshots exist at 375px, 768px, and 1440px. Browser findings are preserved in `specs/state/browser-findings.md`.
+- Blockers: The brief states 29 projects, while the checked-out main branch contains 40. All existing records were preserved and all 40 were repaired.
+- Next: Deliver the completed branch, commits, artifacts, and verification summary.

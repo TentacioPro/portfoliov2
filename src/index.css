@@ -20,13 +20,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @layer components {
   .site-shell { @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12; }
   .panel { @apply rounded-3xl border border-ink-line bg-ink-card; }
-  .eyebrow { @apply text-[10px] font-semibold uppercase tracking-[0.22em] text-ink-muted; }
+  .eyebrow { @apply text-[10px] font-semibold uppercase tracking-[0.22em] text-ink-accessible; }
   .display-text { @apply text-5xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-7xl lg:text-[7.25rem]; }
   .section-title { @apply text-3xl font-semibold tracking-[-0.04em] sm:text-5xl; }
   .button-primary { @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-ink transition-transform hover:-translate-y-0.5 hover:bg-accent-bright; }
   .button-secondary { @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink-line bg-ink-card px-5 py-3 text-sm font-semibold text-ink-text transition-colors hover:border-ink-muted hover:bg-ink-raised; }
-  .tag { @apply rounded-full border border-ink-line bg-ink-raised px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-ink-muted; }
-  .icon-button { @apply flex h-8 w-8 items-center justify-center rounded-full border border-ink-line bg-ink-raised text-ink-muted transition-colors group-hover:border-accent/60 group-hover:text-accent; }
+  .tag { @apply rounded-full border border-ink-line bg-ink-raised px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-ink-accessible; }
+  .icon-button { @apply flex h-8 w-8 items-center justify-center rounded-full border border-ink-line bg-ink-raised text-ink-accessible transition-colors group-hover:border-accent/60 group-hover:text-accent; }
   .project-card { @apply relative cursor-pointer overflow-hidden rounded-3xl border border-ink-line bg-ink-card transition-transform duration-300 hover:-translate-y-1 hover:border-accent/50; }
   .project-card-art { @apply absolute inset-x-0 top-0 flex h-28 items-center justify-between bg-accent/[0.06] px-6 text-accent transition-colors duration-300 group-hover:bg-accent/[0.12]; }
   .project-card-index { @apply self-start pt-1 text-[10px] font-semibold tracking-[0.2em] text-accent/50; }
