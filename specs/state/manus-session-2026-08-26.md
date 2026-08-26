@@ -35,3 +35,9 @@
 - Gate: `node scripts/audit-project-duplicates.mjs` found 11 summary records; annotation verification found 9 duplicate pairs and 2 standalone records. `npm run lint` and `npm run build` both passed.
 - Blockers: None.
 - Next: Deploy the updated branch to GitHub Pages and verify the live URL.
+
+## [2026-08-26 04:28 IST] Task 5 Complete
+- Decision: Published `manus/polish-portfolio` to GitHub, deployed GitHub Pages through the existing `npm run deploy` script, and opened PR #2 into `main` without merging. Added an explicit live portfolio section to the TentacioPro profile README and pushed it directly to that profile repository's `main` branch.
+- Gate: The portfolio branch tracks `origin/manus/polish-portfolio`; Pages serves the new `dist/index.html` from `gh-pages`; the public URL is `https://tentaciopro.github.io/portfoliov2/`; profile README commit `3dd8e24` is on `origin/main`; PR #2 is open and not merged.
+- Blockers: None.
+- Next: Deliver the live URL, profile README update, PR link, and duplicate audit summary for review.
