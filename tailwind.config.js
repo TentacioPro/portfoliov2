@@ -1,31 +1,30 @@
-/** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        swiss: {
-          bg: '#FAFAF9', // Stone 50
-          text: '#18181b', // Zinc 900
-          accent: '#f97316', // Orange 500
-          secondary: '#4f46e5', // Indigo 600
-        }
+        ink: {
+          DEFAULT: '#0a0a0a',
+          card: '#141414',
+          raised: '#1c1c1c',
+          text: '#e5e5e5',
+          muted: '#737373',
+          accessible: '#a3a3a3',
+          line: '#292929',
+        },
+        accent: {
+          DEFAULT: '#22c55e',
+          bright: '#4ade80',
+        },
       },
       fontFamily: {
-        sans: ['Instrument Sans', 'sans-serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
-        'noise': "url('/noise.svg')",
+        noise: "url('/noise.svg')",
       },
-      boxShadow: {
-        'soft': '0 20px 40px -15px rgba(0, 0, 0, 0.05)',
-        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
-      }
     },
   },
   plugins: [],
-}
+};
