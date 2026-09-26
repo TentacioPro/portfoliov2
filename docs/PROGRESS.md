@@ -11,3 +11,4 @@
 ## Gates
 - G0 backups: branches `backup/gh-pages-2026-09-27` (b9fdf2f) and `backup/main-2026-09-27` (aaa9eeb) pushed; tags `pre-v3-gh-pages`, `pre-v3-main` local only (proxy refused tag push). Secret scan of tree and history: no keys, tokens or env files found. PASS (tags noted). Next: G1a TASTE.md.
 - G1a TASTE.md: written from DRF 06/09/11/12/13/16/17/18, stitch/05 and RR 54/56; 15 ranked rules. PASS (2026-09-27). Next: G1b three variants in Claude Design.
+- G1b variants: 3 variants x 3 frames in a private Claude Design canvas; critique + one fix pass; winner V1 Ledger 12/12, both gates pass (V2 11, V3 11). PASS (2026-09-27). Next: G2 build.
