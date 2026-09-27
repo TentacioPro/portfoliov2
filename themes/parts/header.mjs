@@ -1,7 +1,7 @@
 // Header variants. Same markup (so the theme switch and skip link behave the same); layout comes from CSS.
 // From: pillbar (R10 Soft, R11), topleft (Chart, Poster), topright (Geometric, Hollow), tabs (Product),
 // bottom (Ink: a fixed bar at the foot of the screen on wider screens), vertical (Ma: a left rail on wide screens), none (Issue).
-const markup = (x, cls, withNav = true) => `<header class="top h-${cls}">
+export const markup = (x, cls, withNav = true) => `<header class="top h-${cls}">
   <a class="name" href="${x.B}">${x.esc(x.C.person.name)}</a>
   ${withNav ? `<nav class="nav card" aria-label="Site">${x.nav.map(([t, h, k]) => `<a href="${h}"${k === x.current ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</nav>` : ''}
   <div class="aside"><span class="social">${x.C.person.links.map((l) => `<a href="${l.href}">${x.esc(l.label)}</a>`).join('')}</span>${x.toggle ? `

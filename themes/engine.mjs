@@ -9,9 +9,13 @@ import hero from './parts/hero.mjs';
 import work from './parts/work.mjs';
 import { frame, blocks, project } from './parts/layout.mjs';
 import { vizCss } from './parts/viz.mjs';
+import * as M from './parts/motion.mjs';
 import { FONTS, fontStack, fontsQuery } from './fonts.mjs';
 
-export const PARTS = { header, hero, work, frame, blocks, project };
+export const PARTS = {
+  header: { ...header, ...M.header }, hero: { ...hero, ...M.hero }, work: { ...work, ...M.work },
+  frame: { ...frame, ...M.frame }, blocks, project,
+};
 export const SECTIONS = ['hero', 'work', 'experiments', 'alsoReal', 'path', 'education', 'contact'];
 export const DEFAULT_STYLE = 'r11-soft-ink';
 export { STYLES, FONTS };
@@ -33,9 +37,9 @@ export function resolve(theme = {}) {
   const have = Object.keys(st.modes);
   let modes = have;
   if (theme.modes === 'light' || theme.modes === 'dark') modes = have.includes(theme.modes) ? [theme.modes] : have;
-  const font = { body: st.fonts.body, display: st.fonts.display, ...(theme.font || {}) };
-  for (const k of ['body', 'display']) if (!FONTS[font[k]]) { errors.push(`unknown font "${font[k]}"`); font[k] = st.fonts[k]; }
-  const global = { wrap: '1296px', font: fontStack(font.body), 'font-d': fontStack(font.display), ...st.global, ...(theme.tokens?.all || {}) };
+  const font = { body: st.fonts.body, display: st.fonts.display, mono: st.fonts.mono || 'IBM Plex Mono', ...(theme.font || {}) };
+  for (const k of ['body', 'display', 'mono']) if (!FONTS[font[k]]) { errors.push(`unknown font "${font[k]}"`); font[k] = st.fonts[k] || 'IBM Plex Mono'; }
+  const global = { wrap: '1296px', font: fontStack(font.body), 'font-d': fontStack(font.display), 'font-m': fontStack(font.mono), ...st.global, ...(theme.tokens?.all || {}) };
   const tok = (m) => ({ ...st.modes[m], ...(theme.tokens?.[m] || {}) });
   let tokens;
   if (modes.length === 2) {
@@ -45,13 +49,16 @@ export function resolve(theme = {}) {
     tokens = `:root { ${decl(global)} ${decl(tok(modes[0]))} color-scheme: ${modes[0]}; }`;
   }
   const partCss = Object.entries(slots).map(([slot, v]) => PARTS[slot][v].css).filter(Boolean).join('\n');
-  const css = `${tokens}\n\n${BASE}\n/* parts */\n${vizCss}\n${partCss}\n/* style: ${st.name} */\n${st.skin}\n${theme.css || ''}\n`;
+  const motion = theme.motion === false
+    ? '*,*::before,*::after{animation:none!important}.pause{display:none}'
+    : '@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important}.pause{display:none}}:root[data-motion="off"] .mo,:root[data-motion="off"] .mo *,:root[data-motion="off"] body::before{animation-play-state:paused!important}';
+  const css = `${tokens}\n\n${BASE}\n/* parts */\n${vizCss}\n${partCss}\n/* style: ${st.name} */\n${st.skin}\n/* motion */\n${motion}\n${theme.css || ''}\n`;
   const sections = (theme.home?.sections || SECTIONS).filter((s) => SECTIONS.includes(s));
   for (const s of SECTIONS) if (!sections.includes(s)) sections.push(s);
   const hidden = new Set(theme.home?.hidden || []);
   return {
     styleId, style: st, slots, modes, css, errors,
-    fonts: (mono) => fontsQuery([font.body, font.display], mono),
+    fonts: (mono) => fontsQuery([font.body, font.display, ...(st.fonts.mono || theme.font?.mono ? [font.mono] : [])], mono),
     themeColor: Object.fromEntries(modes.map((m) => [m, tok(m).bg])),
     bodyClass: Object.entries(slots).map(([k, v]) => `s-${k}-${v}`).join(' '),
     sections: sections.filter((s) => !hidden.has(s)),

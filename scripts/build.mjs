@@ -81,7 +81,7 @@ const WORDS = ['No things', 'One thing', 'Two things', 'Three things', 'Four thi
 const count = (n) => WORDS[n] || `${n} things`;
 const hasAbout = T.sections.includes('path') || T.sections.includes('education');
 const actions = (big = true) => `<div class="actions"><a class="btn cta" href="${mailto}">${big ? `Email ${C.person.email}` : 'Email me'}</a><button class="btn ghost" type="button" data-copy="${C.person.email}" aria-live="polite">Copy address</button></div>`;
-const X = { B, C, esc, tag, actions };
+const X = { B, C, esc, tag, actions, mailto, rev: new Date().toISOString().slice(0, 7).replace('-', '.') };
 
 function home() {
   const exp = C.experiments.map((e) => `<div class="card item"><h3>${esc(e.name)} ${tag(e.status)}</h3><p class="sub">${esc(e.text)}</p></div>`).join('');
