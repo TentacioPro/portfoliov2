@@ -18,8 +18,8 @@
 - **G2 build:** the React/Tailwind app was replaced by a static build (`scripts/build.mjs`): home, four project pages, Writing (hidden until the first published post), posts, 404, sitemap, robots. PASS.
 - **G3 facts audit:** `npm run audit:facts`. PASS.
 - **G4/G5 QA:** `npm run qa`: 70 checks (7 pages × 5 widths × 2 themes), 0 axe issues, 0 overflow, 0 tiny text. PASS.
-- **Writer:** `npm run writer` (local only). Tested end to end: create, publish and build made Writing appear; the test post and its log lines were then removed.
-- **G6 deploy:** NOT DONE. Waiting on the owner's go. Backups: `backup/main-2026-09-27`, `backup/gh-pages-2026-09-27`.
+- **Writer:** (retired later the same day; Workbench → Portfolio replaces it) `npm run writer` (local only). Tested end to end: create, publish and build made Writing appear; the test post and its log lines were then removed.
+- **G6 deploy:** (superseded by the next line) NOT DONE at first; waiting on the owner's go. Backups: `backup/main-2026-09-27`, `backup/gh-pages-2026-09-27`.
 - **G6 deploy: DONE 2026-09-27.** `main` fast-forwarded to `portfolio-v3` (old main kept as `backup/main-pre-v3` and `backup/main-2026-09-27`). Published with `npm run deploy` (all gates rerun: lint, build, facts audit, qa 70/70) to `gh-pages` (commit 692b944; old site kept as `backup/gh-pages-2026-09-27`). GitHub's "pages build and deployment" run succeeded.
 - **Publishing:** Pages serves from the `gh-pages` branch. The Actions deploy job was dropped (2026-09-27); `.github/workflows/ci.yml` now only installs, lints and builds on pushes to main. Publish with `npm run deploy`, which reruns every gate first. Stray files from the old site (`.eslintrc.cjs`, `.gitignore`) were removed from `gh-pages`.
 
@@ -30,3 +30,4 @@
 - **Editor:** Workbench → Portfolio (Resume-Research): site data, posts, appearance with live preview, sources and facts, publish. Every change is logged. `tools/writer` retired.
 - **Harness contract:** `AGENTS.md` (CLAUDE.md points to it).
 - **Live site:** unchanged (still R11 Soft + Ink) until the owner applies another look and deploys.
+- **Decision (2026-09-27):** the live static page stays as it is; admin is local only (Workbench → Portfolio on `portfolio-v3`); `portfolio-v3` is not merged into `main`.

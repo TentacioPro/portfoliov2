@@ -4,6 +4,9 @@ This is a static site (https://tentaciopro.github.io/portfoliov2/), built by `sc
 Claude Code, Codex, OpenCode, Cursor or any other harness can work on it by editing those files; the owner edits the same
 files through **Workbench → Portfolio** (Resume-Research/workbench), which logs every change. There is no database.
 
+## Working model
+**Working model (owner's decision, 2026-09-27):** the public static page stays as it is (Soft + Ink, live on gh-pages). Admin and management are **local only**: Workbench → Portfolio on 127.0.0.1, editing the portfoliov2 working copy on branch `portfolio-v3`. No merge to `main` is needed; `main` stays the source of what is live. The site changes only if the owner chooses to deploy (Publish page, typed confirmation, or `npm run deploy`).
+
 ## The files (the contract)
 | File | What it holds | Checked by |
 |---|---|---|

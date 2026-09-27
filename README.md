@@ -5,6 +5,9 @@ generated CSS file and a small script (theme switch, copy button, pause motion).
 `content/site.json`, `content/theme.json` and `content/posts/`. They are edited in **Workbench → Portfolio**
 (Resume-Research/workbench) or by any coding harness; see [AGENTS.md](AGENTS.md).
 
+## Working model
+**Working model (owner's decision, 2026-09-27):** the public static page stays as it is (Soft + Ink, live on gh-pages). Admin and management are **local only**: Workbench → Portfolio on 127.0.0.1, editing the portfoliov2 working copy on branch `portfolio-v3`. No merge to `main` is needed; `main` stays the source of what is live. The site changes only if the owner chooses to deploy (Publish page, typed confirmation, or `npm run deploy`).
+
 ## Commands
 | Command | What it does |
 |---|---|
