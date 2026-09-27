@@ -1,0 +1,267 @@
+{
+  "alsoReal": [
+    {
+      "name": "The ATS module",
+      "text": "Owned through a live demo in January 2026: a stored-procedure migration with a shadow-database cutover, Create React App to Vite, AI-assisted offer letters, and Groq, Unipile and MSAL integrations."
+    },
+    {
+      "name": "A working practice",
+      "text": "Context, prompt and harness engineering."
+    }
+  ],
+  "authorship": "I directed and reviewed the design; an AI coding agent implemented it.",
+  "certification": {
+    "name": "AWS Certified Cloud Practitioner (CLF-C02)",
+    "when": "March 2025, valid to March 2028"
+  },
+  "education": [
+    {
+      "name": "B.E. Computer Science",
+      "where": "St. Joseph's Institute of Technology, Chennai",
+      "when": "2022 to 2025",
+      "note": "CGPA 7.79/10"
+    },
+    {
+      "name": "Diploma in Computer Science Engineering",
+      "where": "Apollo Polytechnic College",
+      "when": "2019 to 2022",
+      "note": "92%"
+    }
+  ],
+  "experiments": [
+    {
+      "name": "Self-hosted coding assistant",
+      "status": "experiment",
+      "text": "Llama 3 8B on vLLM on a V100 32 GB, LanceDB retrieval, a Neo4j code-dependency graph, a FastAPI proxy, Docker. I root-caused a vLLM/Triton compile failure to a missing libcuda.so symlink."
+    },
+    {
+      "name": "Phoenix and Langfuse tracing trial",
+      "status": "experiment",
+      "text": "Compared the two for reading agent traces; fixed a Langfuse trace-loss bug (a missing flushAsync) during the trial. Arize Phoenix is the one I use."
+    }
+  ],
+  "person": {
+    "name": "Abishek M",
+    "role": "Applied AI engineer",
+    "place": "Chennai",
+    "display": "Real calls, real systems.",
+    "line": "I build voice and chat AI agents that run real calls, and connect them to real business systems.",
+    "employment": "Graduate Engineering Trainee at cluBITS Solutions, working as a software engineer.",
+    "location": "Based in Chennai; open to Bengaluru and Hyderabad.",
+    "email": "abishekmdev@gmail.com",
+    "emailSubject": "Hello Abishek (from your portfolio)",
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/TentacioPro"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/abishek-maharajan"
+      },
+      {
+        "label": "X",
+        "href": "https://x.com/abizhek_m"
+      }
+    ]
+  },
+  "projects": [
+    {
+      "id": "voice-agents",
+      "name": "Voice agents on ElevenLabs, with an MCP tool server",
+      "short": "Voice agents + MCP tool server",
+      "status": "live",
+      "key": {
+        "value": "91 of 113",
+        "label": "tool-server commits are mine"
+      },
+      "oneLine": "Seconds before a call ends, my dental agent calls a tool on my MCP server that writes the call’s state to the database, so the dental app shows it before the caller hangs up.",
+      "families": [
+        {
+          "name": "Interview agents",
+          "status": "live",
+          "text": "A technical-role interviewer and a functional (business-role) interviewer. About 10 to 15 real candidate interviews run."
+        },
+        {
+          "name": "Dental front-desk agents",
+          "status": "live",
+          "text": "Inbound and outbound calls: schedule, cancel and reschedule appointments; answer questions about providers, doctors and general website enquiries; lead conversion and lead management for dental patients."
+        },
+        {
+          "name": "Insurance-verification agent",
+          "status": "ready",
+          "text": "Speaks with insurance-provider representatives to collect the dental codes the existing RPA bot flow misses, and writes them to the database through MCP. Paired with the existing application by database polling on call creation, so the existing flow was not broken."
+        }
+      ],
+      "built": [
+        "15 ElevenLabs voice agents across two workspaces, in three families; 10 have logged usage.",
+        "Branching workflows of 9 to 10 nodes, with the LLM for each node chosen by task difficulty; up to about 50 versions on one agent.",
+        "The MCP-over-SSE tool server, built alone (91 of 113 commits): Bun and Express with a React front end, 11 SQL-backed tools (patients, appointments, availability, eligibility), on Azure App Service, shared by agents in two workspaces.",
+        "Multi-provider LLM orchestration across Groq, Azure OpenAI and Gemini, with live failover under rate limits.",
+        "Multilingual support with knowledge attached to the model; graceful and abrupt call endings handled."
+      ],
+      "checked": [
+        "474 conversations analysed through the API.",
+        "Test-driven development, a bug tracker and ordered SQL migrations on the tool server.",
+        "I read waterfall traces in Arize Phoenix to debug the agents.",
+        "I adapted the agents to ElevenLabs feature releases as they shipped, by trial and error."
+      ],
+      "notClaimed": [
+        "The phone lines and call services were built by other teams; I use them.",
+        "The insurance-verification agent is not live."
+      ],
+      "numbers": [
+        {
+          "value": "15",
+          "label": "voice agents, two workspaces"
+        },
+        {
+          "value": "91 of 113",
+          "label": "tool-server commits are mine"
+        },
+        {
+          "value": "11",
+          "label": "SQL-backed MCP tools"
+        },
+        {
+          "value": "474",
+          "label": "conversations analysed"
+        }
+      ]
+    },
+    {
+      "id": "translator",
+      "name": "cluBITSTranslator",
+      "short": "cluBITSTranslator",
+      "status": "ready",
+      "key": {
+        "value": "1",
+        "label": "enterprise client signed"
+      },
+      "oneLine": "A Dockerized FastAPI service that translates PDF, DOCX, XLSX and PPTX files and keeps their layout. Taken to a priced proposal.",
+      "built": [
+        "Per-format pipelines: OOXML text-node patching for Word and PowerPoint, openpyxl for Excel, font-fitted re-rendering with a QA validator for PDF.",
+        "OpenRouter vision models for OCR, a translation cache, per-job cost tracking, Azure Blob, MSSQL telemetry and crash recovery."
+      ],
+      "checked": [
+        "Taken to a priced commercial proposal: a hybrid of Azure Translator, Google Translate and a custom LLM under one subscription, positioned on price, OCR, analytics, India data residency and on-premise deployment.",
+        "One enterprise client has signed."
+      ],
+      "notClaimed": [
+        "The client is not named, and no usage volume is claimed."
+      ]
+    },
+    {
+      "id": "safesupport",
+      "name": "SafeSupport",
+      "short": "SafeSupport",
+      "status": "repo",
+      "key": {
+        "value": "123",
+        "label": "passing tests"
+      },
+      "oneLine": "A support-triage agent over real customer-support conversations, with an evaluation harness. Bulk labels wait for human sign-off.",
+      "built": [
+        "Intent classification, a retrieval-grounded draft reply, and a decision to auto-handle or escalate.",
+        "An evaluation harness with baselines and ablations; 123 passing tests."
+      ],
+      "checked": [
+        "In data prep I rejected mid-thread fragments: 24,253 of 106,860 brand replies, about 23%.",
+        "Bulk labelling waits for explicit human sign-off, because golden labels cannot come from the model class being evaluated."
+      ],
+      "notClaimed": [
+        "No accuracy figure is quoted here; the evaluation is in the repo."
+      ],
+      "numbers": [
+        {
+          "value": "123",
+          "label": "passing tests"
+        },
+        {
+          "value": "24,253 of 106,860",
+          "label": "replies rejected as mid-thread fragments"
+        }
+      ],
+      "link": {
+        "label": "SafeSupport on GitHub",
+        "href": "https://github.com/TentacioPro/SafeSupport"
+      }
+    },
+    {
+      "id": "agenticloop",
+      "name": "AgenticLoop",
+      "short": "AgenticLoop",
+      "status": "daily",
+      "key": {
+        "value": "~3 months",
+        "label": "used daily as my own harness"
+      },
+      "oneLine": "A spec-driven workflow for AI coding agents: read, red, green, gate, record, update.",
+      "built": [
+        "A workflow that evolved from published best practices, under the MIT licence."
+      ],
+      "checked": [
+        "Used daily for about three months as the harness for my own projects."
+      ],
+      "notClaimed": [
+        "It is not an invention; it evolved from published best practices."
+      ],
+      "link": {
+        "label": "AgenticLoop on GitHub",
+        "href": "https://github.com/TentacioPro/AgenticLoop"
+      }
+    }
+  ],
+  "publication": {
+    "title": "Detection of Sybil Attacks in VANET Using Transformer, with CNN Hybrid Architecture and Optimized by AdamW Optimizer",
+    "venue": "ICDSAAI 2025, Chennai, March 2025"
+  },
+  "site": {
+    "base": "/portfoliov2/",
+    "url": "https://tentaciopro.github.io/portfoliov2/",
+    "title": "Abishek M · Applied AI engineer",
+    "description": "Abishek M, applied AI engineer in Chennai: voice agents that write to a real database through an MCP tool server I built, an evaluated triage agent, and a plain note of what is live and what is not."
+  },
+  "statuses": {
+    "live": {
+      "label": "live",
+      "meaning": "Running with real callers or candidates."
+    },
+    "ready": {
+      "label": "ready for production",
+      "meaning": "Built and paired with its system; not live."
+    },
+    "repo": {
+      "label": "public repo",
+      "meaning": "The code is public; read it on GitHub."
+    },
+    "daily": {
+      "label": "used daily",
+      "meaning": "My own daily tool, for the time stated."
+    },
+    "experiment": {
+      "label": "experiment",
+      "meaning": "Explored, not used day to day."
+    }
+  },
+  "timeline": [
+    {
+      "when": "Aug 2025 – now",
+      "role": "Graduate Engineering Trainee",
+      "where": "cluBITS Solutions",
+      "text": "Working as a software engineer."
+    },
+    {
+      "when": "Aug – Nov 2025",
+      "role": "Freelance full-stack developer (weekends)",
+      "where": "Underdogs of Madras",
+      "text": "Pivoted an ATS-style request into a LinkedIn-style talent marketplace with the client: React/Vite, Express/MongoDB, JWT, Redis- and Kafka-backed messaging."
+    },
+    {
+      "when": "Jan – Jul 2025",
+      "role": "Software Developer Intern",
+      "where": "cluBITS Solutions",
+      "text": "Joined as an intern; Graduate Engineering Trainee from August 2025."
+    }
+  ]
+}

@@ -11,8 +11,9 @@
     "lint": "eslint scripts tools src --ext .js,.mjs --max-warnings 0",
     "audit:facts": "node scripts/audit-facts.mjs",
     "qa": "node scripts/qa.mjs",
-    "check": "npm run lint && npm run build && npm run audit:facts && npm run qa",
-    "deploy": "npm run check && gh-pages -d dist --dotfiles"
+    "check": "npm run lint && npm run validate && npm run build && npm run audit:facts && npm run qa",
+    "deploy": "npm run check && gh-pages -d dist --dotfiles",
+    "validate": "node scripts/validate-content.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

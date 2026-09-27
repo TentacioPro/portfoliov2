@@ -13,7 +13,7 @@ for (const f of files) {
   const t = text(fs.readFileSync(f, 'utf8')); const rel = path.relative(DIST, f);
   if (rel.startsWith('writing/') && rel !== 'writing/index.html') continue; // posts are the owner's own words
   for (const r of NEVER) if (r.test(t)) fails.push(`${rel}: NEVER ${r}`);
-  for (const n of t.match(/\d[\d,.]*%?/g) || []) if (!allowed.includes(n) && !/^(404|20\d\d)$/.test(n)) fails.push(`${rel}: number not in content.js: ${n}`);
+  for (const n of t.match(/\d[\d,.]*%?/g) || []) if (!allowed.includes(n) && !/^(404|20\d\d)$/.test(n)) fails.push(`${rel}: number not in content/site.json: ${n}`);
   if (/insurance-verification[^.]{0,80}\b(is live|in production)\b/i.test(t) || /self-hosted[^.]{0,80}\b(is live|in production)\b/i.test(t)) fails.push(`${rel}: EBV agent or self-hosted assistant called live/in production`);
 }
 const labels = new Set(Object.values(C.statuses).map((s) => s.label));

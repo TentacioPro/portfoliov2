@@ -1,0 +1,517 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Portfolio site data",
+  "type": "object",
+  "additionalProperties": false,
+  "x-order": [
+    "person",
+    "projects",
+    "experiments",
+    "alsoReal",
+    "timeline",
+    "education",
+    "certification",
+    "publication",
+    "statuses",
+    "authorship",
+    "site"
+  ],
+  "properties": {
+    "person": {
+      "type": "object",
+      "title": "Profile",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "role": {
+          "type": "string",
+          "title": "Role"
+        },
+        "place": {
+          "type": "string",
+          "title": "Place"
+        },
+        "display": {
+          "type": "string",
+          "title": "Display line",
+          "description": "The big headline."
+        },
+        "line": {
+          "type": "string",
+          "title": "One line",
+          "x-widget": "textarea"
+        },
+        "employment": {
+          "type": "string",
+          "title": "Employment",
+          "x-widget": "textarea"
+        },
+        "location": {
+          "type": "string",
+          "title": "Location"
+        },
+        "email": {
+          "type": "string",
+          "title": "Email",
+          "format": "email",
+          "pattern": "^[^@\\s]+@[^@\\s]+$"
+        },
+        "emailSubject": {
+          "type": "string",
+          "title": "Email subject"
+        },
+        "links": {
+          "type": "array",
+          "title": "Social links",
+          "items": {
+            "type": "object",
+            "title": "Link",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "URL",
+                "pattern": "^(https?://|mailto:|/)"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "place",
+        "display",
+        "line",
+        "employment",
+        "location",
+        "email",
+        "emailSubject",
+        "links"
+      ],
+      "additionalProperties": false
+    },
+    "projects": {
+      "type": "array",
+      "title": "Projects",
+      "description": "Each project gets a card on the home page and its own page.",
+      "items": {
+        "type": "object",
+        "title": "Project",
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Used in the URL: /work/<id>/. Lowercase letters, digits, hyphens.",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "name": {
+            "type": "string",
+            "title": "Full name"
+          },
+          "short": {
+            "type": "string",
+            "title": "Short name",
+            "description": "Used on cards."
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "One of the status keys (live, ready, repo, daily, experiment).",
+            "x-ref": "statuses"
+          },
+          "key": {
+            "type": "object",
+            "title": "Key value",
+            "description": "The one number on the card.",
+            "properties": {
+              "value": {
+                "type": "string",
+                "title": "Value"
+              },
+              "label": {
+                "type": "string",
+                "title": "Label"
+              }
+            },
+            "required": [
+              "value",
+              "label"
+            ],
+            "additionalProperties": false
+          },
+          "oneLine": {
+            "type": "string",
+            "title": "One line",
+            "x-widget": "textarea"
+          },
+          "families": {
+            "type": "array",
+            "title": "Families",
+            "description": "Optional groups shown on the project page.",
+            "items": {
+              "type": "object",
+              "title": "Family",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "title": "Name"
+                },
+                "status": {
+                  "type": "string",
+                  "title": "Status",
+                  "description": "One of the status keys (live, ready, repo, daily, experiment).",
+                  "x-ref": "statuses"
+                },
+                "text": {
+                  "type": "string",
+                  "title": "Text",
+                  "x-widget": "textarea"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "text"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "built": {
+            "type": "array",
+            "title": "What I built",
+            "items": {
+              "type": "string",
+              "title": "Item",
+              "x-widget": "textarea"
+            }
+          },
+          "checked": {
+            "type": "array",
+            "title": "How it was checked",
+            "items": {
+              "type": "string",
+              "title": "Item",
+              "x-widget": "textarea"
+            }
+          },
+          "notClaimed": {
+            "type": "array",
+            "title": "Not claimed",
+            "items": {
+              "type": "string",
+              "title": "Item",
+              "x-widget": "textarea"
+            }
+          },
+          "numbers": {
+            "type": "array",
+            "title": "Numbers",
+            "items": {
+              "type": "object",
+              "title": "Number",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "title": "Value",
+                  "description": "Shown big. Must be backed by a source."
+                },
+                "label": {
+                  "type": "string",
+                  "title": "Label"
+                }
+              },
+              "required": [
+                "value",
+                "label"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "link": {
+            "type": "object",
+            "title": "Link",
+            "description": "Optional.",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "URL",
+                "pattern": "^https?://"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "short",
+          "status",
+          "key",
+          "oneLine",
+          "built",
+          "checked",
+          "notClaimed"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "experiments": {
+      "type": "array",
+      "title": "Experiments",
+      "items": {
+        "type": "object",
+        "title": "Experiment",
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "One of the status keys (live, ready, repo, daily, experiment).",
+            "x-ref": "statuses"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "x-widget": "textarea"
+          }
+        },
+        "required": [
+          "name",
+          "status",
+          "text"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "alsoReal": {
+      "type": "array",
+      "title": "Also real",
+      "items": {
+        "type": "object",
+        "title": "Item",
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "x-widget": "textarea"
+          }
+        },
+        "required": [
+          "name",
+          "text"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "timeline": {
+      "type": "array",
+      "title": "Path",
+      "items": {
+        "type": "object",
+        "title": "Step",
+        "properties": {
+          "when": {
+            "type": "string",
+            "title": "When"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "where": {
+            "type": "string",
+            "title": "Where"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "x-widget": "textarea"
+          }
+        },
+        "required": [
+          "when",
+          "role"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "education": {
+      "type": "array",
+      "title": "Education",
+      "items": {
+        "type": "object",
+        "title": "Entry",
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "where": {
+            "type": "string",
+            "title": "Where"
+          },
+          "when": {
+            "type": "string",
+            "title": "When"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "required": [
+          "name",
+          "where",
+          "when"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "certification": {
+      "type": "object",
+      "title": "Certification",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "when": {
+          "type": "string",
+          "title": "When"
+        }
+      },
+      "required": [
+        "name",
+        "when"
+      ],
+      "additionalProperties": false
+    },
+    "publication": {
+      "type": "object",
+      "title": "Publication",
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "Title"
+        },
+        "venue": {
+          "type": "string",
+          "title": "Venue"
+        }
+      },
+      "required": [
+        "title",
+        "venue"
+      ],
+      "additionalProperties": false
+    },
+    "statuses": {
+      "type": "object",
+      "title": "Status labels",
+      "description": "The five status labels are fixed by the owner's rules; meanings can be edited.",
+      "additionalProperties": {
+        "type": "object",
+        "title": "Status",
+        "properties": {
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "meaning": {
+            "type": "string",
+            "title": "Meaning"
+          }
+        },
+        "required": [
+          "label",
+          "meaning"
+        ],
+        "additionalProperties": false
+      },
+      "x-fixed-keys": [
+        "live",
+        "ready",
+        "repo",
+        "daily",
+        "experiment"
+      ]
+    },
+    "authorship": {
+      "type": "string",
+      "title": "Authorship line",
+      "x-widget": "textarea"
+    },
+    "site": {
+      "type": "object",
+      "title": "Site",
+      "properties": {
+        "base": {
+          "type": "string",
+          "title": "Base path",
+          "pattern": "^/.*/$"
+        },
+        "url": {
+          "type": "string",
+          "title": "Site URL",
+          "pattern": "^https://"
+        },
+        "title": {
+          "type": "string",
+          "title": "Page title"
+        },
+        "description": {
+          "type": "string",
+          "title": "Meta description",
+          "x-widget": "textarea",
+          "maxLength": 300
+        }
+      },
+      "required": [
+        "base",
+        "url",
+        "title",
+        "description"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "person",
+    "projects",
+    "experiments",
+    "alsoReal",
+    "timeline",
+    "education",
+    "certification",
+    "publication",
+    "statuses",
+    "authorship",
+    "site"
+  ]
+}
