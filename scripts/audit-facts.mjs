@@ -3,8 +3,9 @@
 // Env: DIST_DIR (a scratch build) and SITE_JSON (a candidate site.json) let Workbench audit an edit before saving it.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import * as C from '../src/content.js';
-const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', 'dist');
+const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const files = []; (function walk(d) { for (const f of fs.readdirSync(d)) { const p = path.join(d, f); fs.statSync(p).isDirectory() ? walk(p) : p.endsWith('.html') && files.push(p); } })(DIST);
 const text = (h) => h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ');
 const NEVER = [/78%/, /200\+/, /10K\+/i, /36 dental codes/i, /9 ?min/i, /under 300 ?ms/i, /twilio/i, /\bSIP\b/, /phone number/i, /amazon connect/i, /onboardflow/i, /hackathon/i,

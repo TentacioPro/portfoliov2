@@ -6,12 +6,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import http from 'node:http';
+import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import { STYLES, PARTS } from '../themes/engine.mjs';
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TMP = path.join(ROOT, '.qa-presets'); const SHOTS = path.join(ROOT, 'qa-shots', 'presets');
 fs.rmSync(TMP, { recursive: true, force: true }); fs.mkdirSync(SHOTS, { recursive: true });
 const only = process.argv.slice(2);

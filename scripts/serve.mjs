@@ -2,7 +2,8 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
-const DIST = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', 'dist');
+import { fileURLToPath } from 'node:url';
+const DIST = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.xml': 'application/xml', '.txt': 'text/plain' };
 const PORT = Number(process.env.PORT || 4173);
 http.createServer((req, res) => {

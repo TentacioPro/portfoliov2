@@ -4,12 +4,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import * as C from '../src/content.js';
 import { readPosts } from './posts.mjs';
 import { resolve, PARTS } from '../themes/engine.mjs';
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = process.env.OUT_DIR ? path.resolve(process.env.OUT_DIR) : path.join(ROOT, 'dist');
 const T = resolve(JSON.parse(fs.readFileSync(process.env.THEME_JSON || path.join(ROOT, 'content', 'theme.json'), 'utf8')));
 for (const e of T.errors) console.warn(`theme: ${e}`);
