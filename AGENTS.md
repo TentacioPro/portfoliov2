@@ -7,6 +7,9 @@ files through **Workbench → Portfolio** (Resume-Research/workbench), which log
 ## Working model
 **Working model (owner's decision, 2026-09-27):** the public static page stays as it is (Soft + Ink, live on gh-pages). Admin and management are **local only**: Workbench → Portfolio on 127.0.0.1, editing the portfoliov2 working copy on branch `portfolio-v3`. No merge to `main` is needed; `main` stays the source of what is live. The site changes only if the owner chooses to deploy (Publish page, typed confirmation, or `npm run deploy`).
 
+## Effort matches the task
+Same policy as `Resume-Research/AGENTS.md`'s "Effort matches the task": editing an existing part or style inside the contract below is routine work, fine for a decent-reasoning model. Escalate for a new style/part family, a change to the engine (`themes/engine.mjs`), or anything touching the facts audit or deploy gate.
+
 ## The files (the contract)
 | File | What it holds | Checked by |
 |---|---|---|
