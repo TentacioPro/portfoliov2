@@ -1,39 +1,28 @@
-# Experimental Portfolio - The Archive
+# portfoliov2: Abishek M, applied AI engineer
 
-[![CI](https://github.com/TentacioPro/portfoliov2/actions/workflows/deploy.yml/badge.svg)](https://github.com/TentacioPro/portfoliov2/actions/workflows/deploy.yml)
+A static site served at https://tentaciopro.github.io/portfoliov2/. There is no framework in the browser: plain HTML, one CSS file, and a 1 kB script (the theme switch and the copy button). The design is Soft + Ink, with light and dark modes; see `docs/DESIGN.md`.
 
-A digital garden for my experiments, pivots, and code. Built with React, Vite, Tailwind CSS, and Framer Motion.
+## Commands
+| Command | What it does |
+|---|---|
+| `npm run build` | `src/content.js` plus published posts in `content/posts/` → `dist/` |
+| `npm run dev` | build, then serve at http://127.0.0.1:4173/portfoliov2/ |
+| `npm run writer` | the local writing app at http://127.0.0.1:4321 (see below) |
+| `npm run audit:facts` | G3: the built text against FACTS (NEVER list, numbers, status labels) |
+| `npm run qa` | Playwright and axe on every page, at 320/390/768/1280/1440, light and dark (set `CHROME` to a Chromium path if Playwright has no browser) |
+| `npm run check` | lint + build + audit + qa |
+| `npm run deploy` | `check`, then `gh-pages -d dist` (only on the owner's go) |
 
-## Getting Started
+## Content
+- **Every claim lives in `src/content.js`**, in the first person. Pages only arrange it.
+- **Posts** are `content/posts/<slug>.md` with front matter. Only `status: published` posts are built, and Writing stays out of the navigation until there is one.
 
-1.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-
-2.  **Run the development server:**
-    ```bash
-    npm run dev
-    ```
-
-3.  **Build for production:**
-    ```bash
-    npm run build
-    ```
-
-4.  **Deploy to GitHub Pages:**
-    ```bash
-    npm run deploy
-    ```
-
-## Project Structure
-
--   `src/components`: Reusable UI components (ProjectCard, ProjectDetail, etc.)
--   `src/data`: Mock data for projects.
--   `src/App.jsx`: Main application logic and layout.
--   `tailwind.config.js`: Custom theme configuration.
-
-## Customization
-
--   **Projects:** Edit `src/data/projects.js` to add your own projects.
--   **Theme:** Modify `tailwind.config.js` to change colors or fonts.
+## Local writing app (`tools/writer/`)
+- **Where it runs:** on 127.0.0.1 only. It is never built into `dist/` and never deployed.
+- **What it does:**
+  - lists drafts and published posts;
+  - edits markdown with a live preview;
+  - publishes or unpublishes after a confirmation;
+  - runs the build.
+- **The change log:** every action appends one timestamped line to `content/log.jsonl` (git-tracked).
+- **Publishing:** write, publish, build, then commit and push. Only static files leave your machine.
