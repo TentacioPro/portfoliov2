@@ -20,3 +20,5 @@
 - **G4/G5 QA:** `npm run qa`: 70 checks (7 pages × 5 widths × 2 themes), 0 axe issues, 0 overflow, 0 tiny text. PASS.
 - **Writer:** `npm run writer` (local only). Tested end to end: create, publish and build made Writing appear; the test post and its log lines were then removed.
 - **G6 deploy:** NOT DONE. Waiting on the owner's go. Backups: `backup/main-2026-09-27`, `backup/gh-pages-2026-09-27`.
+- **G6 deploy: DONE 2026-09-27.** `main` fast-forwarded to `portfolio-v3` (old main kept as `backup/main-pre-v3` and `backup/main-2026-09-27`). Published with `npm run deploy` (all gates rerun: lint, build, facts audit, qa 70/70) to `gh-pages` (commit 692b944; old site kept as `backup/gh-pages-2026-09-27`). GitHub's "pages build and deployment" run succeeded.
+- **Known:** Pages serves from the `gh-pages` branch, so the deploy job in `.github/workflows/deploy.yml` (actions/deploy-pages) fails on every push to main; its build job passes. Fix: either set Pages source to "GitHub Actions" in repo settings (owner only), or drop the deploy job. Until then, publish with `npm run deploy`.
