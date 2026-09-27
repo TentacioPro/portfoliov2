@@ -8,12 +8,13 @@
     "preview": "node scripts/serve.mjs",
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
     "writer": "node tools/writer/server.mjs",
-    "lint": "eslint scripts tools src --ext .js,.mjs --max-warnings 0",
+    "lint": "eslint scripts tools src themes --ext .js,.mjs --max-warnings 0",
     "audit:facts": "node scripts/audit-facts.mjs",
     "qa": "node scripts/qa.mjs",
     "check": "npm run lint && npm run validate && npm run build && npm run audit:facts && npm run qa",
     "deploy": "npm run check && gh-pages -d dist --dotfiles",
-    "validate": "node scripts/validate-content.mjs"
+    "validate": "node scripts/validate-content.mjs",
+    "qa:presets": "node scripts/qa-presets.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

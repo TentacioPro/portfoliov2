@@ -1,0 +1,7 @@
+{
+  "style": "r11-soft-ink",
+  "modes": "both",
+  "slots": {},
+  "tokens": {},
+  "home": { "sections": ["hero", "work", "experiments", "alsoReal", "path", "education", "contact"], "hidden": [] }
+}
