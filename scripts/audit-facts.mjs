@@ -1,9 +1,10 @@
 // G3 fact audit on the built HTML. Fails (exit 1) on any NEVER string, an unknown number, a missing or wrong
 // status label, the EBV agent or the self-hosted assistant called live or in production, or vendor/telephony names.
+// Env: DIST_DIR (a scratch build) and SITE_JSON (a candidate site.json) let Workbench audit an edit before saving it.
 import fs from 'node:fs';
 import path from 'node:path';
 import * as C from '../src/content.js';
-const DIST = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', 'dist');
+const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', 'dist');
 const files = []; (function walk(d) { for (const f of fs.readdirSync(d)) { const p = path.join(d, f); fs.statSync(p).isDirectory() ? walk(p) : p.endsWith('.html') && files.push(p); } })(DIST);
 const text = (h) => h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ');
 const NEVER = [/78%/, /200\+/, /10K\+/i, /36 dental codes/i, /9 ?min/i, /under 300 ?ms/i, /twilio/i, /\bSIP\b/, /phone number/i, /amazon connect/i, /onboardflow/i, /hackathon/i,
@@ -18,5 +19,5 @@ for (const f of files) {
 }
 const labels = new Set(Object.values(C.statuses).map((s) => s.label));
 for (const p of C.projects) if (!C.statuses[p.status] || !labels.has(C.statuses[p.status].label)) fails.push(`project ${p.id}: bad status`);
-if (C.projects.find((p) => p.id === 'voice-agents').families.find((f) => /insurance/i.test(f.name)).status !== 'ready') fails.push('EBV agent status must be ready');
+for (const p of C.projects) for (const f of p.families || []) if (/insurance/i.test(f.name) && f.status !== 'ready') fails.push('EBV agent status must be ready');
 console.log(`${files.length} pages audited`); if (fails.length) { console.log([...new Set(fails)].join('\n')); process.exit(1); } console.log('facts audit: pass');
