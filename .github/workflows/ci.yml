@@ -1,4 +1,4 @@
-name: CI and Deploy to GitHub Pages
+name: CI
 
 on:
   push:
@@ -9,11 +9,9 @@ on:
 permissions:
   contents: read
   issues: write
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -52,11 +50,6 @@ jobs:
           set -o pipefail
           npm run build 2>&1 | tee .ci-logs/build.log
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
       - name: Create issue for failed CI
         if: ${{ failure() }}
         env:
@@ -80,16 +73,3 @@ jobs:
           gh issue create \
             --title "CI failure on ${{ github.ref_name }} (${{ github.sha }})" \
             --body-file issue-body.md
-
-  deploy:
-    needs: build
-    if: ${{ needs.build.result == 'success' }}
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
