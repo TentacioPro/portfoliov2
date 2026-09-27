@@ -67,7 +67,11 @@ export function resolve(theme = {}) {
 
 export function catalog() {
   return {
-    styles: Object.fromEntries(Object.entries(STYLES).map(([id, s]) => [id, { name: s.name, round: s.round, note: s.note, modes: Object.keys(s.modes), fonts: s.fonts, defaults: s.defaults }])),
+    styles: Object.fromEntries(Object.entries(STYLES).map(([id, s]) => [id, {
+      name: s.name, round: s.round, note: s.note, modes: Object.keys(s.modes), fonts: s.fonts, defaults: s.defaults, global: s.global,
+      swatches: Object.fromEntries(Object.entries(s.modes).map(([m, t]) => [m, { bg: t.bg, card: t.card, ink: t.ink, sub: t.sub, accent: t.accent, live: t.live, ready: t.ready }])),
+    }])),
+    tokenKeys: ['bg', 'card', 'ink', 'sub', 'line', 'accent', 'live', 'ready', 'focus'],
     parts: Object.fromEntries(Object.entries(PARTS).map(([slot, vs]) => [slot, Object.fromEntries(Object.entries(vs).map(([id, v]) => [id, { label: v.label, from: v.from }]))])),
     fonts: Object.keys(FONTS), sections: SECTIONS,
   };

@@ -43,3 +43,14 @@ The page follows the system setting until the visitor uses the switch in the hea
 | Writing index | `/writing/` (empty state until the first published post; year groups; Written and Curated labels) |
 | Posts | `/writing/<slug>/` |
 | Not found | `404.html` |
+
+## Theme engine (2026-09-27)
+Soft + Ink (above) is now one of 25 styles. The rules above hold for the default; every style keeps its round's own look.
+- **Style** (`themes/styles/`): tokens per colour mode (`bg card ink sub line sh sh-s sh-in` + tag colours + `focus accent accent-2`), global tokens (`display`, `w-d`, `track-d`, `radius`, fonts), a skin (a few CSS rules on the shared classes) and a default part per slot.
+- **Slots and parts** (`themes/parts/`):
+  - header: pillbar, topleft, topright, tabs, bottom, vertical, none, dock;
+  - hero: statement, quiet, metrics, number, poster, letter, kinetic, window, aurora, ascii, manpage, datasheet, flap, gallery, swiss;
+  - work: tiles, rows, list, charts, shapes, table, poster, letter, stack, bento, orbit, windows, cells, reel, glass, departures, frames, stories, swissrows, sheet;
+  - frame: plain, column, sheet, app, split; blocks: cards, plain; project: columns, stacked.
+- **Output:** the build writes one stylesheet: tokens, `themes/base.css`, the chosen parts' CSS, the skin, motion rules. `<body>` carries `s-<slot>-<part>` classes.
+- **Motion:** looping animations live under `.mo`; the site's Pause button, `motion: false` and prefers-reduced-motion all stop them.

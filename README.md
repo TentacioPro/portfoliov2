@@ -1,28 +1,31 @@
 # portfoliov2: Abishek M, applied AI engineer
 
-A static site served at https://tentaciopro.github.io/portfoliov2/. There is no framework in the browser: plain HTML, one CSS file, and a 1 kB script (the theme switch and the copy button). The design is Soft + Ink, with light and dark modes; see `docs/DESIGN.md`.
+A static site served at https://tentaciopro.github.io/portfoliov2/. There is no framework in the browser: plain HTML, one
+generated CSS file and a small script (theme switch, copy button, pause motion). Content and look are plain files:
+`content/site.json`, `content/theme.json` and `content/posts/`. They are edited in **Workbench → Portfolio**
+(Resume-Research/workbench) or by any coding harness; see [AGENTS.md](AGENTS.md).
 
 ## Commands
 | Command | What it does |
 |---|---|
-| `npm run build` | `src/content.js` plus published posts in `content/posts/` → `dist/` |
+| `npm run build` | site.json + theme.json + published posts → `dist/` (env `SITE_JSON`, `THEME_JSON`, `POSTS_DIR`, `OUT_DIR` override) |
 | `npm run dev` | build, then serve at http://127.0.0.1:4173/portfoliov2/ |
-| `npm run writer` | the local writing app at http://127.0.0.1:4321 (see below) |
-| `npm run audit:facts` | G3: the built text against FACTS (NEVER list, numbers, status labels) |
-| `npm run qa` | Playwright and axe on every page, at 320/390/768/1280/1440, light and dark (set `CHROME` to a Chromium path if Playwright has no browser) |
-| `npm run check` | lint + build + audit + qa |
-| `npm run deploy` | `check`, then `gh-pages -d dist` (only on the owner's go) |
+| `npm run validate` | site.json against content/schema.json and the owner's fixed rules |
+| `npm run audit:facts` | the built text against FACTS (NEVER list, numbers, status labels) |
+| `npm run qa` | Playwright + axe on every page at 320/390/768/1280/1440, light and dark (`CHROME=<path>` if needed) |
+| `npm run qa:presets` | every style, at 390/768/1440 in its modes, with a contact sheet in `qa-shots/presets/` |
+| `npm run qa:mix` | every header, hero and work part rotated through two unlike host styles |
+| `npm run check` | lint + validate + build + facts audit + qa |
+| `npm run deploy` | `check`, then publish `dist/` to the `gh-pages` branch (only on the owner's go) |
 
-## Content
-- **Every claim lives in `src/content.js`**, in the first person. Pages only arrange it.
-- **Posts** are `content/posts/<slug>.md` with front matter. Only `status: published` posts are built, and Writing stays out of the navigation until there is one.
+## Styles and parts (like WordPress themes and blocks)
+- **25 styles** from the design rounds: R11 Soft + Ink (live), the ten R10 styles, six R6 and eight R5 styles.
+- **Parts per slot**, usable in any style: header (8), hero (15), work list (20), frame (5), other sections (2), project page (2).
+- `content/theme.json` picks a style and optionally overrides any slot, colours, fonts, display size, radius, home section
+  order and visibility, and motion. See `docs/DESIGN.md` and `themes/`.
 
-## Local writing app (`tools/writer/`)
-- **Where it runs:** on 127.0.0.1 only. It is never built into `dist/` and never deployed.
-- **What it does:**
-  - lists drafts and published posts;
-  - edits markdown with a live preview;
-  - publishes or unpublishes after a confirmation;
-  - runs the build.
-- **The change log:** every action appends one timestamped line to `content/log.jsonl` (git-tracked).
-- **Publishing:** write, publish, build, then commit and push. Only static files leave your machine.
+## Editing
+Use Workbench → Portfolio: **Site data** (forms from the schema), **Posts**, **Appearance** (styles, parts, colours, sections,
+live preview), **Sources and facts** (curate facts from the numbered docs and uploads) and **Publish** (checks, commit,
+deploy). Every action is logged in the Workbench Audit trail and in `content/log.jsonl`.
+The standalone `tools/writer` app was retired on 2026-09-27; Workbench replaces it.

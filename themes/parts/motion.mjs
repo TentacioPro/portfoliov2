@@ -82,9 +82,9 @@ export const hero = {
   },
   flap: {
     label: 'Split-flap board', from: 'R6 Departures',
-    css: `.hero-flap .board{background:var(--card);border-radius:14px;padding:22px 32px 26px;box-shadow:0 20px 50px rgba(0,0,0,.35)}.hero-flap h1{font-family:var(--font-d);font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:.02em;line-height:1.3}
-.flaps{display:inline}.flap{display:inline-block;min-width:.72em;text-align:center;background:var(--n-bg);margin:0 2px 4px 0;border-radius:3px;position:relative;line-height:1.35;animation:flip .5s cubic-bezier(.3,.1,.3,1) both}.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#0006}
-@keyframes flip{0%{transform:rotateX(90deg);opacity:.2}60%{transform:rotateX(-12deg)}100%{transform:none;opacity:1}}.hero-flap .acc{color:var(--accent)}.hero-flap .line{margin-top:16px}`,
+    css: `.hero-flap .board{--fl-bg:#26282b;background:#0e0f10;color:#f1f1ee;border-radius:14px;padding:22px 32px 26px;box-shadow:0 20px 50px rgba(0,0,0,.35)}.hero-flap .board .sub{color:#b3b5b7}.hero-flap h1{font-family:var(--font-d);font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:.02em;line-height:1.3}
+.flaps{display:inline}.hero-flap .flap{display:inline-block;min-width:.72em;text-align:center;background:var(--fl-bg);margin:0 2px 4px 0;border-radius:3px;position:relative;line-height:1.35;animation:flip .5s cubic-bezier(.3,.1,.3,1) both}.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#0006}
+@keyframes flip{0%{transform:rotateX(90deg);opacity:.2}60%{transform:rotateX(-12deg)}100%{transform:none;opacity:1}}.hero-flap .acc{color:#ffd23c}.hero-flap .line{margin-top:16px}`,
     render: (x) => `<section class="hero hero-flap" aria-labelledby="h"><div class="board"><p class="sub" style="font-size:14px;letter-spacing:.12em;text-transform:uppercase">${x.esc(x.C.person.role)} · ${x.esc(x.C.person.place)}</p>
   <h1 id="h">${flap(x.esc, x.C.person.display.toUpperCase(), 'acc')}</h1><p class="line">${x.esc(x.C.person.line)}</p><p class="role sub">${x.esc(x.C.person.employment)} ${x.esc(x.C.person.location)}</p>${x.actions()}</div></section>`,
   },
@@ -172,8 +172,8 @@ export const work = {
   },
   departures: {
     label: 'Departures board', from: 'R6 Departures',
-    css: `.wdep{background:var(--card);border-radius:14px;padding:18px 32px 20px;margin-top:24px;box-shadow:0 20px 50px rgba(0,0,0,.35)}.wdep .hd,.wdep a{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,2fr);gap:24px;align-items:center}.wdep .hd{font-size:14px;letter-spacing:.12em;color:var(--sub);text-transform:uppercase;font-weight:600;padding-bottom:10px}
-.wdep a{padding:14px 0;border-top:1px solid var(--line);text-decoration:none}.wdep .nm{font-family:var(--font-d);font-size:clamp(20px,2.4vw,30px);color:var(--accent);text-transform:uppercase}.flap{display:inline-block;min-width:.72em;text-align:center;background:var(--n-bg);margin:0 2px 4px 0;border-radius:3px;position:relative;line-height:1.35;animation:flip .5s cubic-bezier(.3,.1,.3,1) both}.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#0006}
+    css: `.wdep{--fl-bg:#26282b;--fl-ink:#ffd23c;background:#0e0f10;color:#f1f1ee;border-radius:14px;padding:18px 32px 20px;margin-top:24px;box-shadow:0 20px 50px rgba(0,0,0,.35)}.wdep .sub{color:#b3b5b7}.wdep a{color:#f1f1ee}.wdep .hd,.wdep a{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,2fr);gap:24px;align-items:center}.wdep .hd{font-size:14px;letter-spacing:.12em;color:#b3b5b7;text-transform:uppercase;font-weight:600;padding-bottom:10px}
+.wdep a{padding:14px 0;border-top:1px solid #2c2e31;text-decoration:none}.wdep .nm{font-family:var(--font-d);font-size:clamp(20px,2.4vw,30px);color:var(--fl-ink);text-transform:uppercase}.wdep .flap{display:inline-block;min-width:.72em;text-align:center;background:var(--fl-bg);margin:0 2px 4px 0;border-radius:3px;position:relative;line-height:1.35;animation:flip .5s cubic-bezier(.3,.1,.3,1) both}.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#0006}
 @keyframes flip{0%{transform:rotateX(90deg);opacity:.2}60%{transform:rotateX(-12deg)}100%{transform:none;opacity:1}}@media (max-width:820px){.wdep{padding:14px 18px}.wdep .hd{display:none}.wdep a{grid-template-columns:minmax(0,1fr);gap:6px}}`,
     render: (x) => `<div class="wdep"><div class="hd" aria-hidden="true"><span>Work</span><span>Key value</span><span>Status</span></div>${sortByLive(x.C.projects).map((p) => `<a href="${link(x, p)}"><span class="nm">${flap(x.esc, p.short.toUpperCase())}</span><span class="sub">${x.esc(p.key.value)} ${x.esc(p.key.label)}</span><span>${x.tag(p.status)}</span></a>`).join('')}</div>`,
   },
@@ -208,7 +208,7 @@ export const header = {
   dock: {
     label: 'Dock', from: 'R5 abishek.os',
     css: `.h-dock .nav{background:none;box-shadow:none;padding:0}@media (min-width:721px){.h-dock .nav{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:5;display:flex;gap:10px;padding:10px 12px;border-radius:22px;background:color-mix(in srgb,var(--card) 70%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 0 0 1px var(--line),0 20px 40px rgba(20,20,60,.15)}
-.h-dock .nav a{height:48px;padding:0 18px;border-radius:14px;background:var(--ink);color:var(--bg);font-weight:700;transition:transform .2s ease}.h-dock .nav a:hover{transform:translateY(-4px) scale(1.06);color:var(--bg)}body.s-header-dock{padding-bottom:96px}}`,
+.h-dock .nav a,.h-dock .nav a[aria-current]{height:48px;padding:0 18px;border-radius:14px;background:var(--ink);color:var(--bg);box-shadow:none;text-decoration:none;font-weight:700;transition:transform .2s ease}.h-dock .nav a[aria-current]{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--ink)}.h-dock .nav a:hover{transform:translateY(-4px) scale(1.06);color:var(--bg)}body.s-header-dock{padding-bottom:96px}}`,
     render: (x) => markup(x, 'dock'),
   },
 };

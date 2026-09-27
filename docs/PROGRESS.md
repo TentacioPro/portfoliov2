@@ -22,3 +22,11 @@
 - **G6 deploy:** NOT DONE. Waiting on the owner's go. Backups: `backup/main-2026-09-27`, `backup/gh-pages-2026-09-27`.
 - **G6 deploy: DONE 2026-09-27.** `main` fast-forwarded to `portfolio-v3` (old main kept as `backup/main-pre-v3` and `backup/main-2026-09-27`). Published with `npm run deploy` (all gates rerun: lint, build, facts audit, qa 70/70) to `gh-pages` (commit 692b944; old site kept as `backup/gh-pages-2026-09-27`). GitHub's "pages build and deployment" run succeeded.
 - **Publishing:** Pages serves from the `gh-pages` branch. The Actions deploy job was dropped (2026-09-27); `.github/workflows/ci.yml` now only installs, lints and builds on pushes to main. Publish with `npm run deploy`, which reruns every gate first. Stray files from the old site (`.eslintrc.cjs`, `.gitignore`) were removed from `gh-pages`.
+
+## Portfolio studio (2026-09-27): editable data, swappable designs, Workbench editor
+- **Data:** all site text moved from `src/content.js` to `content/site.json` with `content/schema.json` and `npm run validate`. The build output was byte-identical.
+- **Themes:** `themes/` engine, 25 styles (R11, R10 ×10, R6 ×6, R5 ×8) and 52 parts across six slots; `content/theme.json`. R11 renders pixel-identical to before (diffed at 390/1440, light/dark, 4 pages).
+- **Gates:** `qa:presets` 25 styles / 312 checks, `qa:mix` 40 mixes / 720 checks, `check` (qa 70/70), all 0 issues.
+- **Editor:** Workbench → Portfolio (Resume-Research): site data, posts, appearance with live preview, sources and facts, publish. Every change is logged. `tools/writer` retired.
+- **Harness contract:** `AGENTS.md` (CLAUDE.md points to it).
+- **Live site:** unchanged (still R11 Soft + Ink) until the owner applies another look and deploys.
