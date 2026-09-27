@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voice agents on ElevenLabs, with an MCP tool server · Abishek M</title>
+<meta name="description" content="Seconds before a call ends, my dental agent calls a tool on my MCP server that writes the call’s state to the database, so the dental app shows it before the caller hangs up.">
+<link rel="canonical" href="https://tentaciopro.github.io/portfoliov2/work/voice-agents/">
+<meta property="og:title" content="Voice agents on ElevenLabs, with an MCP tool server · Abishek M">
+<meta property="og:description" content="Seconds before a call ends, my dental agent calls a tool on my MCP server that writes the call’s state to the database, so the dental app shows it before the caller hangs up.">
+<meta property="og:url" content="https://tentaciopro.github.io/portfoliov2/work/voice-agents/">
+<meta name="theme-color" content="#e8ebef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/portfoliov2/assets/site.331e2995.css">
+<script src="/portfoliov2/assets/site.ce7dc8e8.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header class="top">
+  <a class="name" href="/portfoliov2/">Abishek M</a>
+  <nav class="nav card" aria-label="Site"><a href="/portfoliov2/#work" aria-current="page">Work</a><a href="/portfoliov2/#about">About</a></nav>
+  <div class="aside"><span class="social"><a href="https://github.com/TentacioPro">GitHub</a><a href="https://www.linkedin.com/in/abishek-maharajan">LinkedIn</a><a href="https://x.com/abizhek_m">X</a></span>
+  <button class="theme" type="button" data-theme-toggle aria-label="Switch colour mode"><i aria-hidden="true"></i><span>Dark</span></button></div>
+</header>
+<main id="main">
+
+<article style="padding:16px 0 40px">
+  <p class="back"><a href="/portfoliov2/#work">← Work</a></p>
+  <p style="margin-top:16px"><span class="tag t-live">live</span></p>
+  <h1 class="ptitle">Voice agents on ElevenLabs, with an MCP tool server</h1>
+  <p class="pone">Seconds before a call ends, my dental agent calls a tool on my MCP server that writes the call’s state to the database, so the dental app shows it before the caller hangs up.</p>
+  <div class="nums"><div><p class="num">15</p><p class="sub">voice agents, two workspaces</p></div><div><p class="num">91 of 113</p><p class="sub">tool-server commits are mine</p></div><div><p class="num">11</p><p class="sub">SQL-backed MCP tools</p></div><div><p class="num">474</p><p class="sub">conversations analysed</p></div></div>
+  <div class="pcols">
+    <section><h2>What I built</h2><ul><li>15 ElevenLabs voice agents across two workspaces, in three families; 10 have logged usage.</li><li>Branching workflows of 9 to 10 nodes, with the LLM for each node chosen by task difficulty; up to about 50 versions on one agent.</li><li>The MCP-over-SSE tool server, built alone (91 of 113 commits): Bun and Express with a React front end, 11 SQL-backed tools (patients, appointments, availability, eligibility), on Azure App Service, shared by agents in two workspaces.</li><li>Multi-provider LLM orchestration across Groq, Azure OpenAI and Gemini, with live failover under rate limits.</li><li>Multilingual support with knowledge attached to the model; graceful and abrupt call endings handled.</li></ul></section>
+    <section><h2>How it was checked</h2><ul><li>474 conversations analysed through the API.</li><li>Test-driven development, a bug tracker and ordered SQL migrations on the tool server.</li><li>I read waterfall traces in Arize Phoenix to debug the agents.</li><li>I adapted the agents to ElevenLabs feature releases as they shipped, by trial and error.</li></ul><h2 style="margin-top:28px">Families</h2><ul class="fam"><li><span class="tag t-live">live</span><span><b>Interview agents.</b> A technical-role interviewer and a functional (business-role) interviewer. About 10 to 15 real candidate interviews run.</span></li><li><span class="tag t-live">live</span><span><b>Dental front-desk agents.</b> Inbound and outbound calls: schedule, cancel and reschedule appointments; answer questions about providers, doctors and general website enquiries; lead conversion and lead management for dental patients.</span></li><li><span class="tag t-ready">ready for production</span><span><b>Insurance-verification agent.</b> Speaks with insurance-provider representatives to collect the dental codes the existing RPA bot flow misses, and writes them to the database through MCP. Paired with the existing application by database polling on call creation, so the existing flow was not broken.</span></li></ul></section>
+    <section><h2>Not claimed</h2><ul><li>The phone lines and call services were built by other teams; I use them.</li><li>The insurance-verification agent is not live.</li></ul></section>
+  </div>
+</article>
+<section class="contact" aria-labelledby="c"><h2 id="c">Questions about this?</h2><div style="margin-top:20px"><div class="actions"><a class="btn cta" href="mailto:abishekmdev@gmail.com?subject=Hello%20Abishek%20(from%20your%20portfolio)">Email abishekmdev@gmail.com</a><button class="btn ghost" type="button" data-copy="abishekmdev@gmail.com" aria-live="polite">Copy address</button></div></div></section>
+</main>
+<footer class="foot sub">
+  <p>I directed and reviewed the design; an AI coding agent implemented it.</p>
+  <p><a href="https://github.com/TentacioPro">GitHub</a> · <a href="https://www.linkedin.com/in/abishek-maharajan">LinkedIn</a> · <a href="https://x.com/abizhek_m">X</a> · <a href="mailto:abishekmdev@gmail.com?subject=Hello%20Abishek%20(from%20your%20portfolio)">abishekmdev@gmail.com</a></p>
+</footer>
+</div>
+</body>
+</html>
