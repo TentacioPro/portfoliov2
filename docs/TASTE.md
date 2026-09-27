@@ -1,3 +1,5 @@
+> Superseded 2026-09-27: the owner's final design is Soft + Ink (see docs/DESIGN.md). Kept for history.
+
 # TASTE.md: the owner's design taste, as rules
 
 Written 2026-09-27 before any design work on portfolio v3. Sources are the owner's two private research repos, read-only:

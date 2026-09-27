@@ -12,3 +12,11 @@
 - G0 backups: branches `backup/gh-pages-2026-09-27` (b9fdf2f) and `backup/main-2026-09-27` (aaa9eeb) pushed; tags `pre-v3-gh-pages`, `pre-v3-main` local only (proxy refused tag push). Secret scan of tree and history: no keys, tokens or env files found. PASS (tags noted). Next: G1a TASTE.md.
 - G1a TASTE.md: written from DRF 06/09/11/12/13/16/17/18, stitch/05 and RR 54/56; 15 ranked rules. PASS (2026-09-27). Next: G1b three variants in Claude Design.
 - G1b variants: 3 variants x 3 frames in a private Claude Design canvas; critique + one fix pass; winner V1 Ledger 12/12, both gates pass (V2 11, V3 11). PASS (2026-09-27). Next: G2 build.
+
+## Portfolio v3 build (2026-09-27, after design round 11)
+- **Design:** Soft + Ink, light and dark (Design-Research-Factory `design/portfolio-v3/rounds/r11`). The earlier G1b winner (V1 Ledger) was rejected by the owner and is superseded.
+- **G2 build:** the React/Tailwind app was replaced by a static build (`scripts/build.mjs`): home, four project pages, Writing (hidden until the first published post), posts, 404, sitemap, robots. PASS.
+- **G3 facts audit:** `npm run audit:facts`. PASS.
+- **G4/G5 QA:** `npm run qa`: 70 checks (7 pages × 5 widths × 2 themes), 0 axe issues, 0 overflow, 0 tiny text. PASS.
+- **Writer:** `npm run writer` (local only). Tested end to end: create, publish and build made Writing appear; the test post and its log lines were then removed.
+- **G6 deploy:** NOT DONE. Waiting on the owner's go. Backups: `backup/main-2026-09-27`, `backup/gh-pages-2026-09-27`.
