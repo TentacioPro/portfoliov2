@@ -131,8 +131,8 @@
     },
     {
       "id": "translator",
-      "name": "cluBITSTranslator",
-      "short": "cluBITSTranslator",
+      "name": "Translator App",
+      "short": "Translator App",
       "status": "ready",
       "key": {
         "value": "1",
@@ -252,16 +252,16 @@
       "text": "Working as a software engineer."
     },
     {
-      "when": "Aug – Nov 2025",
-      "role": "Freelance full-stack developer (weekends)",
-      "where": "Underdogs of Madras",
-      "text": "Pivoted an ATS-style request into a LinkedIn-style talent marketplace with the client: React/Vite, Express/MongoDB, JWT, Redis- and Kafka-backed messaging."
-    },
-    {
       "when": "Jan – Jul 2025",
       "role": "Software Developer Intern",
       "where": "cluBITS Solutions",
       "text": "Joined as an intern; Graduate Engineering Trainee from August 2025."
+    },
+    {
+      "when": "Aug – Dec 2024",
+      "role": "Freelance full-stack developer",
+      "where": "Underdogs of Madras",
+      "text": "Pivoted an ATS-style request into a LinkedIn-style talent marketplace with the client: React/Vite, Express/MongoDB, JWT, Redis- and Kafka-backed messaging."
     }
   ]
 }
