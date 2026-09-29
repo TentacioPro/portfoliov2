@@ -5,6 +5,10 @@
       "text": "Owned through a live demo in January 2026: a stored-procedure migration with a shadow-database cutover, Create React App to Vite, AI-assisted offer letters, and Groq, Unipile and MSAL integrations."
     },
     {
+      "name": "Talent marketplace platform (freelance)",
+      "text": "Underdogs of Madras, Aug–Nov 2025: pivoted a client's ATS-style request into a LinkedIn-style talent marketplace (React/Vite, Express/MongoDB, JWT, Redis- and Kafka-backed messaging). Met a hard $300/90-day infrastructure budget for ~1,000 users by cutting a 10-service stack to 4 production containers."
+    },
+    {
       "name": "A working practice",
       "text": "Context, prompt and harness engineering."
     }
@@ -256,12 +260,6 @@
       "role": "Software Developer Intern",
       "where": "cluBITS Solutions",
       "text": "Joined as an intern; Graduate Engineering Trainee from August 2025."
-    },
-    {
-      "when": "Aug – Dec 2024",
-      "role": "Freelance full-stack developer",
-      "where": "Underdogs of Madras",
-      "text": "Pivoted an ATS-style request into a LinkedIn-style talent marketplace with the client: React/Vite, Express/MongoDB, JWT, Redis- and Kafka-backed messaging."
     }
   ]
 }
