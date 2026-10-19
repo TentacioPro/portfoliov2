@@ -6,7 +6,7 @@
     },
     {
       "name": "Talent marketplace platform (freelance)",
-      "text": "Underdogs of Madras, Aug–Nov 2025: pivoted a client's ATS-style request into a LinkedIn-style talent marketplace (React/Vite, Express/MongoDB, JWT, Redis- and Kafka-backed messaging). Met a hard $300/90-day infrastructure budget for ~1,000 users by cutting a 10-service stack to 4 production containers."
+      "text": "Freelance, Aug-Nov 2025: reframed an ATS request as a talent marketplace using React/Vite, Express/MongoDB, JWT, Redis and Kafka-backed messaging. Compared five GCP deployment architectures against a $300/90-day budget and reduced a ten-service development design to four planned production containers."
     },
     {
       "name": "A working practice",
@@ -48,10 +48,10 @@
     "name": "Abishek M",
     "role": "Applied AI engineer",
     "place": "Chennai",
-    "display": "Real calls, real systems.",
-    "line": "I build voice and chat AI agents that run real calls, and connect them to real business systems.",
-    "employment": "Graduate Engineering Trainee at cluBITS Solutions, working as a software engineer.",
-    "location": "Based in Chennai; open to Bengaluru and Hyderabad.",
+    "display": "Voice agents and practical AI integrations.",
+    "line": "I connect voice agents to business data and build software for document and operational workflows.",
+    "employment": "Applied AI Engineer | cluBITS Solutions.",
+    "location": "Based in Chennai; open to Bengaluru, Hyderabad and India-remote roles with suitable IST hours.",
     "email": "abishekmdev@gmail.com",
     "emailSubject": "Hello Abishek (from your portfolio)",
     "links": [
@@ -79,7 +79,7 @@
         "value": "91 of 113",
         "label": "tool-server commits are mine"
       },
-      "oneLine": "Seconds before a call ends, my dental agent calls a tool on my MCP server that writes the call’s state to the database, so the dental app shows it before the caller hangs up.",
+      "oneLine": "Before a dental appointment call ends, an MCP tool writes its current state to the database so the application can reflect the conversation.",
       "families": [
         {
           "name": "Interview agents",
@@ -100,7 +100,7 @@
       "built": [
         "15 ElevenLabs voice agents across two workspaces, in three families; 10 have logged usage.",
         "Branching workflows of 9 to 10 nodes, with the LLM for each node chosen by task difficulty; up to about 50 versions on one agent.",
-        "The MCP-over-SSE tool server, built alone (91 of 113 commits): Bun and Express with a React front end, 11 SQL-backed tools (patients, appointments, availability, eligibility), on Azure App Service, shared by agents in two workspaces.",
+        "Implemented most of the MCP-over-SSE tool server (91 of 113 commits): Bun and Express with a React front end, 11 SQL-backed tools (patients, appointments, availability, eligibility), on Azure App Service, shared by agents in two workspaces.",
         "Multi-provider LLM orchestration across Groq, Azure OpenAI and Gemini, with live failover under rate limits.",
         "Multilingual support with knowledge attached to the model; graceful and abrupt call endings handled."
       ],
@@ -162,24 +162,24 @@
       "status": "repo",
       "key": {
         "value": "123",
-        "label": "passing tests"
+        "label": "software tests recorded"
       },
-      "oneLine": "A support-triage agent over real customer-support conversations, with an evaluation harness. Bulk labels wait for human sign-off.",
+      "oneLine": "A support-triage workflow with retrieval and an evaluation harness. Golden-set completion and live-model evaluation remain pending.",
       "built": [
         "Intent classification, a retrieval-grounded draft reply, and a decision to auto-handle or escalate.",
-        "An evaluation harness with baselines and ablations; 123 passing tests."
+        "Data preparation, TF-IDF retrieval, guarded response drafting, escalation logic and an evaluation harness; 123 software tests recorded."
       ],
       "checked": [
         "In data prep I rejected mid-thread fragments: 24,253 of 106,860 brand replies, about 23%.",
         "Bulk labelling waits for explicit human sign-off, because golden labels cannot come from the model class being evaluated."
       ],
       "notClaimed": [
-        "No accuracy figure is quoted here; the evaluation is in the repo."
+        "The golden set is incomplete and live-model evaluation is pending. Software tests do not establish model accuracy."
       ],
       "numbers": [
         {
           "value": "123",
-          "label": "passing tests"
+          "label": "software tests recorded"
         },
         {
           "value": "24,253 of 106,860",
@@ -195,17 +195,17 @@
       "id": "agenticloop",
       "name": "AgenticLoop",
       "short": "AgenticLoop",
-      "status": "daily",
+      "status": "repo",
       "key": {
-        "value": "~3 months",
-        "label": "used daily as my own harness"
+        "value": "MIT",
+        "label": "workflow from published practices"
       },
       "oneLine": "A spec-driven workflow for AI coding agents: read, red, green, gate, record, update.",
       "built": [
         "A workflow that evolved from published best practices, under the MIT licence."
       ],
       "checked": [
-        "Used daily for about three months as the harness for my own projects."
+        "Public repository documenting the read, red, green, gate, record and update workflow."
       ],
       "notClaimed": [
         "It is not an invention; it evolved from published best practices."
@@ -224,7 +224,7 @@
     "base": "/portfoliov2/",
     "url": "https://tentaciopro.github.io/portfoliov2/",
     "title": "Abishek M · Applied AI engineer",
-    "description": "Abishek M, applied AI engineer in Chennai: voice agents that write to a real database through an MCP tool server I built, an evaluated triage agent, and a plain note of what is live and what is not."
+    "description": "Abishek M, Applied AI Engineer in Chennai. Voice-agent integrations, SQL-backed MCP tools, document processing and public projects with explicit maturity limits."
   },
   "statuses": {
     "live": {
@@ -250,16 +250,16 @@
   },
   "timeline": [
     {
-      "when": "Aug 2025 – now",
-      "role": "Graduate Engineering Trainee",
+      "when": "Jun 2025 - now",
+      "role": "Applied AI Engineer",
       "where": "cluBITS Solutions",
-      "text": "Working as a software engineer."
+      "text": "Voice-agent integrations, SQL-backed MCP tools and application software."
     },
     {
-      "when": "Jan – Jul 2025",
-      "role": "Software Developer Intern",
+      "when": "Jan - May 2025",
+      "role": "Full Stack Engineer Intern",
       "where": "cluBITS Solutions",
-      "text": "Joined as an intern; Graduate Engineering Trainee from August 2025."
+      "text": "Full-stack prototypes, BI integrations, RPA and OCR experiments."
     }
   ]
 }
