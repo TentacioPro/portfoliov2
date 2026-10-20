@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reel-finder: retrieval for half-remembered saved content · Abishek M</title>
-<meta name="description" content="A local search application that turns saved links and exports into deduplicated resources, then combines keyword and semantic retrieval. Private source; sanitized case study.">
+<meta name="description" content="Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Private prototype; case study available.">
 <link rel="canonical" href="https://tentaciopro.github.io/portfoliov2/work/reel-finder/">
 <meta property="og:title" content="Reel-finder: retrieval for half-remembered saved content · Abishek M">
-<meta property="og:description" content="A local search application that turns saved links and exports into deduplicated resources, then combines keyword and semantic retrieval. Private source; sanitized case study.">
+<meta property="og:description" content="Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Private prototype; case study available.">
 <meta property="og:url" content="https://tentaciopro.github.io/portfoliov2/work/reel-finder/">
 <meta name="theme-color" content="#e8ebef" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
@@ -33,18 +33,18 @@
   <p class="back"><a href="/portfoliov2/#work">← Work</a></p>
   <p style="margin-top:16px"><span class="tag t-experiment">experiment</span></p>
   <h1 class="ptitle">Reel-finder: retrieval for half-remembered saved content</h1>
-  <p class="pone">A local search application that turns saved links and exports into deduplicated resources, then combines keyword and semantic retrieval. Private source; sanitized case study.</p>
+  <p class="pone">Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Private prototype; case study available.</p>
   <div class="nums"><div><p class="num">Hybrid retrieval</p><p class="sub">keyword and multilingual semantic search</p></div></div>
   <div class="pcols">
-    <section><h2>What I built</h2><ul><li>A single ingestion gateway: adapters produce raw items, canonical resource keys deduplicate links, and separate sightings retain source context.</li><li>Text acquisition from available captions, transcripts, OCR and page text; a staged pipeline records coverage gaps and reasons for missing content.</li><li>SQLite FTS5 keyword retrieval and multilingual-e5-large embeddings combined with reciprocal-rank fusion, exposed through a Python/FastAPI web interface.</li><li>Feedback labels, saved items, filters and stage telemetry. Development used coding-agent assistance; implementation and model choices are assessed against recorded evidence.</li></ul></section>
-    <section><h2>How it was checked</h2><ul><li>Source review confirms ingestion, retrieval and telemetry modules. Historical verification records distinguish actual application probes from unit tests.</li><li>Recorded hybrid MRR was 0.910 on a small single-user set of 70 agent-drafted, owner-confirmed queries. On a harder 62-query content-answerable note set, with notes excluded from the index, hybrid MRR was 0.496. These are different development sets, not a held-out public benchmark.</li><li>The latest recorded keyword/item probe passed on a scratch database. The standard hybrid probe failed after an embedding-model allocation error; that failure is unresolved in this showcase review.</li></ul></section>
-    <section><h2>Not claimed</h2><ul><li>Personal exports, messages, media, databases, logs and private repository source are not published here.</li><li>No multi-user adoption, production-scale reliability, independent held-out benchmark, or completed general multimodal pipeline is claimed.</li><li>The headline retrieval score does not establish performance on vague owner wording; missing transcripts, partial vector coverage and model-memory failures remain real limits.</li></ul></section>
+    <section><h2>Solution and contribution</h2><ul><li>A single ingestion gateway: adapters produce raw items, canonical resource keys deduplicate links, and separate sightings retain source context.</li><li>Text acquisition from available captions, transcripts, OCR and page text; a staged pipeline records coverage gaps and reasons for missing content.</li><li>SQLite FTS5 keyword retrieval and multilingual-e5-large embeddings combined with reciprocal-rank fusion, exposed through a Python/FastAPI web interface.</li><li>Feedback labels, saved items, filters and stage telemetry. Development used coding-agent assistance; implementation and model choices are assessed against recorded evidence.</li></ul></section>
+    <section><h2>Verification and evidence</h2><ul><li>Source review confirms ingestion, retrieval and telemetry modules. Historical verification records distinguish actual application probes from unit tests.</li><li>Recorded hybrid MRR was 0.910 on a small single-user set of 70 agent-drafted, owner-confirmed queries. On a harder 62-query content-answerable note set, with notes excluded from the index, hybrid MRR was 0.496. These are different development sets, not a held-out public benchmark.</li><li>The latest recorded keyword/item probe passed on a scratch database. The standard hybrid probe failed after an embedding-model allocation error; that failure is unresolved in this showcase review.</li></ul></section>
+    <section><h2>Scope and current status</h2><ul><li>Personal exports, messages, media, databases, logs and private repository source are not published here.</li><li>No multi-user adoption, production-scale reliability, independent held-out benchmark, or completed general multimodal pipeline is claimed.</li><li>The headline retrieval score does not establish performance on vague owner wording; missing transcripts, partial vector coverage and model-memory failures remain real limits.</li></ul></section>
   </div>
 </article>
 <section class="contact" aria-labelledby="c"><h2 id="c">Questions about this?</h2><div style="margin-top:20px"><div class="actions"><a class="btn cta" href="mailto:abishekmdev@gmail.com?subject=Hello%20Abishek%20(from%20your%20portfolio)">Email abishekmdev@gmail.com</a><button class="btn ghost" type="button" data-copy="abishekmdev@gmail.com" aria-live="polite">Copy address</button></div></div></section>
 </main>
 <footer class="foot sub">
-  <p>I directed and reviewed the design; an AI coding agent implemented it.</p>
+  <p>I design, debug and verify the work shown here, using coding agents for implementation support. Contribution details and project status are documented in each case study.</p>
   <p><a href="https://github.com/TentacioPro">GitHub</a> · <a href="https://www.linkedin.com/in/abishek-maharajan">LinkedIn</a> · <a href="https://x.com/abizhek_m">X</a> · <a href="mailto:abishekmdev@gmail.com?subject=Hello%20Abishek%20(from%20your%20portfolio)">abishekmdev@gmail.com</a></p>
 </footer>
 </div>
