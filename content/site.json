@@ -9,8 +9,12 @@
       "text": "Freelance, Aug-Nov 2025: reframed an ATS request as a talent marketplace using React/Vite, Express/MongoDB, JWT, Redis and Kafka-backed messaging. Compared five GCP deployment architectures against a $300/90-day budget and reduced a ten-service development design to four planned production containers."
     },
     {
-      "name": "A working practice",
-      "text": "Context, prompt and harness engineering."
+      "name": "SafeSupport — public evaluation-harness project",
+      "text": "A support-triage pipeline with retrieval, escalation rules and software tests. Golden-set completion and live-model evaluation remain pending. Source: https://github.com/TentacioPro/SafeSupport ."
+    },
+    {
+      "name": "Quick_yt — secondary prototype",
+      "text": "A React Native workspace with sync and ingest services. Historical tests and endpoint-audit records exist, while device-level UI verification and some routing features remain incomplete. It is supporting material, not the lead showcase."
     }
   ],
   "authorship": "I directed and reviewed the design; an AI coding agent implemented it.",
@@ -156,64 +160,56 @@
       ]
     },
     {
-      "id": "safesupport",
-      "name": "SafeSupport",
-      "short": "SafeSupport",
-      "status": "repo",
+      "id": "reel-finder",
+      "name": "Reel-finder: retrieval for half-remembered saved content",
+      "short": "Reel-finder",
+      "status": "experiment",
       "key": {
-        "value": "123",
-        "label": "software tests recorded"
+        "value": "Hybrid retrieval",
+        "label": "keyword and multilingual semantic search"
       },
-      "oneLine": "A support-triage workflow with retrieval and an evaluation harness. Golden-set completion and live-model evaluation remain pending.",
+      "oneLine": "A local search application that turns saved links and exports into deduplicated resources, then combines keyword and semantic retrieval. Private source; sanitized case study.",
       "built": [
-        "Intent classification, a retrieval-grounded draft reply, and a decision to auto-handle or escalate.",
-        "Data preparation, TF-IDF retrieval, guarded response drafting, escalation logic and an evaluation harness; 123 software tests recorded."
+        "A single ingestion gateway: adapters produce raw items, canonical resource keys deduplicate links, and separate sightings retain source context.",
+        "Text acquisition from available captions, transcripts, OCR and page text; a staged pipeline records coverage gaps and reasons for missing content.",
+        "SQLite FTS5 keyword retrieval and multilingual-e5-large embeddings combined with reciprocal-rank fusion, exposed through a Python/FastAPI web interface.",
+        "Feedback labels, saved items, filters and stage telemetry. Development used coding-agent assistance; implementation and model choices are assessed against recorded evidence."
       ],
       "checked": [
-        "In data prep I rejected mid-thread fragments: 24,253 of 106,860 brand replies, about 23%.",
-        "Bulk labelling waits for explicit human sign-off, because golden labels cannot come from the model class being evaluated."
+        "Source review confirms ingestion, retrieval and telemetry modules. Historical verification records distinguish actual application probes from unit tests.",
+        "Recorded hybrid MRR was 0.910 on a small single-user set of 70 agent-drafted, owner-confirmed queries. On a harder 62-query content-answerable note set, with notes excluded from the index, hybrid MRR was 0.496. These are different development sets, not a held-out public benchmark.",
+        "The latest recorded keyword/item probe passed on a scratch database. The standard hybrid probe failed after an embedding-model allocation error; that failure is unresolved in this showcase review."
       ],
       "notClaimed": [
-        "The golden set is incomplete and live-model evaluation is pending. Software tests do not establish model accuracy."
-      ],
-      "numbers": [
-        {
-          "value": "123",
-          "label": "software tests recorded"
-        },
-        {
-          "value": "24,253 of 106,860",
-          "label": "replies rejected as mid-thread fragments"
-        }
-      ],
-      "link": {
-        "label": "SafeSupport on GitHub",
-        "href": "https://github.com/TentacioPro/SafeSupport"
-      }
+        "Personal exports, messages, media, databases, logs and private repository source are not published here.",
+        "No multi-user adoption, production-scale reliability, independent held-out benchmark, or completed general multimodal pipeline is claimed.",
+        "The headline retrieval score does not establish performance on vague owner wording; missing transcripts, partial vector coverage and model-memory failures remain real limits."
+      ]
     },
     {
-      "id": "agenticloop",
-      "name": "AgenticLoop",
-      "short": "AgenticLoop",
-      "status": "repo",
+      "id": "local-ledger",
+      "name": "Local-first ledger: ingestion, review and data integrity",
+      "short": "Local-first ledger",
+      "status": "experiment",
       "key": {
-        "value": "MIT",
-        "label": "workflow from published practices"
+        "value": "Synthetic demo",
+        "label": "private financial data stays local"
       },
-      "oneLine": "A spec-driven workflow for AI coding agents: read, red, green, gate, record, update.",
+      "oneLine": "A Python, React and SQLite application that stages heterogeneous records for review, preserves user decisions and exposes data-quality gaps. This case study contains no personal financial data.",
       "built": [
-        "A workflow that evolved from published best practices, under the MIT licence."
+        "A local Python backend and React interface with SQLite storage, document staging, review queues, transfer reconciliation and record provenance.",
+        "Human confirmation and undo for ambiguous matches, with saved decisions protected from automatic refreshes.",
+        "Synthetic-data demo generation, verified-backup and restore tooling, integrity checks and a loopback-only application boundary."
       ],
       "checked": [
-        "Public repository documenting the read, red, green, gate, record and update workflow."
+        "Reviewed the architecture, synthetic-demo procedure and dated verification records; no personal source records were opened for this showcase.",
+        "The project provides a scratch-database smoke flow and a combined verification script covering tests, health, backup restoration and decision locks. These are existing procedures, not a new verification run in this review."
       ],
       "notClaimed": [
-        "It is not an invention; it evolved from published best practices."
-      ],
-      "link": {
-        "label": "AgenticLoop on GitHub",
-        "href": "https://github.com/TentacioPro/AgenticLoop"
-      }
+        "No real account details, balances, transaction amounts, correspondents, private messages or screenshots of personal records are shared.",
+        "No financial-advice capability, automated money movement, complete reconciliation or universal statement coverage is claimed.",
+        "This is a personal local application developed with coding-agent assistance, not a public SaaS product or a scale benchmark."
+      ]
     }
   ],
   "publication": {
