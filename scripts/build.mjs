@@ -97,7 +97,7 @@ function home() {
     hero: () => PARTS.hero[T.slots.hero].render(X),
     work: () => `<section class="section" id="work" aria-labelledby="w"><h2 id="w">Work</h2><p class="lead sub">${count(C.projects.length)} I built. Each says whether it is live.</p>${PARTS.work[T.slots.work].render(X)}</section>`,
     experiments: () => (C.experiments.length ? `<section class="section" aria-labelledby="x"><h2 id="x">Experiments</h2><p class="lead sub">Explored, not used day to day.</p><div class="cols2">${exp}</div></section>` : ''),
-    alsoReal: () => (C.alsoReal.length ? `<section class="section" aria-labelledby="a"><h2 id="a">Also real</h2><div class="cols2">${also}</div></section>` : ''),
+    alsoReal: () => (C.alsoReal.length ? `<section class="section" aria-labelledby="a"><h2 id="a">Additional work</h2><div class="cols2">${also}</div></section>` : ''),
     path: () => `<section class="section path"${id('path')} aria-labelledby="p"><h2 id="p">Path</h2><ul class="rows card item" style="margin-top:24px">${path_}</ul></section>`,
     education: () => `<section class="section edu"${id('education')} aria-labelledby="e"><h2 id="e">Education, certification, publication</h2><ul class="rows card item" style="margin-top:24px">${edu}</ul></section>`,
     contact: () => `<section class="contact" aria-labelledby="c"><h2 id="c">Write to me.</h2><p class="sub" style="margin-top:8px">One email is the best way to reach me.</p><div style="margin-top:20px">${actions()}</div></section>`,
@@ -118,9 +118,9 @@ function project(p) {
   <p class="pone">${esc(p.oneLine)}</p>
   <div class="nums">${nums}</div>
   <div class="pcols">
-    <section><h2>What I built</h2><ul>${li(p.built)}</ul></section>
-    <section><h2>How it was checked</h2><ul>${li(p.checked)}</ul>${fam}</section>
-    <section><h2>Not claimed</h2><ul>${li(p.notClaimed)}</ul>${link}</section>
+    <section><h2>Solution and contribution</h2><ul>${li(p.built)}</ul></section>
+    <section><h2>Verification and evidence</h2><ul>${li(p.checked)}</ul>${fam}</section>
+    <section><h2>Scope and current status</h2><ul>${li(p.notClaimed)}</ul>${link}</section>
   </div>
 </article>
 <section class="contact" aria-labelledby="c"><h2 id="c">Questions about this?</h2><div style="margin-top:20px">${actions()}</div></section>` });

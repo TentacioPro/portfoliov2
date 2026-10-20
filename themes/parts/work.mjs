@@ -14,7 +14,7 @@ export default {
     render: (x) => `<div class="grid4">${x.C.projects.map((p) => `<a class="card tile" href="${link(x, p)}">
   <span>${x.tag(p.status)}</span><h3>${x.esc(p.short)}</h3>
   <p class="num">${x.esc(p.key.value)}</p><p class="k sub">${x.esc(p.key.label)}</p>
-  <p class="one">${x.esc(p.oneLine)}</p><span class="more">What I built, and what I don’t claim →</span></a>`).join('\n')}</div>`,
+  <p class="one">${x.esc(p.oneLine)}</p><span class="more">View case study →</span></a>`).join('\n')}</div>`,
   },
   rows: {
     label: 'Rows', from: 'R10 Ink, Hollow',

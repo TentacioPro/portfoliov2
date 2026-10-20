@@ -17,7 +17,7 @@
       "text": "A React Native workspace with sync and ingest services. Historical tests and endpoint-audit records exist, while device-level UI verification and some routing features remain incomplete. It is supporting material, not the lead showcase."
     }
   ],
-  "authorship": "I directed and reviewed the design; an AI coding agent implemented it.",
+  "authorship": "I design, debug and verify the work shown here, using coding agents for implementation support. Contribution details and project status are documented in each case study.",
   "certification": {
     "name": "AWS Certified Cloud Practitioner (CLF-C02)",
     "when": "March 2025, valid to March 2028"
@@ -80,10 +80,10 @@
       "short": "Voice agents + MCP tool server",
       "status": "live",
       "key": {
-        "value": "91 of 113",
-        "label": "tool-server commits are mine"
+        "value": "11",
+        "label": "SQL-backed tools connecting voice agents to business data"
       },
-      "oneLine": "Before a dental appointment call ends, an MCP tool writes its current state to the database so the application can reflect the conversation.",
+      "oneLine": "Voice agents used in live candidate interviews and dental appointments, connected to patient and appointment data through an Azure-hosted MCP server.",
       "families": [
         {
           "name": "Interview agents",
@@ -104,7 +104,7 @@
       "built": [
         "15 ElevenLabs voice agents across two workspaces, in three families; 10 have logged usage.",
         "Branching workflows of 9 to 10 nodes, with the LLM for each node chosen by task difficulty; up to about 50 versions on one agent.",
-        "Implemented most of the MCP-over-SSE tool server (91 of 113 commits): Bun and Express with a React front end, 11 SQL-backed tools (patients, appointments, availability, eligibility), on Azure App Service, shared by agents in two workspaces.",
+        "Connected voice agents to patient, appointment, availability and eligibility data by implementing most of an 11-tool MCP-over-SSE server on Azure App Service, shared across two workspaces. Bun and Express backend, with a React front end.",
         "Multi-provider LLM orchestration across Groq, Azure OpenAI and Gemini, with live failover under rate limits.",
         "Multilingual support with knowledge attached to the model; graceful and abrupt call endings handled."
       ],
@@ -140,13 +140,13 @@
     {
       "id": "translator",
       "name": "Translator App",
-      "short": "Translator App",
+      "short": "Document translation service",
       "status": "ready",
       "key": {
-        "value": "1",
-        "label": "enterprise client signed"
+        "value": "4 formats",
+        "label": "PDF, DOCX, XLSX and PPTX with layout preservation"
       },
-      "oneLine": "A Dockerized FastAPI service that translates PDF, DOCX, XLSX and PPTX files and keeps their layout. Taken to a priced proposal.",
+      "oneLine": "Delivered layout-preserving document translation through a Dockerized FastAPI service with per-format pipelines, caching, cost tracking and recovery; developed a priced commercial proposal.",
       "built": [
         "Per-format pipelines: OOXML text-node patching for Word and PowerPoint, openpyxl for Excel, font-fitted re-rendering with a QA validator for PDF.",
         "OpenRouter vision models for OCR, a translation cache, per-job cost tracking, Azure Blob, MSSQL telemetry and crash recovery."
@@ -168,7 +168,7 @@
         "value": "Hybrid retrieval",
         "label": "keyword and multilingual semantic search"
       },
-      "oneLine": "A local search application that turns saved links and exports into deduplicated resources, then combines keyword and semantic retrieval. Private source; sanitized case study.",
+      "oneLine": "Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Private prototype; case study available.",
       "built": [
         "A single ingestion gateway: adapters produce raw items, canonical resource keys deduplicate links, and separate sightings retain source context.",
         "Text acquisition from available captions, transcripts, OCR and page text; a staged pipeline records coverage gaps and reasons for missing content.",
@@ -192,10 +192,10 @@
       "short": "Local-first ledger",
       "status": "experiment",
       "key": {
-        "value": "Synthetic demo",
-        "label": "private financial data stays local"
+        "value": "Review + undo",
+        "label": "saved decisions, reconciliation and backup/restore"
       },
-      "oneLine": "A Python, React and SQLite application that stages heterogeneous records for review, preserves user decisions and exposes data-quality gaps. This case study contains no personal financial data.",
+      "oneLine": "Preserves review decisions across refreshes in a local Python, React and SQLite workflow with staging, reconciliation, undo and backup/restore. Private application; synthetic-data case study.",
       "built": [
         "A local Python backend and React interface with SQLite storage, document staging, review queues, transfer reconciliation and record provenance.",
         "Human confirmation and undo for ambiguous matches, with saved decisions protected from automatic refreshes.",
@@ -220,7 +220,7 @@
     "base": "/portfoliov2/",
     "url": "https://tentaciopro.github.io/portfoliov2/",
     "title": "Abishek M · Applied AI engineer",
-    "description": "Abishek M, Applied AI Engineer in Chennai. Voice-agent integrations, SQL-backed MCP tools, document processing and public projects with explicit maturity limits."
+    "description": "Abishek M, Applied AI Engineer in Chennai. Live voice-agent workflows, SQL-backed MCP integrations, document translation and local retrieval applications."
   },
   "statuses": {
     "live": {
