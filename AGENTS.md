@@ -46,3 +46,6 @@ Same policy as `Resume-Research/AGENTS.md`'s "Effort matches the task": editing 
 - **Style:** add an entry in `themes/styles/<round>.mjs` with `modes` (light and/or dark tokens), `fonts` (names from
   `themes/fonts.mjs`), `global` (display size, weights, radius), `skin` and `defaults`. Register it in `themes/styles/index.mjs`.
 - Workbench picks up new parts and styles after its server restarts.
+
+## Owner correction - 26 October 2026
+Owner explicitly confirms completed professional and personal work is production and requests alignment across sources. This supersedes the older fixed EBV-ready and personal-experiment maturity instructions above. Use live for operational professional/personal systems; keep actual ownership, measured results, remaining evaluations and private-data boundaries precise. Current content and audit enforce the new EBV live status. Historical labels remain history. Public updates are authorized by the current session request; record verification and deployment receipts.

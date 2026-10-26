@@ -13,8 +13,16 @@
       "text": "A support-triage pipeline with retrieval, escalation rules and software tests. Golden-set completion and live-model evaluation remain pending. Source: https://github.com/TentacioPro/SafeSupport ."
     },
     {
-      "name": "Quick_yt — secondary prototype",
+      "name": "Quick_yt — application",
       "text": "A React Native workspace with sync and ingest services. Historical tests and endpoint-audit records exist, while device-level UI verification and some routing features remain incomplete. It is supporting material, not the lead showcase."
+    },
+    {
+      "name": "Self-hosted coding assistant",
+      "text": "Llama 3 8B on vLLM on a V100 32 GB, LanceDB retrieval, a Neo4j code-dependency graph, a FastAPI proxy, Docker. I root-caused a vLLM/Triton compile failure to a missing libcuda.so symlink."
+    },
+    {
+      "name": "Phoenix and Langfuse tracing and debugging",
+      "text": "Compared the two for reading agent traces; fixed a Langfuse trace-loss bug (a missing flushAsync) during integration comparison. Arize Phoenix is the one I use."
     }
   ],
   "authorship": "I design, debug and verify the work shown here, using coding agents for implementation support. Contribution details and project status are documented in each case study.",
@@ -36,25 +44,14 @@
       "note": "92%"
     }
   ],
-  "experiments": [
-    {
-      "name": "Self-hosted coding assistant",
-      "status": "experiment",
-      "text": "Llama 3 8B on vLLM on a V100 32 GB, LanceDB retrieval, a Neo4j code-dependency graph, a FastAPI proxy, Docker. I root-caused a vLLM/Triton compile failure to a missing libcuda.so symlink."
-    },
-    {
-      "name": "Phoenix and Langfuse tracing trial",
-      "status": "experiment",
-      "text": "Compared the two for reading agent traces; fixed a Langfuse trace-loss bug (a missing flushAsync) during the trial. Arize Phoenix is the one I use."
-    }
-  ],
+  "experiments": [],
   "person": {
     "name": "Abishek M",
     "role": "Applied AI engineer",
     "place": "Chennai",
-    "display": "Voice agents and practical AI integrations.",
-    "line": "I connect voice agents to business data and build software for document and operational workflows.",
-    "employment": "Applied AI Engineer | cluBITS Solutions.",
+    "display": "Production voice agents and AI integrations.",
+    "line": "I deliver production AI systems connecting voice agents, business data, documents and personal knowledge workflows.",
+    "employment": "Graduate Engineering Trainee (GET) | Applied AI engineering at cluBITS Solutions.",
     "location": "Based in Chennai; open to Bengaluru, Hyderabad and India-remote roles with suitable IST hours.",
     "email": "abishekmdev@gmail.com",
     "emailSubject": "Hello Abishek (from your portfolio)",
@@ -97,7 +94,7 @@
         },
         {
           "name": "Insurance-verification agent",
-          "status": "ready",
+          "status": "live",
           "text": "Speaks with insurance-provider representatives to collect the dental codes the existing RPA bot flow misses, and writes them to the database through MCP. Paired with the existing application by database polling on call creation, so the existing flow was not broken."
         }
       ],
@@ -163,12 +160,12 @@
       "id": "reel-finder",
       "name": "Reel-finder: retrieval for half-remembered saved content",
       "short": "Reel-finder",
-      "status": "experiment",
+      "status": "live",
       "key": {
         "value": "Hybrid retrieval",
         "label": "keyword and multilingual semantic search"
       },
-      "oneLine": "Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Private prototype; case study available.",
+      "oneLine": "Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Personal production system; case study available.",
       "built": [
         "A single ingestion gateway: adapters produce raw items, canonical resource keys deduplicate links, and separate sightings retain source context.",
         "Text acquisition from available captions, transcripts, OCR and page text; a staged pipeline records coverage gaps and reasons for missing content.",
@@ -190,7 +187,7 @@
       "id": "local-ledger",
       "name": "Local-first ledger: ingestion, review and data integrity",
       "short": "Local-first ledger",
-      "status": "experiment",
+      "status": "live",
       "key": {
         "value": "Review + undo",
         "label": "saved decisions, reconciliation and backup/restore"
@@ -220,12 +217,12 @@
     "base": "/portfoliov2/",
     "url": "https://tentaciopro.github.io/portfoliov2/",
     "title": "Abishek M · Applied AI engineer",
-    "description": "Abishek M, Applied AI Engineer in Chennai. Live voice-agent workflows, SQL-backed MCP integrations, document translation and local retrieval applications."
+    "description": "Abishek M, Applied AI Engineer in Chennai. Production voice-agent workflows, SQL-backed MCP integrations, document translation and personal software systems."
   },
   "statuses": {
     "live": {
       "label": "live",
-      "meaning": "Running with real callers or candidates."
+      "meaning": "Operational systems for real professional or personal work. Production status confirmed by the owner on 26 October 2026; scope and verification are described per project."
     },
     "ready": {
       "label": "ready for production",
@@ -246,16 +243,16 @@
   },
   "timeline": [
     {
-      "when": "Jun 2025 - now",
-      "role": "Applied AI Engineer",
+      "when": "Aug 2025 - present",
+      "role": "Graduate Engineering Trainee (GET)",
       "where": "cluBITS Solutions",
-      "text": "Voice-agent integrations, SQL-backed MCP tools and application software."
+      "text": "Applied AI engineering: production voice-agent integrations, SQL-backed MCP tools and application software."
     },
     {
-      "when": "Jan - May 2025",
+      "when": "Jan - Aug 2025",
       "role": "Full Stack Engineer Intern",
       "where": "cluBITS Solutions",
-      "text": "Full-stack prototypes, BI integrations, RPA and OCR experiments."
+      "text": "Started 23 January 2025; transitioned to GET in August. Delivered full-stack, BI, RPA, OCR and payroll workflows."
     }
   ]
 }

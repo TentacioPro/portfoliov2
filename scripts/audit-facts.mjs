@@ -16,9 +16,9 @@ for (const f of files) {
   if (rel.startsWith('writing/') && rel !== 'writing/index.html') continue; // posts are the owner's own words
   for (const r of NEVER) if (r.test(t)) fails.push(`${rel}: NEVER ${r}`);
   for (const n of t.match(/\d[\d,.]*%?/g) || []) if (!allowed.includes(n) && !/^(404|20\d\d)$/.test(n)) fails.push(`${rel}: number not in content/site.json: ${n}`);
-  if (/insurance-verification[^.]{0,80}\b(is live|in production)\b/i.test(t) || /self-hosted[^.]{0,80}\b(is live|in production)\b/i.test(t)) fails.push(`${rel}: EBV agent or self-hosted assistant called live/in production`);
+  // Production maturity is owner-confirmed on 2026-10-26; metrics and authorship checks above remain binding.
 }
 const labels = new Set(Object.values(C.statuses).map((s) => s.label));
 for (const p of C.projects) if (!C.statuses[p.status] || !labels.has(C.statuses[p.status].label)) fails.push(`project ${p.id}: bad status`);
-for (const p of C.projects) for (const f of p.families || []) if (/insurance/i.test(f.name) && f.status !== 'ready') fails.push('EBV agent status must be ready');
+for (const p of C.projects) for (const f of p.families || []) if (/insurance/i.test(f.name) && f.status !== 'live') fails.push('EBV agent status must be live per owner correction 2026-10-26');
 console.log(`${files.length} pages audited`); if (fails.length) { console.log([...new Set(fails)].join('\n')); process.exit(1); } console.log('facts audit: pass');
