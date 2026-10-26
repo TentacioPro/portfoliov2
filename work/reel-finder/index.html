@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reel-finder: retrieval for half-remembered saved content · Abishek M</title>
-<meta name="description" content="Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Private prototype; case study available.">
+<meta name="description" content="Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Personal production system; case study available.">
 <link rel="canonical" href="https://tentaciopro.github.io/portfoliov2/work/reel-finder/">
 <meta property="og:title" content="Reel-finder: retrieval for half-remembered saved content · Abishek M">
-<meta property="og:description" content="Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Private prototype; case study available.">
+<meta property="og:description" content="Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Personal production system; case study available.">
 <meta property="og:url" content="https://tentaciopro.github.io/portfoliov2/work/reel-finder/">
 <meta name="theme-color" content="#e8ebef" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
@@ -31,9 +31,9 @@
 
 <article style="padding:16px 0 40px">
   <p class="back"><a href="/portfoliov2/#work">← Work</a></p>
-  <p style="margin-top:16px"><span class="tag t-experiment">experiment</span></p>
+  <p style="margin-top:16px"><span class="tag t-live">live</span></p>
   <h1 class="ptitle">Reel-finder: retrieval for half-remembered saved content</h1>
-  <p class="pone">Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Private prototype; case study available.</p>
+  <p class="pone">Search for saved content using canonical ingestion, deduplication, keyword and multilingual semantic retrieval. Feedback and coverage checks make retrieval gaps inspectable. Personal production system; case study available.</p>
   <div class="nums"><div><p class="num">Hybrid retrieval</p><p class="sub">keyword and multilingual semantic search</p></div></div>
   <div class="pcols">
     <section><h2>Solution and contribution</h2><ul><li>A single ingestion gateway: adapters produce raw items, canonical resource keys deduplicate links, and separate sightings retain source context.</li><li>Text acquisition from available captions, transcripts, OCR and page text; a staged pipeline records coverage gaps and reasons for missing content.</li><li>SQLite FTS5 keyword retrieval and multilingual-e5-large embeddings combined with reciprocal-rank fusion, exposed through a Python/FastAPI web interface.</li><li>Feedback labels, saved items, filters and stage telemetry. Development used coding-agent assistance; implementation and model choices are assessed against recorded evidence.</li></ul></section>
