@@ -2,7 +2,7 @@
   "alsoReal": [
     {
       "name": "The ATS module",
-      "text": "Owned through a live demo in January 2026: a stored-procedure migration with a shadow-database cutover, Create React App to Vite, AI-assisted offer letters, and Groq, Unipile and MSAL integrations."
+      "text": "Owned through a live demo in January 2026: a stored-procedure migration with a shadow-database cutover, Create React App to Vite, AI-assisted offer letters, and Groq, Unipile and MSAL integrations. In November 2026, hardened further: audited 105 queries across 22 controllers for multi-tenant role-based access parity, isolated a 22.55MB calling-SDK bundle behind dynamic loading to cut the initial download to 1.17MB, and fixed an employee-lookup query from a 15-second timeout to 758ms."
     },
     {
       "name": "A working practice",
@@ -145,10 +145,82 @@
       ],
       "checked": [
         "Taken to a priced commercial proposal: a hybrid of Azure Translator, Google Translate and a custom LLM under one subscription, positioned on price, OCR, analytics, India data residency and on-premise deployment.",
-        "One enterprise client has signed."
+        "One enterprise client has signed.",
+        "In November 2026, migrated the staging environment to development parity across 19 tables and 45 stored procedures, and backfilled 313 historical rows with zero SHA-256 payload hash diffs against source.",
+        "Cut a quota-reservation query from a 15-second timeout to 205ms on development and 119ms on staging, by removing an unindexed subquery."
       ],
       "notClaimed": [
         "The client is not named, and no usage volume is claimed."
+      ]
+    },
+    {
+      "id": "voice-live-mcp",
+      "name": "Azure Voice Live API prototype, GPT Realtime and an MCP tool server",
+      "short": "Azure Voice Live + MCP",
+      "status": "ready",
+      "key": {
+        "value": "<100ms",
+        "label": "barge-in to playback purge"
+      },
+      "oneLine": "A local real-time voice gateway on Azure's Voice Live API, wired to a stdio MCP server so the model can call dental-eligibility tools mid-conversation.",
+      "built": [
+        "A Node.js WebSocket gateway and a React 19 browser client, connected to Azure AI Foundry's Voice Live API (GPT Realtime, Azure Neural TTS) over a persistent socket.",
+        "A telephony-codec transport adapter resampling 8kHz G.711 mu-law audio to 24kHz PCM16, so the same gateway can sit behind a phone call or a browser tab.",
+        "A stdio JSON-RPC MCP server exposing five dental-eligibility tools, wired into the realtime session as live function calls."
+      ],
+      "checked": [
+        "Verified the WebSocket upgrade and audio round-trip against two realtime models, with server-side voice-activity detection tuned for natural turn-taking.",
+        "Measured under 100ms from user barge-in to playback purge, and exercised live MCP tool round-trips end to end.",
+        "Logged the gaps between this prototype and a production rollout in the repo's own docs, instead of presenting it as shipped."
+      ],
+      "notClaimed": [
+        "This is a local prototype, not a deployed production system.",
+        "No call volume or user-facing deployment is claimed."
+      ],
+      "numbers": [
+        {
+          "value": "<100ms",
+          "label": "barge-in to playback purge"
+        },
+        {
+          "value": "5",
+          "label": "MCP tools exposed to the model"
+        }
+      ]
+    },
+    {
+      "id": "post-call-analytics",
+      "name": "Post-call audio analytics, scored by Claude Sonnet on Azure AI Foundry",
+      "short": "Post-call analytics",
+      "status": "ready",
+      "key": {
+        "value": "14",
+        "label": "rubric metrics per call"
+      },
+      "oneLine": "A pipeline that turns a recorded coaching call into a scored, interactive report: audio in, a structured 14-metric Claude Sonnet assessment out.",
+      "built": [
+        "A skill-coach voice agent built for dental front-desk role-play, reusing the post-call reporting pattern proven on earlier interview-assessment work.",
+        "A pipeline that pulls a call's transcript and recording, optionally diarizes it by speaker, and passes it to Claude Sonnet on Azure AI Foundry to score 14 metrics across three strictness modes.",
+        "A deterministic template engine that renders the scored result into a multi-tab interactive HTML report, instead of asking the model to emit the full report markup itself."
+      ],
+      "checked": [
+        "Hit and fixed a real Azure AI Foundry issue where reasoning consumed the entire completion budget and returned empty text; fixed with an explicit thinking-budget setting and backoff on rate limits.",
+        "Confirmed by direct test that asking the model to emit the full 1,390-line HTML report in one completion was unreliable, which is why the report is templated, not model-generated.",
+        "Handed off as a small, dependency-free backend module, reusing a pattern proven on an earlier reporting pipeline."
+      ],
+      "notClaimed": [
+        "This is a coaching and assessment tool, not a clinical or compliance system.",
+        "No accuracy or adoption figures beyond the engineering facts above are claimed."
+      ],
+      "numbers": [
+        {
+          "value": "14",
+          "label": "rubric metrics per call"
+        },
+        {
+          "value": "3",
+          "label": "coach strictness modes"
+        }
       ]
     },
     {
@@ -217,8 +289,8 @@
     "venue": "ICDSAAI 2025, Chennai, March 2025"
   },
   "site": {
-    "base": "/portfoliov2/",
-    "url": "https://tentaciopro.github.io/portfoliov2/",
+    "base": "/",
+    "url": "https://abishek.pro/",
     "title": "Abishek M · Applied AI engineer",
     "description": "Abishek M, applied AI engineer in Chennai: voice agents that write to a real database through an MCP tool server I built, an evaluated triage agent, and a plain note of what is live and what is not."
   },

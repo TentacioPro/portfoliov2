@@ -31,3 +31,9 @@
 - **Harness contract:** `AGENTS.md` (CLAUDE.md points to it).
 - **Live site:** unchanged (still R11 Soft + Ink) until the owner applies another look and deploys.
 - **Decision (2026-09-27):** the live static page stays as it is; admin is local only (Workbench → Portfolio on `portfolio-v3`); `portfolio-v3` is not merged into `main`.
+
+## Custom domain cutover + Nov 2026 content refresh (2026-11-16/17, CLAUDE CODE)
+- **Domain:** `content/site.json` `site.base` changed `/portfoliov2/` → `/`, `site.url` changed to `https://abishek.pro/`. `scripts/build.mjs` now writes `dist/CNAME` (`abishek.pro`) on every build so `npm run deploy` never drops the custom domain. `scripts/serve.mjs`, `scripts/qa.mjs`, `scripts/qa-presets.mjs` no longer hardcode `/portfoliov2/` — they read `site.base` so local preview/QA match whatever is live. `AGENTS.md` and `README.md` updated to match.
+- **Content:** two new project cards added (`voice-live-mcp`: Azure Voice Live API + GPT Realtime + MCP tool server prototype; `post-call-analytics`: post-call audio scored by Claude Sonnet on Azure AI Foundry, 14 metrics/3 modes), plus Nov hardening facts added to the existing `translator` project and the "ATS module" alsoReal entry. Source: `learning-tracker/context-archive/nov-2026-four-repos-deliverables.md`, zero invented numbers.
+- **Gates run:** `npm run lint`, `npm run build`, `npm run validate`, `npm run audit:facts` — all PASS. `npm run qa` (Playwright+axe) NOT run this session (no bundled Chromium, out of scope to install here) — flagged, not skipped silently.
+- **Not yet done:** `npm run deploy` (publish to `gh-pages`) is withheld pending the owner's go per the Step 5 STOP gate, and until the Hostinger DNS records for `abishek.pro` are live.

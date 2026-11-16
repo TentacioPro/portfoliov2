@@ -11,7 +11,9 @@ import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import { STYLES, PARTS } from '../themes/engine.mjs';
+import * as C from '../src/content.js';
 
+const BASE = C.site.base;
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TMP = path.join(ROOT, '.qa-presets'); const SHOTS = path.join(ROOT, 'qa-shots', 'presets');
 fs.rmSync(TMP, { recursive: true, force: true }); fs.mkdirSync(SHOTS, { recursive: true });
@@ -30,16 +32,17 @@ const ids = Object.keys(JOBS);
 for (const id of ids) {
   const tj = path.join(TMP, `${id}.json`); fs.mkdirSync(TMP, { recursive: true });
   fs.writeFileSync(tj, JSON.stringify(JOBS[id]));
-  execFileSync(process.execPath, ['scripts/build.mjs'], { cwd: ROOT, env: { ...process.env, THEME_JSON: tj, OUT_DIR: path.join(TMP, id, 'portfoliov2') }, stdio: 'ignore' });
+  execFileSync(process.execPath, ['scripts/build.mjs'], { cwd: ROOT, env: { ...process.env, THEME_JSON: tj, OUT_DIR: path.join(TMP, id, 'site') }, stdio: 'ignore' });
 }
 let current = '';
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript' };
 const srv = http.createServer((req, res) => {
-  const dir = path.join(TMP, current); // each style is served at the real base path, /portfoliov2/, one at a time
-  let f = path.join(dir, decodeURIComponent(new URL(req.url, 'http://x').pathname));
+  const dir = path.join(TMP, current); // each style is served at the real base path (site.base), one at a time
+  const p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+  let f = path.join(dir, 'site', p.startsWith(BASE) ? p.slice(BASE.length) : p);
   if (!f.startsWith(dir)) { res.writeHead(403); return res.end(); }
   if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
-  if (!fs.existsSync(f)) f = path.join(dir, 'portfoliov2', '404.html');
+  if (!fs.existsSync(f)) f = path.join(dir, 'site', '404.html');
   if (!fs.existsSync(f)) { res.writeHead(404); return res.end(); }
   res.writeHead(200, { 'content-type': TYPES[path.extname(f)] || 'text/plain' }); res.end(fs.readFileSync(f));
 }).listen(0, '127.0.0.1');
@@ -55,7 +58,7 @@ for (const id of ids) for (const mode of Object.keys(STYLES[JOBS[id].style].mode
   const ctx = await b.newContext({ viewport: { width: w, height: 900 }, colorScheme: mode, reducedMotion: 'reduce' });
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, (r) => r.abort());
   for (const p of pages) {
-    const pg = await ctx.newPage(); await pg.goto(`http://127.0.0.1:${PORT}/portfoliov2/${p}`); n++;
+    const pg = await ctx.newPage(); await pg.goto(`http://127.0.0.1:${PORT}${BASE}${p}`); n++;
     const axe = await new AxeBuilder({ page: pg }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
     const dom = await pg.evaluate(() => ({ sw: document.documentElement.scrollWidth, small: [...document.querySelectorAll('body *')].filter((e) => [...e.childNodes].some((x) => x.nodeType === 3 && x.textContent.trim()) && parseFloat(getComputedStyle(e).fontSize) < 12).length }));
     const issues = [...axe.violations.map((v) => `${v.id}(${v.impact}): ${v.nodes.slice(0, 2).map((x) => x.target.join(' ')).join(' | ')}`), ...(dom.sw > w ? [`overflow ${dom.sw}px`] : []), ...(dom.small ? [`${dom.small} tiny texts`] : [])];

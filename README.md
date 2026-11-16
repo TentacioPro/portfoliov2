@@ -1,6 +1,6 @@
 # portfoliov2: Abishek M, applied AI engineer
 
-A static site served at https://tentaciopro.github.io/portfoliov2/. There is no framework in the browser: plain HTML, one
+A static site served at https://abishek.pro/ (custom domain, cut over 2026-11-16; was https://tentaciopro.github.io/portfoliov2/). There is no framework in the browser: plain HTML, one
 generated CSS file and a small script (theme switch, copy button, pause motion). Content and look are plain files:
 `content/site.json`, `content/theme.json` and `content/posts/`. They are edited in **Workbench → Portfolio**
 (Resume-Research/workbench) or by any coding harness; see [AGENTS.md](AGENTS.md).
@@ -12,7 +12,7 @@ generated CSS file and a small script (theme switch, copy button, pause motion).
 | Command | What it does |
 |---|---|
 | `npm run build` | site.json + theme.json + published posts → `dist/` (env `SITE_JSON`, `THEME_JSON`, `POSTS_DIR`, `OUT_DIR` override) |
-| `npm run dev` | build, then serve at http://127.0.0.1:4173/portfoliov2/ |
+| `npm run dev` | build, then serve at http://127.0.0.1:4173/ (mirrors the live base path from `content/site.json`) |
 | `npm run validate` | site.json against content/schema.json and the owner's fixed rules |
 | `npm run audit:facts` | the built text against FACTS (NEVER list, numbers, status labels) |
 | `npm run qa` | Playwright + axe on every page at 320/390/768/1280/1440, light and dark (`CHROME=<path>` if needed) |

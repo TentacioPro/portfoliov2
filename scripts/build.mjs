@@ -170,6 +170,7 @@ out('writing/index.html', writingIndex());
 for (const p of posts) out(`writing/${p.slug}/index.html`, postPage(p));
 out('404.html', notFound());
 out('.nojekyll', '');
+out('CNAME', 'abishek.pro\n');
 out('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${C.site.url}sitemap.xml\n`);
 const urls = ['', ...C.projects.map((p) => `work/${p.id}/`), ...(hasWriting ? ['writing/', ...posts.map((p) => `writing/${p.slug}/`)] : [])];
 out('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map((u) => `<url><loc>${C.site.url}${u}</loc></url>`).join('')}</urlset>\n`);

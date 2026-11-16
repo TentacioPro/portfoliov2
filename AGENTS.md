@@ -27,7 +27,7 @@ files through **Workbench → Portfolio** (Resume-Research/workbench), which log
 - **Owner's design rules:** sans by default (three R5/R6 styles keep their drawn serif display; the font control swaps it);
   the type scale 12/14/16/20/28/36 plus one display size; radii 6/10; pills only for tags; one blue focus ring #2f6fed.
 - **Motion:** every looping animation sits under `.mo` (the Pause button stops it) and stops under reduced motion.
-- **Base path** stays `/portfoliov2/`. No analytics, trackers, chat widgets, stock photos or live LLM on the site.
+- **Base path** is `/` (custom domain `https://abishek.pro/`, cut over 2026-11-16 — was `/portfoliov2/` on `tentaciopro.github.io`). `scripts/build.mjs` writes `dist/CNAME` on every build so `npm run deploy` never wipes the domain. No analytics, trackers, chat widgets, stock photos or live LLM on the site.
 - **Never deploy without the owner's go.** `npm run deploy` publishes; Workbench asks for a typed confirmation.
 
 ## Workflow
